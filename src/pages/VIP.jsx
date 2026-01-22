@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
-import { TrendingUp, Lock, CheckCircle, ArrowLeft } from "lucide-react";
+import { TrendingUp, Lock, CheckCircle } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Card, Text, PageHeader, Badge } from "../components";
 // --- VIP Tiers Data ---
 // Updated to include the 'invites' requirement (currently 0 for all levels)
 const VIP_LEVELS = [
@@ -132,10 +133,10 @@ export const VIPBadge = ({
 // --- VIP Tier Gallery Component (Replaces the Table) ---
 const VIPTierGallery = ({ currentInvestment, currentLevel }) => {
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">
+    <Card variant="default" padding="lg" className="mb-6 shadow-lg">
+      <Text variant="h2" className="text-2xl font-bold text-gray-800 mb-6">
         VIP Tier Roadmap
-      </h2>
+      </Text>
 
       {/* Vertical list of VIP Levels (Column Layout) */}
       <div className="flex flex-col gap-4">
@@ -156,36 +157,51 @@ const VIPTierGallery = ({ currentInvestment, currentLevel }) => {
                   isCurrent={isCurrent}
                   isUnlocked={isUnlocked}
                 />
-                <p className="text-xl font-bold text-gray-900">
+                <Text variant="h3" className="text-xl font-bold text-gray-900">
                   {levelData.name}
-                </p>
+                </Text>
               </div>
 
               {/* RIGHT: Investment and Status */}
               <div className="flex flex-col items-end">
                 <div className="text-right mb-2">
-                  <span className="text-xs text-gray-500 font-semibold uppercase">
+                  <Text
+                    variant="sm"
+                    className="text-gray-500 font-semibold uppercase"
+                  >
                     Required Investment
-                  </span>
-                  <p className="text-lg font-semibold text-gray-700">
+                  </Text>
+                  <Text
+                    variant="body"
+                    className="text-lg font-semibold text-gray-700"
+                  >
                     {formatCurrency(levelData.investment)}
-                  </p>
+                  </Text>
                 </div>
 
                 {/* Status Indicator */}
                 <div>
                   {isCurrent ? (
-                    <span className="bg-amber-100 text-orange-600 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-md">
+                    <Badge
+                      variant="success"
+                      className="flex items-center gap-1"
+                    >
                       <CheckCircle className="w-4 h-4" /> CURRENT LEVEL
-                    </span>
+                    </Badge>
                   ) : isUnlocked ? (
-                    <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-md">
+                    <Badge
+                      variant="success"
+                      className="flex items-center gap-1"
+                    >
                       <CheckCircle className="w-4 h-4" /> UNLOCKED
-                    </span>
+                    </Badge>
                   ) : (
-                    <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-md">
+                    <Badge
+                      variant="warning"
+                      className="flex items-center gap-1"
+                    >
                       <Lock className="w-4 h-4" /> LOCKED
-                    </span>
+                    </Badge>
                   )}
                 </div>
               </div>
@@ -193,7 +209,7 @@ const VIPTierGallery = ({ currentInvestment, currentLevel }) => {
           );
         })}
       </div>
-    </div>
+    </Card>
   );
 };
 
@@ -255,22 +271,16 @@ const VIP = () => {
   return (
     <>
       <div className="w-full min-h-screen bg-gradient-to-b from-yellow-100 to-gray-100">
-        {/* --- APP HEADER (Fixed/Sticky) --- */}
-        <div className="relative w-full py-3 px-4 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 flex items-center justify-between">
-          <button
-            className="hover:opacity-70 transition"
-            onClick={() => navigate(-1)}
-          >
-            <ArrowLeft color="black" size={22} />
-          </button>
-          <h1 className="text-xl font-bold flex-1 text-center">VIP</h1>
-          <div className="w-6"></div>
-        </div>
+        <PageHeader title="VIP" onBack={() => navigate(-1)} />
 
         {/* --- MAIN CONTENT WRAPPER --- */}
         <div className="w-full max-w-md mx-auto p-4 pb-20">
           {/* --- Current Status Card --- */}
-          <div className="bg-white rounded-2xl shadow-2xl p-6 mb-6 border-t-4 border-orange-400 flex flex-col md:flex-row items-center md:items-start gap-4">
+          <Card
+            variant="default"
+            padding="lg"
+            className="mb-6 border-t-4 border-orange-400 flex flex-col md:flex-row items-center md:items-start gap-4 shadow-2xl"
+          >
             <div className="flex-shrink-0">
               {/* The primary, large VIP badge */}
               <VIPBadge
@@ -281,34 +291,45 @@ const VIP = () => {
             </div>
 
             <div className="text-center md:text-left flex-grow">
-              <p className="text-2xl font-bold text-gray-700">
+              <Text variant="h3" className="text-2xl font-bold text-gray-700">
                 Current VIP Level:{" "}
                 <span className="text-orange-700">{currentLevel.name}</span>
-              </p>
-              <p className="text-4xl font-extrabold mt-2">
+              </Text>
+              <Text variant="h2" className="text-4xl font-extrabold mt-2">
                 {formatCurrency(currentInvestment)}
-              </p>
-              <p className="text-lg text-gray-500">Total Account Investment</p>
+              </Text>
+              <Text variant="body" className="text-lg text-gray-500">
+                Total Account Investment
+              </Text>
             </div>
-          </div>
+          </Card>
 
           {/* --- Progress Bar Section --- */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <Card variant="default" padding="lg" className="mb-6 shadow-lg">
+            <Text
+              variant="h3"
+              className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2"
+            >
               <TrendingUp className="w-6 h-6 text-green-500" />
               {nextLevel
                 ? `Progress to ${nextLevel.name}`
                 : "Maximum VIP Level Reached!"}
-            </h2>
+            </Text>
 
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <div className="px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-600 uppercase">
+                <Badge
+                  variant="primary"
+                  className="text-xs font-bold uppercase"
+                >
                   {currentLevel.name}
-                </div>
-                <div className="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-600 uppercase">
+                </Badge>
+                <Badge
+                  variant="success"
+                  className="text-xs font-bold uppercase"
+                >
                   {nextLevel ? nextLevel.name : "MAX"}
-                </div>
+                </Badge>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                 {/* NOTE: Progress bar width must remain an inline style due to dynamic calculation */}
@@ -321,7 +342,7 @@ const VIP = () => {
 
             {nextLevel ? (
               <div className="text-center p-4 border-t border-gray-100 mt-4">
-                <p className="text-base text-gray-600">
+                <Text variant="body" className="text-base text-gray-600">
                   You need to invest{" "}
                   <span className="font-bold text-red-600">
                     {formatCurrency(progressData.remaining)}
@@ -331,14 +352,17 @@ const VIP = () => {
                     {nextLevel.name}
                   </span>
                   !
-                </p>
+                </Text>
               </div>
             ) : (
-              <p className="text-center text-lg font-bold text-green-600 mt-4">
+              <Text
+                variant="body"
+                className="text-center text-lg font-bold text-green-600 mt-4"
+              >
                 Congratulations! You've reached the highest VIP tier.
-              </p>
+              </Text>
             )}
-          </div>
+          </Card>
 
           {/* --- VIP Tier Gallery (Now a vertical list/column) --- */}
           <VIPTierGallery

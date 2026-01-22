@@ -15,6 +15,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { VIPBadge } from "./VIP";
+import {
+  Card,
+  Text,
+  PageHeader,
+  StatCard,
+  Button,
+  InfoRow,
+} from "../components";
 // --- Color and Style Constants ---
 const BRIGHT_ORANGE = "#ff9900";
 
@@ -205,15 +213,35 @@ const Profile = ({ userInfo, accountData }) => {
             <HeaderBackground />
             <div className="relative z-10 p-4 mb-20">
               <ProfileHeader userId={userInfo.userId} userInfo={userInfo} />
-              <BalanceSummary accountData={accountpaloadData} />
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                {accountpaloadData.map((item, index) => (
+                  <StatCard
+                    key={index}
+                    label={item.label}
+                    value={
+                      item.value >= 1000000
+                        ? (item.value / 1000000).toFixed(1) + "M"
+                        : item.value >= 1000
+                          ? (item.value / 1000).toFixed(1) + "K"
+                          : item.value
+                    }
+                    icon={<DollarSign size={16} />}
+                  />
+                ))}
+              </div>
 
               <section className="pb-2.5 border-t border-gray-200">
-                <h2 className="text-lg font-bold text-gray-900 mb-2.5 border-b-2 border-gray-100 pb-1.5">
+                <Text
+                  variant="h2"
+                  className="mb-4 border-l-4 border-orange-500 pl-2"
+                >
                   Financial Summary
-                </h2>
+                </Text>
                 <div className="grid grid-cols-2 gap-2">
-                  <div
-                    className="bg-orange-50 border border-orange-200 rounded-xl p-2.5 cursor-pointer"
+                  <Card
+                    variant="default"
+                    padding="lg"
+                    className="bg-orange-50 border border-orange-200 cursor-pointer hover:shadow-md transition"
                     onClick={() =>
                       navigate("/RechargeHistory", {
                         state: {
@@ -224,56 +252,74 @@ const Profile = ({ userInfo, accountData }) => {
                       })
                     }
                   >
-                    <p className="text-gray-600 text-xs flex items-center gap-1.5">
+                    <Text
+                      variant="sm"
+                      className="text-gray-600 flex items-center gap-1.5"
+                    >
                       <Wallet size={16} /> Balance
-                    </p>
-                    <h3 className="text-lg font-bold text-gray-900 mt-1.5">
+                    </Text>
+                    <Text
+                      variant="h3"
+                      className="text-lg font-bold text-gray-900 mt-1.5"
+                    >
                       ₹{user.balance.toFixed(2)}
-                    </h3>
-                    <div className="pt-1.5">
-                      <button className="w-full py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition text-sm">
-                        Recharge History
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    className="bg-yellow-50 border border-yellow-200 rounded-xl p-2.5 cursor-pointer"
+                    </Text>
+                    <Button variant="primary" className="w-full mt-3 text-sm">
+                      Recharge History
+                    </Button>
+                  </Card>
+                  <Card
+                    variant="default"
+                    padding="lg"
+                    className="bg-yellow-50 border border-yellow-200 cursor-pointer hover:shadow-md transition"
                     onClick={() =>
                       navigate("/orders", { state: userInfo?.withdrawHistory })
                     }
                   >
-                    <p className="text-gray-600 text-xs flex items-center gap-1.5">
+                    <Text
+                      variant="sm"
+                      className="text-gray-600 flex items-center gap-1.5"
+                    >
                       <ShoppingCart size={16} /> Total Orders
-                    </p>
-                    <h3 className="text-lg font-bold text-gray-900 mt-1.5">
+                    </Text>
+                    <Text
+                      variant="h3"
+                      className="text-lg font-bold text-gray-900 mt-1.5"
+                    >
                       {accountData.ordersCount}
-                    </h3>
-                    <div className="pt-1.5">
-                      <button className="w-full py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition text-sm">
-                        Orders History
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    className="bg-orange-50 border border-orange-200 rounded-xl p-2.5 cursor-pointer"
+                    </Text>
+                    <Button variant="primary" className="w-full mt-3 text-sm">
+                      Orders History
+                    </Button>
+                  </Card>
+                  <Card
+                    variant="default"
+                    padding="lg"
+                    className="bg-orange-50 border border-orange-200 cursor-pointer hover:shadow-md transition"
                     onClick={() =>
                       navigate("/orders", { state: userInfo?.withdrawHistory })
                     }
                   >
-                    <p className="text-gray-600 text-xs flex items-center gap-1.5">
+                    <Text
+                      variant="sm"
+                      className="text-gray-600 flex items-center gap-1.5"
+                    >
                       <DollarSign size={16} /> Total Buy
-                    </p>
-                    <h3 className="text-lg font-bold text-gray-900 mt-1.5">
+                    </Text>
+                    <Text
+                      variant="h3"
+                      className="text-lg font-bold text-gray-900 mt-1.5"
+                    >
                       ₹{user.totalBuy.toFixed(2)}
-                    </h3>
-                    <div className="pt-1.5">
-                      <button className="w-full py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition text-sm">
-                        Orders History
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    className="bg-yellow-50 border border-yellow-200 rounded-xl p-2.5 cursor-pointer"
+                    </Text>
+                    <Button variant="primary" className="w-full mt-3 text-sm">
+                      Orders History
+                    </Button>
+                  </Card>
+                  <Card
+                    variant="default"
+                    padding="lg"
+                    className="bg-yellow-50 border border-yellow-200 cursor-pointer hover:shadow-md transition"
                     onClick={() =>
                       navigate("/WithdrawHistory", {
                         state: {
@@ -284,18 +330,22 @@ const Profile = ({ userInfo, accountData }) => {
                       })
                     }
                   >
-                    <p className="text-gray-600 text-xs flex items-center gap-1.5">
+                    <Text
+                      variant="sm"
+                      className="text-gray-600 flex items-center gap-1.5"
+                    >
                       <TrendingDown size={16} /> Withdrawal
-                    </p>
-                    <h3 className="text-lg font-bold text-gray-900 mt-1.5">
+                    </Text>
+                    <Text
+                      variant="h3"
+                      className="text-lg font-bold text-gray-900 mt-1.5"
+                    >
                       ₹{user.withdrawal.toFixed(2)}
-                    </h3>
-                    <div className="pt-1.5">
-                      <button className="w-full py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition text-sm">
-                        Withdrawal History
-                      </button>
-                    </div>
-                  </div>
+                    </Text>
+                    <Button variant="primary" className="w-full mt-3 text-sm">
+                      Withdrawal History
+                    </Button>
+                  </Card>
                 </div>
               </section>
               <ServicesList navigate={navigate} services={services} />
@@ -386,23 +436,22 @@ const ProfileHeader = ({ userId, userInfo }) => {
 // Component for the balance and income metrics
 const BalanceSummary = ({ accountData }) => {
   const data = accountData;
-
   return (
-    <div className="bg-white p-4 mb-6 rounded-xl shadow-md border-t-4 border-orange-500">
-      <div className="flex justify-around text-center">
-        {data.map((item, index) => (
-          <div key={index}>
-            <div className="text-xl font-bold text-gray-900">
-              {item.value >= 1000000
-                ? (item.value / 1000000).toFixed(1) + "M"
-                : item.value >= 1000
-                  ? (item.value / 1000).toFixed(1) + "K"
-                  : item.value}
-            </div>
-            <div className="text-sm text-gray-600">{item.label}</div>
-          </div>
-        ))}
-      </div>
+    <div className="grid grid-cols-4 gap-2">
+      {data.map((item, index) => (
+        <div key={index} className="text-center">
+          <Text variant="h4" className="font-bold text-gray-900">
+            {item.value >= 1000000
+              ? (item.value / 1000000).toFixed(1) + "M"
+              : item.value >= 1000
+                ? (item.value / 1000).toFixed(1) + "K"
+                : item.value}
+          </Text>
+          <Text variant="sm" className="text-gray-600">
+            {item.label}
+          </Text>
+        </div>
+      ))}
     </div>
   );
 };
@@ -411,72 +460,67 @@ const BalanceSummary = ({ accountData }) => {
 const ServicesList = ({ setActiveScreen, navigate, services }) => {
   return (
     <div className="mb-8">
-      <h3 className="text-lg font-bold text-gray-900 mb-4 border-l-4 border-orange-500 pl-2">
+      <Text variant="h3" className="mb-4 border-l-4 border-orange-500 pl-2">
         My Services
-      </h3>
+      </Text>
       <div className="flex flex-col gap-3">
         {services.map((service) => (
-          <ServiceItem
+          <button
             key={service.name}
-            service={service}
-            onClick={() => {
-              navigate(service.path, { state: service.userInfo });
-            }}
-          />
+            onClick={() => navigate(service.path, { state: service.userInfo })}
+            className="w-full bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center justify-between"
+          >
+            <div className="flex items-center gap-4">
+              <img
+                className="w-6 h-6 text-orange-500"
+                src={service.icon}
+                alt={service.name}
+              />
+              <Text
+                variant="body"
+                className="text-lg font-medium text-gray-700"
+              >
+                {service.name}
+              </Text>
+            </div>
+            <ChevronRight className="w-5 h-5 text-gray-400" />
+          </button>
         ))}
       </div>
     </div>
   );
 };
 
-// Reusable component for a single service list item
-const ServiceItem = ({ service, onClick }) => (
-  <button
-    onClick={onClick}
-    className="w-full bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center justify-between"
-  >
-    <div className="flex items-center gap-4">
-      <img
-        className="w-6 h-6 text-orange-500"
-        src={service.icon}
-        alt={service.name}
-      />
-      <span className="text-lg font-medium text-gray-700">{service.name}</span>
-    </div>
-    <ChevronRight className="w-5 h-5 text-gray-400" />
-  </button>
-);
-
 // Component for the Sign Out button
 const SignOutButton = ({ navigate }) => (
-  <button
-    className="w-full py-3 bg-orange-500 text-white font-semibold text-lg rounded-xl mt-8 hover:bg-orange-600 transition active:scale-95 flex items-center justify-center gap-2 shadow-md"
+  <Button
+    variant="primary"
     onClick={() => {
       Cookies.remove("tredingWeb");
       Cookies.remove("tredingWebUser");
       localStorage.removeItem("userData");
       navigate("/login");
     }}
+    className="w-full mt-8 flex items-center justify-center gap-2"
   >
     <LogOut className="w-5 h-5" />
-    <span>Sign Out</span>
-  </button>
+    Sign Out
+  </Button>
 );
 
 const ProfileDetail = ({ userInfo, setActiveScreen }) => {
   return (
     <div>
-      <div className="flex items-center gap-4 bg-white p-4 shadow-md">
-        <button
-          className="p-2 hover:bg-gray-100 rounded-full transition"
-          onClick={() => setActiveScreen("home")}
-        >
-          <ArrowLeft className="w-5 h-5 text-gray-900" />
-        </button>
-        <h2 className="text-xl font-bold text-gray-900">Profile Record</h2>
-      </div>
+      <PageHeader
+        title="Profile Record"
+        onBack={() => setActiveScreen("home")}
+      />
       <div className="relative z-10 p-4 mb-20">
-        <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mt-4">
+        <Card
+          variant="default"
+          padding="lg"
+          className="border border-gray-100 mt-4"
+        >
           <DetailItem
             icon={AtSign}
             label="Username"
@@ -489,7 +533,7 @@ const ProfileDetail = ({ userInfo, setActiveScreen }) => {
             value={userInfo.userId}
             isCopyable={true}
           />
-        </div>
+        </Card>
       </div>
     </div>
   );
@@ -500,10 +544,15 @@ const DetailItem = ({ icon: Icon, label, value, isCopyable = false }) => {
   return (
     <div className="flex items-center p-4 border-b border-gray-200 last:border-b-0">
       <Icon className="w-6 h-6 text-orange-500 mr-4" />
-      <span className="text-sm text-gray-600 w-16">{label}:</span>
-      <span className="text-base font-semibold text-gray-900 flex-grow text-right">
+      <Text variant="sm" className="text-gray-600 w-16">
+        {label}:
+      </Text>
+      <Text
+        variant="body"
+        className="text-base font-semibold text-gray-900 flex-grow text-right"
+      >
         {value}
-      </span>
+      </Text>
       {isCopyable && (
         <button
           onClick={() => copyToClipboard(value)}

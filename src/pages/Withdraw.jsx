@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 import {
   addBankDetails,
@@ -12,6 +12,8 @@ import {
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import pako from "pako";
+import { Card, PageHeader, Text, Button, Input } from "../components";
+
 const encryptedUser = Cookies.get("tredingWebUser");
 
 const Withdraw = () => {

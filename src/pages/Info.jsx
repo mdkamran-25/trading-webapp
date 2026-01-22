@@ -1,24 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { Phone, Clipboard, CalendarDays, Copy, ArrowLeft } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Phone, Clipboard, CalendarDays, Copy } from "lucide-react";
+import { Card, Text, PageHeader } from "../components";
 
 const UserAvatar = () => {
   return (
-    <div className="avatar">
-      <img
-        src="/avatar.jpg"
-        alt="Profile"
-        style={{
-          width: "120px",
-          height: "120px",
-          borderRadius: "50%",
-          objectFit: "cover",
-          border: "3px solid #fbbf24",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-        }}
-      />
-    </div>
+    <img
+      src="/avatar.jpg"
+      alt="Profile"
+      className="w-32 h-32 object-cover rounded-full border-4 border-yellow-400 shadow-lg"
+    />
   );
 };
 
@@ -28,12 +19,14 @@ const DetailItem = ({ icon: Icon, label, value, monetary = false }) => {
     : value || "N/A";
 
   return (
-    <div className="detail-item">
-      <div className="detail-label">
-        <Icon size={18} className="detail-icon" />
+    <div className="flex items-center justify-between py-3 border-b border-gray-200 last:border-b-0">
+      <div className="flex items-center gap-3 text-gray-600">
+        <Icon size={18} className="text-gray-500" />
         <span>{label}</span>
       </div>
-      <span className={monetary ? "detail-value money" : "detail-value"}>
+      <span
+        className={`font-medium ${monetary ? "text-green-600" : "text-gray-900"}`}
+      >
         {displayValue}
       </span>
     </div>
@@ -55,11 +48,10 @@ function Info() {
     withdrawal: 0,
     registrationDate: "",
   });
+
   const location = useLocation();
   const userData = location.state || {};
-  console.log(userData);
-  userData.rechargeHistory.type = "Recharge History";
-  userData.withdrawHistory.type = "Withdraw History";
+
   useEffect(() => {
     if (userData) {
       setUser({
@@ -73,7 +65,7 @@ function Info() {
         registrationDate: userData?.UserData?.registrationDate || new Date(),
       });
     }
-  }, []);
+  }, [userData]);
 
   const handleCopy = async (text, key) => {
     try {
@@ -86,74 +78,84 @@ function Info() {
   };
 
   return (
-    <div className="h-screen bg-gray-100 p-2.5">
-      <div className="w-full h-full bg-white rounded-2xl shadow-2xl flex flex-col overflow-y-auto">
-        {/* Header */}
-        <header className="bg-gradient-to-br from-yellow-400 to-orange-400 text-white text-center p-8 relative">
-          <button
-            className="absolute left-4 top-4 p-2 hover:bg-yellow-500 rounded transition-colors"
-            onClick={() => navigate(-1)}
-          >
-            <ArrowLeft color="white" size={20} />
-          </button>
+    <div className="w-full min-h-screen bg-gray-100 p-4">
+      <PageHeader
+        title="Account Information"
+        onBack={() => navigate(-1)}
+        showBackButton={true}
+      />
 
-          <UserAvatar />
+      {/* Header Card with Avatar */}
+      <Card
+        variant="gradient"
+        padding="lg"
+        className="w-full mx-auto mt-6 text-center"
+      >
+        <UserAvatar />
+        <Text variant="body" className="mt-3 opacity-90">
+          <CalendarDays className="inline mr-1" size={16} />
+          Member Since: {new Date(user.registrationDate).toLocaleDateString()}
+        </Text>
 
-          <p className="flex items-center justify-center gap-1 text-sm opacity-90 mt-3">
-            <CalendarDays size={16} /> Member Since:{" "}
-            {new Date(user.registrationDate).toLocaleDateString()}
-          </p>
-
-          <div className="border border-white/30 rounded-xl bg-black/15 p-2.5 mt-4">
-            <span className="text-xs opacity-90">USER ID</span>
-            <div className="flex justify-center items-center gap-1.5 mt-1.5">
-              <span className="text-sm font-semibold">{user.userId}</span>
-              <button
-                onClick={() => handleCopy(user.userId, "userId")}
-                className="bg-transparent border-none cursor-pointer relative text-white p-0.5"
-              >
-                <Copy size={14} />
-                {copiedKey === "userId" && (
-                  <span className="absolute top-6 left-1/2 -translate-x-1/2 bg-green-500 text-white text-xs py-0.5 px-1.5 rounded whitespace-nowrap">
-                    Copied!
-                  </span>
-                )}
-              </button>
-            </div>
+        {/* User ID Card */}
+        <Card variant="flat" padding="md" className="mt-4 bg-black/10">
+          <Text variant="small" className="opacity-90">
+            USER ID
+          </Text>
+          <div className="flex justify-center items-center gap-2 mt-2">
+            <Text variant="body" weight="semibold">
+              {user.userId}
+            </Text>
+            <button
+              onClick={() => handleCopy(user.userId, "userId")}
+              className="bg-transparent border-none cursor-pointer relative text-gray-600 hover:text-gray-900 p-1"
+            >
+              <Copy size={14} />
+              {copiedKey === "userId" && (
+                <span className="absolute top-6 left-1/2 -translate-x-1/2 bg-green-500 text-white text-xs py-1 px-2 rounded whitespace-nowrap">
+                  Copied!
+                </span>
+              )}
+            </button>
           </div>
-        </header>
+        </Card>
+      </Card>
 
-        {/* Account Details Section */}
-        <section className="p-5 border-t border-gray-100">
-          <h2 className="text-lg font-bold text-gray-700 mb-2.5 border-b-2 border-gray-100 pb-1.5">
-            Account Details
-          </h2>
-          <DetailItem icon={Phone} label="Phone" value={user.phone} />
+      {/* Account Details Section */}
+      <Card variant="default" padding="lg" className="w-full mx-auto mt-6">
+        <Text
+          variant="h3"
+          weight="bold"
+          className="mb-4 pb-2 border-b-2 border-gray-200"
+        >
+          Account Details
+        </Text>
 
-          <div className="flex items-center justify-between py-2.5 border-b border-gray-100">
-            <div className="flex items-center gap-2 text-gray-600">
-              <Clipboard size={18} className="text-gray-500" />
-              <span>Referral Code</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-medium text-gray-900">
-                {user.referralCode}
-              </span>
-              <button
-                onClick={() => handleCopy(user.referralCode, "referral")}
-                className="bg-transparent border-none cursor-pointer relative text-gray-500 p-0.5"
-              >
-                <Copy size={14} />
-                {copiedKey === "referral" && (
-                  <span className="absolute top-6 left-1/2 -translate-x-1/2 bg-green-500 text-white text-xs py-0.5 px-1.5 rounded whitespace-nowrap">
-                    Copied!
-                  </span>
-                )}
-              </button>
-            </div>
+        <DetailItem icon={Phone} label="Phone" value={user.phone} />
+
+        <div className="flex items-center justify-between py-3 border-b border-gray-200">
+          <div className="flex items-center gap-3 text-gray-600">
+            <Clipboard size={18} className="text-gray-500" />
+            <span>Referral Code</span>
           </div>
-        </section>
-      </div>
+          <div className="flex items-center gap-2">
+            <Text variant="body" weight="semibold">
+              {user.referralCode}
+            </Text>
+            <button
+              onClick={() => handleCopy(user.referralCode, "referral")}
+              className="bg-transparent border-none cursor-pointer relative text-gray-500 hover:text-gray-700 p-1"
+            >
+              <Copy size={14} />
+              {copiedKey === "referral" && (
+                <span className="absolute top-6 left-1/2 -translate-x-1/2 bg-green-500 text-white text-xs py-1 px-2 rounded whitespace-nowrap">
+                  Copied!
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+      </Card>
     </div>
   );
 }

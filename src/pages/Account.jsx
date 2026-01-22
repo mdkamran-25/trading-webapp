@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Home, Users, User, DollarSign } from "lucide-react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
 import { API_BASE_URL, SECRET_KEY } from "../api";
 import Profile from "./Profile";
 import pako from "pako";
+import { Card } from "../components";
 
 export default function AccountPage() {
   const navigate = useNavigate();
@@ -129,12 +129,6 @@ export default function AccountPage() {
   useEffect(() => {
     fetchAccountData();
   }, []);
-  const tabs = [
-    { name: "Home", icon: <Home size={22} />, path: "/home" },
-    { name: "invest", icon: <DollarSign size={22} />, path: "/invest" },
-    { name: "Teams", icon: <Users size={22} />, path: "/teams" },
-    { name: "Profile", icon: <User size={22} />, path: "/account" },
-  ];
 
   return (
     <div className="min-h-screen pb-8 font-sans bg-gradient-to-r from-amber-100 to-yellow-300">

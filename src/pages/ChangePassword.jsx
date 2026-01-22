@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
 import { API_BASE_URL } from "../api";
 import Cookies from "js-cookie";
+import { Card, Button, Text, PageHeader } from "../components";
 
 function ChangePassword() {
   const navigate = useNavigate();
@@ -11,6 +11,7 @@ function ChangePassword() {
   const [newPassword, setNewPassword] = useState("");
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +19,8 @@ function ChangePassword() {
     if (!phone || !currentPassword || !newPassword) {
       return alert("Please fill all fields");
     }
+
+    setLoading(true);
 
     try {
       const res = await fetch(`${API_BASE_URL}api/users/Change-password`, {
@@ -34,13 +37,9 @@ function ChangePassword() {
       const data = await res.json();
 
       if (data.success) {
-        alert("Password updated successfully! Pleas login");
-
+        alert("Password updated successfully! Please login");
         Cookies.remove("tredingWeb");
-
         Cookies.set("tredingWeb", data.token, { expires: 7, path: "/" });
-
-        //         // ✅ Save in localStorage
         localStorage.setItem("userData", JSON.stringify(data.User));
         navigate("/login");
       } else {
@@ -49,83 +48,92 @@ function ChangePassword() {
     } catch (err) {
       console.error(err);
       alert("Error updating password");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="w-full min-h-screen bg-gray-100">
-      <div className="relative flex items-center justify-between w-full px-4 py-3 text-gray-900 bg-gradient-to-b from-yellow-400 to-orange-400 rounded-b-3xl">
-        <button
-          className="transition hover:opacity-70"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft color="black" size={22} />
-        </button>
-        <h2 className="flex-1 text-xl font-bold text-center">
-          Change Password
-        </h2>
-        <div className="w-6"></div>
-      </div>
+      <PageHeader
+        title="Change Password"
+        onBack={() => navigate(-1)}
+        showBackButton={true}
+      />
 
-      <form className="relative z-10 mx-4 mt-[-2rem]" onSubmit={handleSubmit}>
-        <div className="p-6 bg-white shadow-lg rounded-3xl">
-          <label className="text-sm font-medium text-gray-600">
-            Phone Number
-          </label>
-          <input
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="Enter phone number"
-            className="w-full px-4 py-3 mt-2 mb-4 transition border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none"
-          />
-
-          <label className="text-sm font-medium text-gray-600">
-            Current Password
-          </label>
-          <div className="relative mt-2 mb-4">
+      <Card variant="default" padding="lg" className="w-11/12 mx-auto mt-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <Text variant="label" weight="semibold" className="mb-2">
+              Phone Number
+            </Text>
             <input
-              type={showCurrent ? "text" : "password"}
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="Enter current password"
-              className="w-full px-4 py-3 transition border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none"
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Enter phone number"
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
+              required
             />
-            <span
-              className="absolute text-gray-500 transition -translate-y-1/2 cursor-pointer right-3 top-1/2 hover:text-gray-700"
-              onClick={() => setShowCurrent(!showCurrent)}
-            >
-              {showCurrent ? "👁️" : "👁️‍🗨️"}
-            </span>
           </div>
 
-          <label className="text-sm font-medium text-gray-600">
-            New Password
-          </label>
-          <div className="relative mt-2 mb-6">
-            <input
-              type={showNew ? "text" : "password"}
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Enter new password"
-              className="w-full px-4 py-3 transition border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none"
-            />
-            <span
-              className="absolute text-gray-500 transition -translate-y-1/2 cursor-pointer right-3 top-1/2 hover:text-gray-700"
-              onClick={() => setShowNew(!showNew)}
-            >
-              {showNew ? "👁️" : "👁️‍🗨️"}
-            </span>
+          <div>
+            <Text variant="label" weight="semibold" className="mb-2">
+              Current Password
+            </Text>
+            <div className="relative">
+              <input
+                type={showCurrent ? "text" : "password"}
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Enter current password"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
+                required
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition"
+                onClick={() => setShowCurrent(!showCurrent)}
+              >
+                {showCurrent ? "👁️" : "👁️‍🗨️"}
+              </button>
+            </div>
           </div>
 
-          <button
+          <div>
+            <Text variant="label" weight="semibold" className="mb-2">
+              New Password
+            </Text>
+            <div className="relative">
+              <input
+                type={showNew ? "text" : "password"}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Enter new password"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
+                required
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition"
+                onClick={() => setShowNew(!showNew)}
+              >
+                {showNew ? "👁️" : "👁️‍🗨️"}
+              </button>
+            </div>
+          </div>
+
+          <Button
             type="submit"
-            className="w-full py-3 font-semibold text-gray-900 transition rounded-full bg-gradient-to-r from-yellow-400 to-orange-400 hover:shadow-lg"
+            variant="gradient"
+            fullWidth
+            disabled={loading}
+            className="mt-6"
           >
-            Update Password
-          </button>
-        </div>
-      </form>
+            {loading ? "Updating..." : "Update Password"}
+          </Button>
+        </form>
+      </Card>
     </div>
   );
 }

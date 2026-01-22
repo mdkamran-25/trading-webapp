@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Eye, EyeOff } from "lucide-react";
-
+import { Eye, EyeOff } from "lucide-react";
 import { API_BASE_URL, sendOtp } from "../api";
+import { Card, Button, Text, PageHeader } from "../components";
 
 function TradePassword() {
   const navigate = useNavigate();
 
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
-  const [generatedOtp, setGeneratedOtp] = useState(""); // store OTP
+  const [generatedOtp, setGeneratedOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,6 @@ function TradePassword() {
   const [showTradePass, setShowTradePass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
 
-  // Timer countdown
   useEffect(() => {
     let interval;
     if (timer > 0) {
@@ -36,7 +35,7 @@ function TradePassword() {
       const data = await sendOtp(phone);
       if (data.success) {
         setOtpSent(true);
-        setGeneratedOtp(data?.data?.otp || "123456"); // store OTP from API response
+        setGeneratedOtp(data?.data?.otp || "123456");
         alert("OTP sent successfully!");
       } else {
         alert(data?.data?.data?.message[0] || "Failed to send OTP");
@@ -47,12 +46,11 @@ function TradePassword() {
     }
     setLoading(false);
   };
-  // ✅ Verify OTP (match with generatedOtp)
+
   const handleVerifyOtp = () => {
     if (!otp) return alert("Enter OTP");
 
-    // eslint-disable-next-line eqeqeq
-    if (otp == generatedOtp) {
+    if (otp === generatedOtp) {
       setOtpVerified(true);
       alert("OTP verified! You can now set new password.");
     } else {
@@ -60,12 +58,12 @@ function TradePassword() {
     }
   };
 
-  // ✅ Update Trade Password
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (tradePassword !== confirmPassword)
-      return alert("⚠️ Passwords do not match!");
+      return alert("Passwords do not match!");
     try {
+      setLoading(true);
       const res = await fetch(`${API_BASE_URL}api/users/Change-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -74,136 +72,138 @@ function TradePassword() {
       const data = await res.json();
 
       if (data.success) {
-        alert("tradePassword updated successfully!");
+        alert("Trade password updated successfully!");
         navigate(-1);
       } else {
-        alert(data.message || "Failed to update tradePassword");
+        alert(data.message || "Failed to update trade password");
       }
     } catch (err) {
       console.error(err);
-      alert("Error updating tradePassword");
+      alert("Error updating trade password");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col w-full max-w-md min-h-screen p-5 mx-auto bg-gradient-to-br from-yellow-200 via-yellow-100 to-yellow-50 animate-bgFlow">
-      <div className="flex flex-col flex-1">
-        {/* Header */}
-        <div className="flex items-center gap-3 bg-gradient-to-r from-orange-400 to-yellow-300 p-3.5 rounded-2xl mb-5 shadow-md animate-slideDown">
-          <button
-            className="text-2xl text-black transition border-none cursor-pointer bg-none hover:opacity-70"
-            onClick={() => navigate(-1)}
-          >
-            <ArrowLeft color="white" size={22} />
-          </button>
-          <h2 className="flex-1 text-lg font-semibold text-center text-black">
-            Update Trade Password
-          </h2>
-        </div>
+    <div className="w-full min-h-screen bg-gray-100">
+      <PageHeader
+        title="Update Trade Password"
+        onBack={() => navigate(-1)}
+        showBackButton={true}
+      />
 
-        {/* Form */}
-        <form className="flex flex-col flex-1 p-4 space-y-3 bg-white shadow-lg rounded-2xl animate-fadeIn">
+      <Card variant="default" padding="lg" className="w-11/12 mx-auto mt-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {!otpSent && (
             <>
-              <label className="text-xs font-medium text-black">Number</label>
+              <Text variant="label" weight="semibold" className="mb-2">
+                Phone Number
+              </Text>
               <div className="flex gap-2">
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Enter Your number.."
-                  className="flex-1 px-3 py-3 text-sm transition border-2 border-yellow-300 outline-none rounded-2xl focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200"
+                  placeholder="Enter your number"
+                  className="flex-1 px-3 py-3 text-sm border-2 border-yellow-300 rounded-2xl focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200 outline-none transition"
                   required
                 />
-                <button
+                <Button
                   type="button"
-                  className="px-3.5 py-3 bg-yellow-300 text-black border-none rounded-2xl text-xs font-semibold cursor-pointer transition-colors hover:bg-yellow-400 disabled:opacity-50"
+                  variant="primary"
                   onClick={handleSendOtp}
                   disabled={loading}
                 >
                   {loading ? "Sending..." : "Send"}
-                </button>
+                </Button>
               </div>
             </>
           )}
 
           {otpSent && !otpVerified && (
             <>
-              <label className="text-xs font-medium text-black">
+              <Text variant="label" weight="semibold" className="mb-2">
                 Verification Code (OTP)
-              </label>
+              </Text>
               <div className="flex gap-2">
                 <input
                   type="tel"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                   placeholder="Enter OTP"
-                  className="flex-1 px-3 py-3 text-sm transition border-2 border-yellow-300 outline-none rounded-2xl focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200"
+                  className="flex-1 px-3 py-3 text-sm border-2 border-yellow-300 rounded-2xl focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200 outline-none transition"
+                  required
                 />
-                <button
+                <Button
                   type="button"
-                  className="px-3.5 py-3 bg-yellow-300 text-black border-none rounded-2xl text-xs font-semibold cursor-pointer transition-colors hover:bg-yellow-400"
+                  variant="primary"
                   onClick={handleVerifyOtp}
                 >
                   Verify
-                </button>
+                </Button>
               </div>
             </>
           )}
 
           {otpVerified && (
             <>
-              <label className="text-xs font-medium text-black">
+              <Text variant="label" weight="semibold" className="mb-2">
                 New Trade Password
-              </label>
-              <div className="relative">
+              </Text>
+              <div className="relative mb-4">
                 <input
                   type={showTradePass ? "text" : "password"}
                   value={tradePassword}
                   onChange={(e) => setTradePassword(e.target.value)}
                   placeholder="Enter new trade password"
-                  className="w-full px-3 py-3 text-sm transition border-2 border-yellow-300 outline-none rounded-2xl focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200"
+                  className="w-full px-4 py-3 border-2 border-yellow-300 rounded-2xl focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200 outline-none transition"
                   required
                 />
-                <span
-                  className="absolute text-black transition-opacity -translate-y-1/2 cursor-pointer right-3 top-1/2 hover:opacity-70"
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800 transition"
                   onClick={() => setShowTradePass(!showTradePass)}
                 >
                   {showTradePass ? <EyeOff size={18} /> : <Eye size={18} />}
-                </span>
+                </button>
               </div>
 
-              <label className="text-xs font-medium text-black">
+              <Text variant="label" weight="semibold" className="mb-2">
                 Confirm Trade Password
-              </label>
-              <div className="relative">
+              </Text>
+              <div className="relative mb-4">
                 <input
                   type={showConfirmPass ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm trade password"
-                  className="w-full px-3 py-3 text-sm transition border-2 border-yellow-300 outline-none rounded-2xl focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200"
+                  className="w-full px-4 py-3 border-2 border-yellow-300 rounded-2xl focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200 outline-none transition"
                   required
                 />
-                <span
-                  className="absolute text-black transition-opacity -translate-y-1/2 cursor-pointer right-3 top-1/2 hover:opacity-70"
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800 transition"
                   onClick={() => setShowConfirmPass(!showConfirmPass)}
                 >
                   {showConfirmPass ? <EyeOff size={18} /> : <Eye size={18} />}
-                </span>
+                </button>
               </div>
 
-              <button
+              <Button
                 type="submit"
-                className="mt-2 py-3 bg-yellow-300 text-black border-none rounded-2xl text-base font-semibold cursor-pointer transition-all hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
-                disabled={!tradePassword || tradePassword !== confirmPassword}
+                variant="gradient"
+                fullWidth
+                disabled={
+                  loading || !tradePassword || tradePassword !== confirmPassword
+                }
               >
-                Update Trade Password
-              </button>
+                {loading ? "Updating..." : "Update Trade Password"}
+              </Button>
             </>
           )}
         </form>
-      </div>
+      </Card>
     </div>
   );
 }

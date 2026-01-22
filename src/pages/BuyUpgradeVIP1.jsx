@@ -1,25 +1,41 @@
 import React from "react";
-import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Card, PageHeader, Text, Button, InfoRow } from "../components";
+
 export default function BuyUpgradeVIP1() {
   const navigate = useNavigate();
+
+  const productDetails = [
+    { label: "Price", value: "₹280.00" },
+    { label: "Revenue", value: "42 Days" },
+    { label: "Buy Share", value: "1" },
+    { label: "Generated Income", value: "₹4132.80" },
+    { label: "Estimate Income", value: "₹9643.20" },
+  ];
+
+  const settlementRecords = [
+    { date: "2025-08-19", amount: "₹229.60" },
+    { date: "2025-08-20", amount: "₹229.60" },
+    { date: "2025-08-21", amount: "₹229.60" },
+    { date: "2025-08-22", amount: "₹229.60" },
+    { date: "2025-08-23", amount: "₹229.60" },
+    { date: "2025-08-24", amount: "₹229.60" },
+  ];
+
   return (
-    <div className="max-w-md mx-auto font-sans bg-pink-300 p-4 min-h-screen">
-      {/* Header */}
-      <header className="flex items-center gap-2.5 bg-gradient-to-r from-purple-900 to-purple-800 p-3 rounded-xl text-white font-semibold">
-        <button
-          className="p-2 hover:bg-purple-700 rounded transition-colors"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft color="white" size={20} />
-        </button>
-        <h1 className="flex-1 text-center text-xl">My Products</h1>
-      </header>
+    <div className="max-w-md mx-auto font-sans bg-pink-300 p-4 min-h-screen pb-8">
+      <PageHeader title="My Products" onBack={() => navigate(-1)} />
 
       {/* Product Card */}
-      <section className="bg-gradient-to-b from-white to-yellow-50 p-4.5 rounded-3xl my-5 shadow-md">
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold">Buy & Upgrade VIP 1</h2>
+      <Card
+        variant="default"
+        padding="lg"
+        className="bg-gradient-to-b from-white to-yellow-50 rounded-3xl my-5 shadow-md"
+      >
+        <div className="flex justify-between items-center mb-4">
+          <Text variant="h3" className="text-lg font-semibold">
+            Buy & Upgrade VIP 1
+          </Text>
           <img
             src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
             alt="gold-icon"
@@ -27,69 +43,56 @@ export default function BuyUpgradeVIP1() {
           />
         </div>
 
-        <div className="bg-white mt-3 rounded-lg p-3 shadow-inner">
-          <p className="flex justify-between my-2">
-            <span className="font-semibold text-gray-700">Price</span>{" "}
-            <span>₹280.00</span>
-          </p>
-          <p className="flex justify-between my-2">
-            <span className="font-semibold text-gray-700">Revenue</span>{" "}
-            <span>42 Days</span>
-          </p>
-          <p className="flex justify-between my-2">
-            <span className="font-semibold text-gray-700">Buy Share</span>{" "}
-            <span>1</span>
-          </p>
-          <p className="flex justify-between my-2">
-            <span className="font-semibold text-gray-700">
-              Generated Income
-            </span>{" "}
-            <span>₹4132.80</span>
-          </p>
-          <p className="flex justify-between my-2">
-            <span className="font-semibold text-gray-700">Estimate Income</span>{" "}
-            <span>₹9643.20</span>
-          </p>
-        </div>
-      </section>
+        <Card variant="flat" padding="md" className="bg-white shadow-inner">
+          {productDetails.map((detail, index) => (
+            <div
+              key={index}
+              className="flex justify-between py-2 border-b border-gray-200 last:border-b-0"
+            >
+              <Text variant="sm" className="font-semibold text-gray-700">
+                {detail.label}
+              </Text>
+              <Text variant="sm">{detail.value}</Text>
+            </div>
+          ))}
+        </Card>
+      </Card>
 
       {/* Settlement Records */}
-      <section className="bg-pink-200 p-4 rounded-2xl shadow-md">
-        <h3 className="mb-2.5 text-base font-semibold">Settlement Records</h3>
-        <div className="flex justify-between border-b border-gray-300 py-1.5 text-sm">
-          <p>2025-08-19</p>
-          <p className="font-semibold text-purple-900">₹229.60</p>
-        </div>
-        <div className="flex justify-between border-b border-gray-300 py-1.5 text-sm">
-          <p>2025-08-20</p>
-          <p className="font-semibold text-purple-900">₹229.60</p>
-        </div>
-        <div className="flex justify-between border-b border-gray-300 py-1.5 text-sm">
-          <p>2025-08-21</p>
-          <p className="font-semibold text-purple-900">₹229.60</p>
-        </div>
-        <div className="flex justify-between border-b border-gray-300 py-1.5 text-sm">
-          <p>2025-08-22</p>
-          <p className="font-semibold text-purple-900">₹229.60</p>
-        </div>
-        <div className="flex justify-between border-b border-gray-300 py-1.5 text-sm">
-          <p>2025-08-23</p>
-          <p className="font-semibold text-purple-900">₹229.60</p>
-        </div>
-        <div className="flex justify-between py-1.5 text-sm">
-          <p>2025-08-24</p>
-          <p className="font-semibold text-purple-900">₹229.60</p>
-        </div>
+      <Card
+        variant="default"
+        padding="lg"
+        className="bg-pink-200 rounded-2xl shadow-md"
+      >
+        <Text variant="h3" className="mb-4 text-base font-semibold">
+          Settlement Records
+        </Text>
+        {settlementRecords.map((record, index) => (
+          <div
+            key={index}
+            className="flex justify-between border-b border-gray-300 py-2 text-sm last:border-b-0"
+          >
+            <Text variant="sm">{record.date}</Text>
+            <Text variant="sm" className="font-semibold text-purple-900">
+              {record.amount}
+            </Text>
+          </div>
+        ))}
 
-        <div className="flex justify-between items-center mt-3 text-sm">
-          <p>
-            ₹4132.80 <small className="text-gray-600">Total Income</small>
-          </p>
-          <button className="bg-purple-900 border-none py-1.5 px-3.5 rounded-2xl text-xs font-semibold text-white cursor-pointer hover:scale-105 transition-transform">
+        <div className="flex justify-between items-center mt-4 text-sm pt-3 border-t border-gray-300">
+          <div>
+            <Text variant="body" className="font-semibold">
+              ₹4132.80
+            </Text>
+            <Text variant="sm" className="text-gray-600">
+              Total Income
+            </Text>
+          </div>
+          <Button variant="primary" className="px-3.5 text-xs">
             Normal
-          </button>
+          </Button>
         </div>
-      </section>
+      </Card>
     </div>
   );
 }
