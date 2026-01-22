@@ -52,10 +52,10 @@ const Invest = ({ products }) => {
   console.log(products);
   return (
     <>
-      <div className="w-full max-h-screen min-h-screen mx-auto flex flex-col bg-gradient-to-br from-orange-300 via-yellow-100 to-yellow-200 animate-bgFlow relative mb-56 absolute">
+      <div className="relative flex flex-col w-full max-h-screen min-h-screen mx-auto mb-56 bg-gradient-to-br from-orange-300 via-yellow-100 to-yellow-200 animate-bgFlow">
         {/* Header */}
         <div className="flex items-center justify-between p-4">
-          <h1 className="flex-1 text-center text-xl font-semibold">My Order</h1>
+          <h1 className="flex-1 text-xl font-semibold text-center">My Order</h1>
           <div className="w-10"></div>
         </div>
 
@@ -122,7 +122,7 @@ const Invest = ({ products }) => {
       </div>
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 flex items-center justify-around bg-white border-t-2 border-gray-200 px-4 py-3 max-w-md mx-auto shadow-lg">
+      <div className="fixed bottom-0 left-0 right-0 flex items-center justify-around max-w-md px-4 py-3 mx-auto bg-white border-t-2 border-gray-200 shadow-lg">
         {tabs.map((tab) => (
           <button
             key={tab.name}

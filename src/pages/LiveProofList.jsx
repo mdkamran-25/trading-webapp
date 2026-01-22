@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
 // Helper function to generate a random number within a range
-const getRandomAmount = () => Math.floor(Math.random() * (9000 - 1000 + 1)) + 1000;
+const getRandomAmount = () =>
+  Math.floor(Math.random() * (9000 - 1000 + 1)) + 1000;
 
 // Helper function to generate a random time that is in the past (e.g., within the last 2 hours)
 const getRandomTime = () => {
   const now = new Date();
   // Subtract a random number of minutes (0 to 120 minutes)
-  const pastMinutes = Math.floor(Math.random() * 120); 
+  const pastMinutes = Math.floor(Math.random() * 120);
   now.setMinutes(now.getMinutes() - pastMinutes);
-  
+
   // Format the time as HH:MM AM/PM (e.g., 10:35 AM)
   const hours = now.getHours();
-  const minutes = now.getMinutes().toString().padStart(2, '0');
-  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+  const ampm = hours >= 12 ? "PM" : "AM";
   const displayHours = hours % 12 || 12; // Convert 0 to 12 for 12-hour clock
 
   return `${displayHours}:${minutes} ${ampm}`;
@@ -21,32 +22,77 @@ const getRandomTime = () => {
 
 // Expanded list of 50 unique names
 const UserNames = [
-  'Ravi', 'Simran', 'Pooja', 'Deepak', 'Anjali', 'Kunal', 'Neha', 'Vikram', 'Aisha', 'Gaurav',
-  'Amit', 'Sunita', 'Rajesh', 'Priya', 'Sanjay', 'Geeta', 'Mohan', 'Kavita', 'Arjun', 'Smita',
-  'Rahul', 'Jyoti', 'Manish', 'Meena', 'Vikas', 'Lata', 'Ajay', 'Tina', 'Alok', 'Sonia',
-  'Vinay', 'Divya', 'Nikhil', 'Shilpa', 'Rohit', 'Sapna', 'Bharat', 'Kiran', 'Harish', 'Ritu',
-  'Zaid', 'Mona', 'Chetan', 'Preeti', 'Yogesh', 'Shreya', 'Tushar', 'Roshni', 'Ishan', 'Hema'
+  "Ravi",
+  "Simran",
+  "Pooja",
+  "Deepak",
+  "Anjali",
+  "Kunal",
+  "Neha",
+  "Vikram",
+  "Aisha",
+  "Gaurav",
+  "Amit",
+  "Sunita",
+  "Rajesh",
+  "Priya",
+  "Sanjay",
+  "Geeta",
+  "Mohan",
+  "Kavita",
+  "Arjun",
+  "Smita",
+  "Rahul",
+  "Jyoti",
+  "Manish",
+  "Meena",
+  "Vikas",
+  "Lata",
+  "Ajay",
+  "Tina",
+  "Alok",
+  "Sonia",
+  "Vinay",
+  "Divya",
+  "Nikhil",
+  "Shilpa",
+  "Rohit",
+  "Sapna",
+  "Bharat",
+  "Kiran",
+  "Harish",
+  "Ritu",
+  "Zaid",
+  "Mona",
+  "Chetan",
+  "Preeti",
+  "Yogesh",
+  "Shreya",
+  "Tushar",
+  "Roshni",
+  "Ishan",
+  "Hema",
 ];
 
 // Component to display the list of live proofs with auto-scrolling
 const LiveProofList = () => {
   const [proofs, setProofs] = useState([]);
   // Ref to the scrollable container
-  const listRef = useRef(null); 
+  const listRef = useRef(null);
 
   // Effect to generate 50 unique proofs
   useEffect(() => {
     const generateInitialProofs = () => {
       const newProofs = [];
-      const count = 50; 
-      
+      const count = 50;
+
       // Shuffle the names array to pick 50 unique names randomly
       const shuffledNames = [...UserNames].sort(() => 0.5 - Math.random());
-      
+
       for (let i = 0; i < count; i++) {
         // Use a unique name from the shuffled list
         const randomName = shuffledNames[i % shuffledNames.length];
-        
+
         const randomAmount = getRandomAmount();
         const randomTime = getRandomTime();
 
@@ -67,12 +113,12 @@ const LiveProofList = () => {
   useEffect(() => {
     let scrollInterval;
     const listContainer = listRef.current;
-    
+
     if (listContainer) {
       const scrollSpeed = 50; // Milliseconds delay between scrolls
-      const scrollStep = 1;  // Pixels to scroll each step
+      const scrollStep = 1; // Pixels to scroll each step
       let scrollPosition = 0;
-      
+
       const startScrolling = () => {
         scrollInterval = setInterval(() => {
           // Check if content is tall enough to scroll
@@ -82,13 +128,15 @@ const LiveProofList = () => {
           }
 
           scrollPosition += scrollStep;
-          
+
           // Check if we hit the bottom (with a small tolerance)
-          if (scrollPosition >= listContainer.scrollHeight - listContainer.clientHeight - 1) {
+          if (
+            scrollPosition >=
+            listContainer.scrollHeight - listContainer.clientHeight - 1
+          ) {
             // Scroll smoothly back to the top over 1 second, then restart scroll
-            listContainer.scrollTo({ top: 0, behavior: 'smooth' });
-            scrollPosition = 0; 
-            
+            listContainer.scrollTo({ top: 0, behavior: "smooth" });
+            scrollPosition = 0;
           } else {
             listContainer.scrollTop = scrollPosition;
           }
@@ -102,57 +150,63 @@ const LiveProofList = () => {
       startScrolling();
 
       // Pause scrolling when the user hovers over the list (good UX)
-      listContainer.addEventListener('mouseenter', stopScrolling);
-      listContainer.addEventListener('mouseleave', startScrolling);
+      listContainer.addEventListener("mouseenter", stopScrolling);
+      listContainer.addEventListener("mouseleave", startScrolling);
 
       return () => {
         stopScrolling();
-        listContainer.removeEventListener('mouseenter', stopScrolling);
-        listContainer.removeEventListener('mouseleave', startScrolling);
+        listContainer.removeEventListener("mouseenter", stopScrolling);
+        listContainer.removeEventListener("mouseleave", startScrolling);
       };
     }
   }, [proofs.length]); // Rerun if the number of proofs changes
 
   return (
-    <div className="live-list-wrapper">
-      <h2 className="live-header">
-        <span role="img" aria-label="money-with-wings">💸</span>
+    <div className="w-full bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-5 mb-6">
+      <h2 className="text-lg font-bold text-gray-900 mb-4">
+        <span role="img" aria-label="money-with-wings">
+          💸
+        </span>{" "}
         Live Withdrawal Proofs
       </h2>
 
       {/* The scrollable container: using ref and overflow:hidden for ticker effect */}
-      <div 
-        ref={listRef} 
-        className="live-scroll-container"
-        style={{ scrollBehavior: 'smooth' }} // Used for the reset to top
+      <div
+        ref={listRef}
+        className="max-h-56 overflow-hidden bg-white rounded-xl border border-yellow-200"
+        style={{ scrollBehavior: "smooth" }}
       >
         {proofs.map((proof) => (
-          <div 
-            key={proof.id} 
-            className="live-item"
+          <div
+            key={proof.id}
+            className="flex justify-between items-center p-4 border-b border-gray-100 hover:bg-yellow-50 transition"
           >
-            <div className="live-item-details">
-              <span role="img" aria-label="user-icon">👤</span>
+            <div className="flex items-center gap-3">
+              <span role="img" aria-label="user-icon">
+                👤
+              </span>
               <div>
-                <div className="live-name">{proof.name}</div>
-                <div className="live-time">{proof.time}</div>
+                <div className="font-semibold text-gray-900 text-sm">
+                  {proof.name}
+                </div>
+                <div className="text-xs text-gray-500">{proof.time}</div>
               </div>
             </div>
-            <div className="live-amount">
-              ₹{proof.amount} Withdrawal Success
+            <div className="text-sm font-bold text-green-600">
+              ₹{proof.amount} ✓
             </div>
           </div>
         ))}
       </div>
-      <p className="live-pause-text">Hover over the list to pause scrolling.</p>
+      <p className="text-center text-xs text-gray-500 italic mt-3">
+        Hover over the list to pause scrolling.
+      </p>
     </div>
   );
 };
 
-
 // Main App component containing only the LiveProofList
 const LiveProof = () => {
-  
   // --- COMBINED CSS AREA: GLOBAL STYLES and LIVE PROOF LIST STYLES (.live-*) ---
   const styles = `
     /* --- GLOBAL APP STYLES --- */
@@ -257,9 +311,8 @@ const LiveProof = () => {
     <div className="">
       {/* Include the necessary styles */}
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      
-      <LiveProofList />
 
+      <LiveProofList />
     </div>
   );
 };
