@@ -5,13 +5,13 @@ import {
   CheckCircle,
   AlertTriangle,
   Clock,
-  ArrowLeft,
 } from "lucide-react";
 import { getRandomUPI, QRrandom, RechargeBalence, SECRET_KEY } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import pako from "pako";
+import { PageHeader, Card, Text, Button, Input, Badge } from "../components";
 
 const QRCode = async () => {
   const res = await QRrandom();
@@ -318,22 +318,16 @@ const Pay = () => {
   return (
     <div className="w-full max-w-md min-h-screen mx-auto bg-gray-100">
       {/* Header */}
-      <div className="relative flex items-center justify-center p-4 bg-gray-300">
-        <button
-          className="absolute p-2 transition-colors rounded left-4 hover:bg-gray-400"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft color="black" size={20} />
-        </button>
-        <h1 className="text-xl font-bold text-black">Recharge</h1>
-      </div>
+      <PageHeader title="Recharge" onBack={() => navigate(-1)} />
 
       {/* Pay Card */}
-      <div className="bg-gradient-to-b from-yellow-300 to-orange-400 border border-gray-300 rounded-2xl shadow-md p-8 w-full mt-0.5">
+      <Card className="bg-gradient-to-b from-yellow-300 to-orange-400 border border-gray-300 w-full mt-0.5">
         {/* Header with Amount */}
-        <header className="pb-4 mb-4 border-b border-gray-300">
-          <h3 className="text-3xl font-bold text-gray-800">₹{price}</h3>
-        </header>
+        <div className="pb-4 mb-4 border-b border-gray-300">
+          <Text variant="h1" className="text-gray-800">
+            ₹{price}
+          </Text>
+        </div>
 
         {/* Payment Apps */}
         <div className="flex flex-wrap gap-2.5 mt-2.5 mb-4">
@@ -347,7 +341,9 @@ const Pay = () => {
                 alt="Paytm"
                 className="w-6 h-auto"
               />
-              <p className="text-xs font-medium text-gray-800">Paytm</p>
+              <Text variant="sm" className="font-medium text-gray-800">
+                Paytm
+              </Text>
             </div>
           </div>
 
@@ -361,17 +357,19 @@ const Pay = () => {
                 alt="PhonePe"
                 className="w-6 h-auto"
               />
-              <p className="text-xs font-medium text-gray-800">PhonePe</p>
+              <Text variant="sm" className="font-medium text-gray-800">
+                PhonePe
+              </Text>
             </div>
           </div>
         </div>
 
         {/* QR Section */}
         <section className="mt-6 text-center">
-          <h2 className="mb-2 text-xl font-semibold text-gray-700">
+          <Text variant="h3" className="mb-2 text-gray-700">
             Use Mobile Scan Code to Pay
-          </h2>
-          <p className="mb-4 text-sm text-gray-600">
+          </Text>
+          <Text variant="sm" className="mb-4 text-gray-600">
             Or take screenshot and scan in your payment app.
             <br />
             <Clock size={14} className="inline mr-1" />
@@ -379,13 +377,15 @@ const Pay = () => {
             <strong>
               {minutes}:{seconds.toString().padStart(2, "0")} Minutes Left
             </strong>
-          </p>
+          </Text>
 
           <div className="flex items-center justify-center mx-auto overflow-hidden border-2 border-gray-300 border-dashed rounded-lg h-72 w-72 bg-gray-50">
             {isLoading && !qrCodeUrl ? (
               <div className="flex flex-col items-center">
                 <Loader2 className="w-6 h-6 mb-2 text-orange-500 animate-spin" />
-                <p className="text-sm text-gray-600">Loading QR...</p>
+                <Text variant="sm" className="text-gray-600">
+                  Loading QR...
+                </Text>
               </div>
             ) : (
               qrCodeUrl && (
@@ -409,34 +409,36 @@ const Pay = () => {
           {isLoading && !qrCodeUrl ? (
             <div className="flex flex-col items-center mt-4">
               <Loader2 className="w-5 h-5 mb-2 text-orange-500 animate-spin" />
-              <p className="text-sm text-gray-600">Loading QR...</p>
+              <Text variant="sm" className="text-gray-600">
+                Loading QR...
+              </Text>
             </div>
           ) : (
-            <span className="block mt-3 text-sm text-gray-700">
+            <Text variant="sm" className="block mt-3 text-gray-700">
               UPI Id: {upiId}
-            </span>
+            </Text>
           )}
         </section>
 
         {/* UTR Section */}
         <section className="pt-4 mt-8 border-t border-gray-300">
-          <h3 className="mb-3 text-base font-semibold text-gray-700">
+          <Text variant="body" className="mb-3 font-semibold text-gray-700">
             Enter Ref No. and Submit
-          </h3>
+          </Text>
           <form onSubmit={handleSubmit} className="space-y-3">
-            <input
+            <Input
               type="text"
               value={utr}
               onChange={(e) => setUtr(e.target.value)}
               placeholder="Enter Your UTR..."
               required
               disabled={isLoading || message.type === "success"}
-              className="w-full px-3 py-2 text-sm transition border border-gray-300 rounded-lg outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 disabled:bg-gray-200 disabled:cursor-not-allowed"
             />
-            <button
+            <Button
+              variant="primary"
               type="submit"
               disabled={isLoading || !utr.trim() || message.type === "success"}
-              className="w-full py-2.5 bg-gradient-to-r from-orange-400 to-yellow-400 text-gray-800 font-bold rounded-lg hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+              className="w-full py-2.5"
             >
               {isLoading ? (
                 <>
@@ -446,12 +448,12 @@ const Pay = () => {
               ) : (
                 "Submit"
               )}
-            </button>
+            </Button>
           </form>
 
           <MessageDisplay text={message.text} type={message.type} />
         </section>
-      </div>
+      </Card>
     </div>
   );
 };

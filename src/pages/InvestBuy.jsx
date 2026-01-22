@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { PageHeader, Card, Text, Button } from "../components";
 
 const InvestBuy = () => {
   const navigate = useNavigate();
@@ -27,16 +28,7 @@ const InvestBuy = () => {
   return (
     <div className="w-full max-w-md mx-auto font-sans min-h-screen bg-gradient-to-b from-yellow-400 to-yellow-100 p-2.5">
       {/* Header */}
-      <header className="flex items-center justify-between p-3 mb-4 font-semibold bg-yellow-300 rounded-2xl">
-        <button
-          className="text-2xl border-none cursor-pointer bg-none"
-          onClick={() => navigate(-1)}
-        >
-          ←
-        </button>
-        <h2 className="text-lg font-bold">My Products</h2>
-        <div className="w-8"></div>
-      </header>
+      <PageHeader title="My Products" onBack={() => navigate(-1)} />
 
       {/* Product Image */}
       <div className="flex justify-center my-5">
@@ -48,90 +40,103 @@ const InvestBuy = () => {
       </div>
 
       {/* Price Details */}
-      <div className="bg-yellow-50 p-4.5 rounded-3xl mb-4.5 shadow-md text-sm">
-        <p className="my-2">
+      <Card className="mb-4.5 text-sm">
+        <Text variant="body" className="my-2">
           Price ={" "}
           <span className="font-semibold text-amber-600">{product.price}</span>
-        </p>
-        <p className="my-2">
+        </Text>
+        <Text variant="body" className="my-2">
           Buy Share ={" "}
           <span className="font-semibold text-amber-600">{shares}</span>
-        </p>
-        <p className="my-2">
+        </Text>
+        <Text variant="body" className="my-2">
           Daily Income ={" "}
           <span className="font-semibold text-amber-600">{product.daily}</span>
-        </p>
+        </Text>
 
         <div className="flex items-center justify-around my-3">
           <span className="text-xs">Min</span>
-          <button
-            className="bg-white border border-amber-600 rounded-full py-1.5 px-3.5 text-xl font-bold cursor-pointer text-amber-600 hover:bg-amber-600 hover:text-white transition-colors"
+          <Button
+            variant="secondary"
             onClick={decreaseShares}
+            className="rounded-full py-1.5 px-3.5 text-xl"
           >
             -
-          </button>
+          </Button>
           <span className="font-semibold text-amber-600">{shares}</span>
-          <button
-            className="bg-white border border-amber-600 rounded-full py-1.5 px-3.5 text-xl font-bold cursor-pointer text-amber-600 hover:bg-amber-600 hover:text-white transition-colors"
+          <Button
+            variant="secondary"
             onClick={increaseShares}
+            className="rounded-full py-1.5 px-3.5 text-xl"
           >
             +
-          </button>
+          </Button>
           <span className="text-xs">Max</span>
         </div>
 
-        <p className="my-2">
+        <Text variant="body" className="my-2">
           Total Money ={" "}
           <span className="font-semibold text-amber-600">₹{totalMoney}</span>
-        </p>
-        <button className="w-full py-3 mt-3 text-base font-semibold text-white transition-colors bg-orange-500 border-none rounded-full cursor-pointer hover:bg-orange-600">
+        </Text>
+        <Button variant="primary" className="w-full mt-3">
           Buy Now
-        </button>
-      </div>
+        </Button>
+      </Card>
 
       {/* Welfare Section */}
-      <div className="p-4 mb-4 text-sm border border-yellow-300 shadow-md bg-yellow-50 rounded-3xl">
-        <h3 className="mb-2 text-base font-semibold text-gray-800">
+      <Card className="mb-4 text-sm">
+        <Text variant="h3" className="mb-2 text-gray-800">
           {product.id} Welfare
-        </h3>
-        <p className="flex justify-between my-1.5">
-          <span>Price</span>{" "}
-          <span className="font-semibold">{product.price}</span>
-        </p>
-        <p className="flex justify-between my-1.5">
-          <span>Revenue Duration</span>{" "}
-          <span className="font-semibold">{product.revenue}</span>
-        </p>
-        <p className="flex justify-between my-1.5">
-          <span>Daily Income</span>{" "}
-          <span className="font-semibold">{product.daily}</span>
-        </p>
-        <p className="flex justify-between my-1.5">
-          <span>Need Level</span> <span className="font-semibold">VIP1</span>
-        </p>
-        <p className="flex justify-between my-1.5">
-          <span>Total Income</span>{" "}
-          <span className="font-semibold">{product.total}</span>
-        </p>
-      </div>
+        </Text>
+        <div className="flex justify-between my-1.5">
+          <span>Price</span>
+          <Text variant="sm" className="font-semibold">
+            {product.price}
+          </Text>
+        </div>
+        <div className="flex justify-between my-1.5">
+          <span>Revenue Duration</span>
+          <Text variant="sm" className="font-semibold">
+            {product.revenue}
+          </Text>
+        </div>
+        <div className="flex justify-between my-1.5">
+          <span>Daily Income</span>
+          <Text variant="sm" className="font-semibold">
+            {product.daily}
+          </Text>
+        </div>
+        <div className="flex justify-between my-1.5">
+          <span>Need Level</span>
+          <Text variant="sm" className="font-semibold">
+            VIP1
+          </Text>
+        </div>
+        <div className="flex justify-between my-1.5">
+          <span>Total Income</span>
+          <Text variant="sm" className="font-semibold">
+            {product.total}
+          </Text>
+        </div>
+      </Card>
 
       {/* Daily Fund Section */}
-      <div className="p-4 text-sm border border-yellow-300 shadow-md bg-yellow-50 rounded-3xl">
-        <h3 className="mb-2 text-base font-semibold text-gray-800">
+      <Card className="text-sm">
+        <Text variant="h3" className="mb-2 text-gray-800">
           Daily Fund
-        </h3>
-        <p className="my-1.5">
+        </Text>
+        <Text variant="sm" className="my-1.5">
           The investment amount of this product is as low as{" "}
           <span className="font-semibold">{product.price}</span>
-        </p>
-        <p className="my-1.5">
+        </Text>
+        <Text variant="sm" className="my-1.5">
           Period = <span className="font-semibold">{product.revenue}</span>
-        </p>
-        <p className="my-1.5">
+        </Text>
+        <Text variant="sm" className="my-1.5">
           Total Income Obtained ={" "}
           <span className="font-semibold">{product.total}</span>
-        </p>
-      </div>
+        </Text>
+      </Card>
     </div>
   );
 };

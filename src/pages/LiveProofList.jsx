@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { PageHeader, Card, Text, Badge } from "../components";
 
 // Helper function to generate a random number within a range
 const getRandomAmount = () =>
@@ -162,15 +163,15 @@ const LiveProofList = () => {
   }, [proofs.length]); // Rerun if the number of proofs changes
 
   return (
-    <div className="w-full bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-5 mb-6">
-      <h2 className="text-lg font-bold text-gray-900 mb-4">
+    <Card className="w-full bg-gradient-to-br from-yellow-50 to-yellow-100 mb-6">
+      <Text variant="h3" className="text-gray-900 mb-4">
         <span role="img" aria-label="money-with-wings">
           💸
         </span>{" "}
         Live Withdrawal Proofs
-      </h2>
+      </Text>
 
-      {/* The scrollable container: using ref and overflow:hidden for ticker effect */}
+      {/* The scrollable container */}
       <div
         ref={listRef}
         className="max-h-56 overflow-hidden bg-white rounded-xl border border-yellow-200"
@@ -186,22 +187,27 @@ const LiveProofList = () => {
                 👤
               </span>
               <div>
-                <div className="font-semibold text-gray-900 text-sm">
+                <Text variant="sm" className="font-semibold text-gray-900">
                   {proof.name}
-                </div>
-                <div className="text-xs text-gray-500">{proof.time}</div>
+                </Text>
+                <Text variant="sm" className="text-xs text-gray-500">
+                  {proof.time}
+                </Text>
               </div>
             </div>
-            <div className="text-sm font-bold text-green-600">
+            <Text variant="sm" className="font-bold text-green-600">
               ₹{proof.amount} ✓
-            </div>
+            </Text>
           </div>
         ))}
       </div>
-      <p className="text-center text-xs text-gray-500 italic mt-3">
+      <Text
+        variant="sm"
+        className="text-center text-xs text-gray-500 italic mt-3"
+      >
         Hover over the list to pause scrolling.
-      </p>
-    </div>
+      </Text>
+    </Card>
   );
 };
 

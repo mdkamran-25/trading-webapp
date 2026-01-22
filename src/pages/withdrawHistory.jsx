@@ -1,6 +1,7 @@
 import React from "react";
-import { Clock, CheckCircle, XCircle, Copy, ArrowLeft } from "lucide-react";
+import { Clock, CheckCircle, XCircle, Copy } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { PageHeader, Card, Text, Badge } from "../components";
 
 // --- END MOCKS ---
 
@@ -70,32 +71,38 @@ const WithdrawalItem = ({ record }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-2xl shadow-md border-l-4 border-orange-500 hover:shadow-lg hover:-translate-y-0.5 transition">
+    <Card className="border-l-4 border-orange-500 hover:shadow-lg transition">
       <div className="flex justify-between items-start pb-3 border-b border-dashed border-gray-200 mb-3">
         {/* Amount */}
-        <div className="text-2xl font-bold text-gray-900">
+        <Text variant="h2" className="text-gray-900">
           ₹{record.amount.toLocaleString("en-IN")}
-        </div>
+        </Text>
 
-        {/* Status Badge - uses capitalized status for the class names */}
-        <div
-          className={`px-3 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1 uppercase ${getStatusColors(record.status)}`}
+        {/* Status Badge */}
+        <Badge
+          variant={
+            record.status === "approved"
+              ? "success"
+              : record.status === "rejected"
+                ? "error"
+                : "warning"
+          }
         >
-          {getStatusIcon(record.status)} {statusDisplay}
-        </div>
+          {statusDisplay}
+        </Badge>
       </div>
 
       {/* Date Row */}
       <div className="flex justify-between text-sm text-gray-600 mb-2">
-        <span>Create Date:</span>
-        <span className="text-gray-900 font-medium">
+        <Text variant="sm">Create Date:</Text>
+        <Text variant="sm" className="text-gray-900 font-medium">
           {formatDate(record.timestamp)}
-        </span>
+        </Text>
       </div>
 
-      {/* Reference Number Row with Copy Button (using mock refId now) */}
+      {/* Reference Number Row with Copy Button */}
       <div className="flex justify-between items-center text-sm text-gray-600">
-        <span>Transection ID:</span>
+        <Text variant="sm">Transection ID:</Text>
         <div className="flex items-center gap-2">
           <span className="text-gray-900 font-semibold font-mono">
             {record._id.slice(0, 5)}...
@@ -109,7 +116,7 @@ const WithdrawalItem = ({ record }) => {
           </button>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
@@ -119,32 +126,24 @@ const WithdrawalHistory = () => {
   const location = useLocation();
   const data = location.state.data || [];
   console.log(data);
-  //   const Recharge = location.type || {};
   const totalAmount = location.state.totalAmount ?? 0;
-  // The component expects the header type to be present on location object (mocked above)
   const type = "Withdraw History";
 
   return (
     <div className="w-full min-h-screen bg-gray-100 flex flex-col">
       {/* Header */}
-      <div className="w-full bg-white border-b border-gray-300 sticky top-0 z-10 p-4">
-        {/* Back Button */}
-        <button
-          className="hover:bg-gray-200 rounded-lg p-2 transition mb-3"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft className="w-5 h-5 text-gray-900" />
-        </button>
-        <div className="flex-1 text-center mr-10">
-          <h2 className="text-xl font-bold text-gray-900 mb-1">{type}</h2>
-          <p className="text-sm text-gray-600">
-            Total Amount:
-            <span className="text-orange-600 font-bold ml-1">
-              ₹{totalAmount}
-            </span>
-          </p>
-        </div>
+      <PageHeader title={type} onBack={() => navigate(-1)} />
+
+      {/* Total Amount */}
+      <div className="bg-white border-b border-gray-300 p-4">
+        <Text variant="sm" className="text-gray-600">
+          Total Amount:
+        </Text>
+        <Text variant="h3" className="text-orange-600 font-bold">
+          ₹{totalAmount}
+        </Text>
       </div>
+
       {/* List of Records */}
       <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-gray-100">
         {data.length > 0 ? (
@@ -152,9 +151,12 @@ const WithdrawalHistory = () => {
             <WithdrawalItem key={index} record={record} />
           ))
         ) : (
-          <p className="text-center text-gray-400 italic py-8">
+          <Text
+            variant="body"
+            className="text-center text-gray-400 italic py-8"
+          >
             No withdrawal records found.
-          </p>
+          </Text>
         )}
       </div>
     </div>

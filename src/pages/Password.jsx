@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { API_BASE_URL, SECRET_KEY, sendOtp } from "../api";
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
 import pako from "pako";
+import { Card, Input, Button, Text, Label } from "../components";
 function Password() {
   const navigate = useNavigate();
   const [phone, setPhone] = useState("");
@@ -128,66 +128,59 @@ function Password() {
 
   return (
     <div className="w-full max-w-md mx-auto min-h-screen bg-gradient-to-br from-white via-yellow-50 to-yellow-100 p-5">
-      <form
-        className="bg-white rounded-2xl p-5 shadow-lg animate-fadeIn space-y-3.5"
-        onSubmit={handleSubmit}
-      >
+      <Card className="p-5 animate-fadeIn space-y-3.5">
         {!otpSent && (
           <>
-            <label className="block text-sm font-medium text-purple-900 mb-2">
-              Phone Number
-            </label>
-            <input
+            <Label htmlFor="phone">Phone Number</Label>
+            <Input
+              id="phone"
               type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Enter phone number"
-              className="w-full px-3 py-2.5 border-2 border-gray-300 rounded-2xl text-sm outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200 transition"
             />
-            <button
+            <Button
               type="button"
               onClick={handleSendOtp}
-              className="w-full bg-gradient-to-r from-yellow-400 to-amber-400 text-gray-800 font-bold py-2.5 rounded-2xl hover:shadow-lg transition-all mt-2"
+              variant="primary"
+              className="w-full mt-2"
             >
               Send OTP
-            </button>
+            </Button>
           </>
         )}
 
         {otpSent && !otpVerified && (
           <>
-            <label className="block text-sm font-medium text-purple-900 mb-2">
-              Enter OTP
-            </label>
-            <input
+            <Label htmlFor="otp">Enter OTP</Label>
+            <Input
+              id="otp"
               type="tel"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               placeholder="Enter OTP"
-              className="w-full px-3 py-2.5 border-2 border-gray-300 rounded-2xl text-sm outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200 transition"
             />
-            <button
+            <Button
               type="button"
               onClick={handleVerifyOtp}
-              className="w-full bg-gradient-to-r from-yellow-400 to-amber-400 text-gray-800 font-bold py-2.5 rounded-2xl hover:shadow-lg transition-all mt-2"
+              variant="primary"
+              className="w-full mt-2"
             >
               Verify OTP
-            </button>
+            </Button>
           </>
         )}
 
         {otpVerified && (
           <>
-            <label className="block text-sm font-medium text-purple-900 mb-2">
-              New Password
-            </label>
+            <Label htmlFor="password">New Password</Label>
             <div className="relative">
-              <input
+              <Input
+                id="password"
                 type={showNew ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Enter new password"
-                className="w-full px-3 py-2.5 border-2 border-gray-300 rounded-2xl text-sm outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200 transition"
               />
               <button
                 type="button"
@@ -197,15 +190,17 @@ function Password() {
                 {showNew ? "👁" : "👁‍🗨"}
               </button>
             </div>
-            <button
+            <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-yellow-400 to-amber-400 text-gray-800 font-bold py-2.5 rounded-2xl hover:shadow-lg transition-all mt-2"
+              onClick={handleSubmit}
+              variant="primary"
+              className="w-full mt-2"
             >
               Update Password
-            </button>
+            </Button>
           </>
         )}
-      </form>
+      </Card>
     </div>
   );
 }

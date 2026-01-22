@@ -1,10 +1,11 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { ChevronLeft, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import pako from "pako";
 import { API_BASE_URL2, BuyProduct, getUserInfo, SECRET_KEY } from "../api";
+import { PageHeader, Card, Text, Button, Badge, Input } from "../components";
 
 const encryptedUser = Cookies.get("tredingWebUser");
 
@@ -92,24 +93,24 @@ const BuyCard = ({
   };
 
   return (
-    <div className="p-5 bg-white border border-gray-200 shadow-lg rounded-2xl">
-      <h3 className="mb-1 text-sm font-medium text-gray-500">Price</h3>
-      <p className="mb-4 text-3xl font-bold text-orange-500">
+    <Card className="bg-white border border-gray-200 shadow-lg">
+      <Text variant="sm" className="mb-1 text-gray-500">
+        Price
+      </Text>
+      <Text variant="h2" className="mb-4 text-orange-500">
         ₹{newPrice.toFixed(2)}
-      </p>
+      </Text>
 
       <div className="flex flex-col gap-4 pt-2 mb-6 border-t border-gray-200 md:flex-row">
         <div className="flex-1 pr-4">
-          <label className="block mb-1 text-sm font-medium text-gray-500">
+          <Text variant="sm" className="mb-1 font-medium text-gray-500">
             Buy Share
-          </label>
+          </Text>
           <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-gray-800">
+            <Text variant="body" className="text-lg font-bold text-gray-800">
               {shareCount}
-            </span>
-            <span className="inline-block px-2 py-1 text-xs font-semibold text-white bg-orange-500 rounded">
-              {minShare}
-            </span>
+            </Text>
+            <Badge variant="secondary">{minShare}</Badge>
           </div>
           <input
             type="range"
@@ -127,28 +128,31 @@ const BuyCard = ({
         </div>
 
         <div className="text-right">
-          <p className="text-sm text-gray-500">
+          <Text variant="sm" className="text-gray-500">
             {product.cycleType === "hour" ? "Hourly Income" : "Daily Income"}
-          </p>
-          <p className="text-xl font-bold text-green-600">
+          </Text>
+          <Text variant="h3" className="text-green-600">
             ₹{totalDailyIncome.toFixed(1)}
-          </p>
+          </Text>
         </div>
       </div>
 
       <div className="flex flex-col items-start justify-between gap-4 mt-6 md:flex-row md:items-center">
-        <p className="text-lg font-medium text-gray-600">
-          Total Income{" "}
-          <span className="block text-2xl font-bold text-gray-800 md:inline">
+        <div>
+          <Text variant="body" className="text-gray-600">
+            Total Income
+          </Text>
+          <Text variant="h2" className="text-gray-800">
             ₹{totalMoney}
-          </span>
-        </p>
-        <button
+          </Text>
+        </div>
+        <Button
+          variant="primary"
           onClick={() => handleBuy(shareCount, product, newPrice)}
-          className="w-full px-6 py-3 font-bold text-white transition-colors bg-orange-500 shadow-lg md:w-auto rounded-xl hover:bg-orange-600"
+          className="w-full px-6 py-3 md:w-auto"
         >
           Buy Now
-        </button>
+        </Button>
       </div>
 
       {popup.visible && (
@@ -162,7 +166,7 @@ const BuyCard = ({
           {popup.message}
         </div>
       )}
-    </div>
+    </Card>
   );
 };
 
@@ -177,10 +181,10 @@ const DetailCards = ({
   isdailyClaim,
 }) => (
   <div className="space-y-6">
-    <div className="p-5 bg-white border border-gray-200 shadow-lg rounded-2xl">
-      <h2 className="pl-3 mb-4 text-xl font-bold text-gray-800 border-l-4 border-orange-500">
+    <Card className="bg-white border-r-2 border-t-2 border-b-2 border-r-gray-200 border-t-gray-200 border-b-gray-200 shadow-lg border-l-4 border-l-orange-500">
+      <Text variant="h2" className="mb-4 text-gray-800">
         Buy and upgrade vip1
-      </h2>
+      </Text>
       <div className="space-y-3 text-gray-700">
         <DetailRow
           label="Is Daily Claim Product"
@@ -217,14 +221,18 @@ const DetailCards = ({
           valueClassName="text-gray-800 font-bold text-lg"
         />
       </div>
-    </div>
+    </Card>
   </div>
 );
 
 const DetailRow = ({ label, value, valueClassName = "text-gray-700" }) => (
   <div className="flex items-center justify-between text-base">
-    <span className="text-gray-600">{label}</span>
-    <span className={valueClassName}>{value}</span>
+    <Text variant="body" className="text-gray-600">
+      {label}
+    </Text>
+    <Text variant="body" className={valueClassName}>
+      {value}
+    </Text>
   </div>
 );
 
@@ -297,23 +305,19 @@ export default function ProductInfo() {
 
   return (
     <div className="w-full max-w-md min-h-screen mx-auto overflow-y-auto font-sans bg-gray-50">
-      <header className="sticky top-0 z-10 w-full bg-white shadow-md">
-        <div className="flex items-center justify-between p-4 mx-auto">
-          <ChevronLeft
-            className="w-6 h-6 text-gray-800 transition cursor-pointer hover:text-gray-600"
-            onClick={() => navigate(-1)}
-          />
-          <h1 className="flex-1 text-xl font-semibold text-center text-gray-800">
-            Buy Product
-          </h1>
-          <span className="text-sm text-gray-600">
-            Balance{" "}
-            <h3 className="inline ml-1 font-bold text-gray-800">
-              {balance ?? 0}
-            </h3>
-          </span>
-        </div>
-      </header>
+      {/* Header */}
+      <PageHeader title="Buy Product" onBack={() => navigate(-1)}>
+        <Text variant="sm" className="text-gray-600">
+          Balance{" "}
+          <Text
+            as="span"
+            variant="body"
+            className="ml-1 font-bold text-gray-800"
+          >
+            {balance ?? 0}
+          </Text>
+        </Text>
+      </PageHeader>
 
       <main className="p-4 mx-auto">
         <div className="p-2 mb-6 bg-white shadow-2xl rounded-2xl">
@@ -352,8 +356,10 @@ export default function ProductInfo() {
           isdailyClaim={product.isdailyClaim === true ? "Yes" : "No"}
         />
 
-        <div className="p-5 bg-white border border-gray-200 shadow-lg rounded-2xl">
-          <h3 className="mb-3 text-lg font-bold text-gray-800">Explain</h3>
+        <Card className="bg-white border border-gray-200 shadow-lg">
+          <Text variant="h3" className="mb-3 text-gray-800">
+            Explain
+          </Text>
           <ol className="space-y-2 text-gray-700 list-decimal list-inside">
             {explanations.map((item, i) => (
               <li key={i} className="text-sm">
@@ -361,7 +367,7 @@ export default function ProductInfo() {
               </li>
             ))}
           </ol>
-        </div>
+        </Card>
 
         <div className="h-10"></div>
       </main>

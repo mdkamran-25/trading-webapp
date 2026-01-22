@@ -1,12 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, X } from "lucide-react";
+import { X } from "lucide-react";
 
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import { getUserInfo, SECRET_KEY, sendClaim } from "../api";
 import pako from "pako";
+import {
+  PageHeader,
+  Card,
+  Button,
+  Text,
+  Badge,
+  TabButton,
+} from "../components";
 export default function Orders() {
   const isApiLocked = useRef(false);
   const [filter, setFilter] = useState("all");
@@ -218,55 +226,26 @@ export default function Orders() {
   //   };
   return (
     <div className="w-full max-w-md mx-auto min-h-screen bg-gradient-to-br from-white via-yellow-50 to-yellow-100 animate-bgFlow overflow-y-auto overflow-x-hidden pb-12">
-      {/* Header */}
-      <div className="flex items-center justify-center bg-orange-400 p-4 rounded-lg m-5 relative">
-        <button
-          className="absolute left-4 p-2 hover:bg-orange-500 rounded transition-colors"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft color="black" size={20} />
-        </button>
-        <h1 className="text-xl font-bold text-black">My Order</h1>
-      </div>
+      <PageHeader title="My Order" onBack={() => navigate(-1)} />
 
       {/* Tabs */}
       <div className="flex justify-center gap-2 mt-6 mb-6 w-full px-4">
-        <button
-          onClick={() => setFilter("all")}
-          className={`px-11 py-2.5 border-2 border-orange-400 rounded-full font-semibold transition-all ${
-            filter === "all"
-              ? "bg-yellow-300 text-white"
-              : "bg-transparent text-yellow-300 hover:bg-yellow-100"
-          }`}
-        >
-          All
-        </button>
-        <button
-          onClick={() => setFilter("day")}
-          className={`px-11 py-2.5 border-2 border-orange-400 rounded-full font-semibold transition-all ${
-            filter === "day"
-              ? "bg-yellow-300 text-white"
-              : "bg-transparent text-yellow-300 hover:bg-yellow-100"
-          }`}
-        >
-          Day
-        </button>
-        <button
-          onClick={() => setFilter("hour")}
-          className={`px-11 py-2.5 border-2 border-orange-400 rounded-full font-semibold transition-all ${
-            filter === "hour"
-              ? "bg-yellow-300 text-white"
-              : "bg-transparent text-yellow-300 hover:bg-yellow-100"
-          }`}
-        >
-          Hour
-        </button>
+        {["all", "day", "hour"].map((tab) => (
+          <TabButton
+            key={tab}
+            label={tab.charAt(0).toUpperCase() + tab.slice(1)}
+            isActive={filter === tab}
+            onClick={() => setFilter(tab)}
+          />
+        ))}
       </div>
 
       {/* Orders List */}
       <div className="flex flex-col gap-5 w-full px-4 mb-11">
         {filteredOrders.length === 0 ? (
-          <p className="text-center text-gray-600 mt-10">No orders found.</p>
+          <Text variant="body" className="text-center text-gray-600 mt-10">
+            No orders found.
+          </Text>
         ) : (
           filteredOrders.map((order, index) => {
             const totalCycles = Number(order.cycleValue);
@@ -285,122 +264,143 @@ export default function Orders() {
             return (
               <motion.div
                 key={index}
-                className="bg-white rounded-2xl p-5 border border-orange-400 shadow-lg hover:shadow-xl transition-all"
                 initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="mb-3">
-                  <b className="text-sm text-purple-900">{order.productName}</b>
-                </div>
+                <Card
+                  variant="default"
+                  padding="lg"
+                  className="border border-orange-400"
+                >
+                  <Text variant="sm" className="text-purple-900 font-bold mb-3">
+                    {order.productName}
+                  </Text>
 
-                <div className="flex items-center justify-between gap-2.5 mb-4 flex-wrap">
-                  <button
-                    className={`px-2.5 py-1.5 rounded-2xl text-xs font-semibold text-white transition-colors ${
-                      claimableCount === totalCycles
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-green-500 hover:bg-green-600"
-                    }`}
-                  >
-                    {claimableCount === totalCycles ? "Expired" : "Active"}
-                  </button>
+                  <div className="flex items-center justify-between gap-2.5 mb-4 flex-wrap">
+                    <Badge
+                      variant={
+                        claimableCount === totalCycles ? "warning" : "success"
+                      }
+                      className="text-xs"
+                    >
+                      {claimableCount === totalCycles ? "Expired" : "Active"}
+                    </Badge>
 
-                  <button
-                    className={`px-2.5 py-1.5 rounded-2xl text-xs font-semibold text-white transition-colors ${
-                      claimaCount === totalCycles
-                        ? "hidden"
-                        : "bg-orange-400 hover:bg-orange-500"
-                    }`}
-                    onClick={() => setModalOrder(order)}
-                    disabled={claimaCount === totalCycles}
-                  >
-                    Records Info ({claimableCount}/{totalCycles})
-                  </button>
+                    <Button
+                      variant={
+                        claimaCount === totalCycles ? "secondary" : "primary"
+                      }
+                      onClick={() => setModalOrder(order)}
+                      disabled={claimaCount === totalCycles}
+                      className="text-xs"
+                    >
+                      Records Info ({claimableCount}/{totalCycles})
+                    </Button>
 
-                  <button
-                    className={`px-2.5 py-1.5 rounded-2xl text-xs font-semibold text-white transition-colors ${
-                      (order.claim === "waiting" &&
-                        claimableCount === totalCycles) ||
-                      order.exp
-                        ? "bg-black hover:bg-gray-800"
-                        : "bg-gray-400 cursor-not-allowed"
-                    }`}
-                    disabled={
-                      (order.claim === "claimed" &&
-                        claimableCount === totalCycles) ||
-                      order.exp
-                    }
-                    onClick={() => handleClaim(order.purchaseId, -1, 0, true)}
-                  >
-                    {order.claim === "claimed" ? (
-                      <>Claimed ✅</>
-                    ) : order.claim === "waiting" &&
-                      claimableCount === totalCycles ? (
-                      <>
-                        Claim ₹
-                        {(
-                          order.cycleValue *
-                          order.dailyIncome *
-                          order.quantity
-                        ).toFixed(2)}{" "}
-                        ({claimableCount}/{totalCycles})
-                      </>
-                    ) : (
-                      <>
-                        Claim Locked ₹
-                        {(
-                          order.cycleValue *
-                          order.dailyIncome *
-                          order.quantity
-                        ).toFixed(2)}
-                        ({claimableCount}/{totalCycles})
-                      </>
-                    )}
-                  </button>
-                </div>
+                    <Button
+                      variant={
+                        (order.claim === "waiting" &&
+                          claimableCount === totalCycles) ||
+                        order.exp
+                          ? "primary"
+                          : "secondary"
+                      }
+                      disabled={
+                        (order.claim === "claimed" &&
+                          claimableCount === totalCycles) ||
+                        order.exp
+                      }
+                      onClick={() => handleClaim(order.purchaseId, -1, 0, true)}
+                      className="text-xs"
+                    >
+                      {order.claim === "claimed" ? (
+                        <>Claimed ✅</>
+                      ) : order.claim === "waiting" &&
+                        claimableCount === totalCycles ? (
+                        <>
+                          Claim ₹
+                          {(
+                            order.cycleValue *
+                            order.dailyIncome *
+                            order.quantity
+                          ).toFixed(2)}{" "}
+                          ({claimableCount}/{totalCycles})
+                        </>
+                      ) : (
+                        <>
+                          Claim Locked ₹
+                          {(
+                            order.cycleValue *
+                            order.dailyIncome *
+                            order.quantity
+                          ).toFixed(2)}
+                          ({claimableCount}/{totalCycles})
+                        </>
+                      )}
+                    </Button>
+                  </div>
 
-                <div className="bg-white rounded-lg p-4 shadow-sm space-y-2">
-                  <div className="flex justify-between py-1.5 border-b border-gray-200">
-                    <span className="font-semibold text-gray-700">
-                      Buy Share
-                    </span>
-                    <span className="text-blue-500 font-medium">
-                      {order.quantity}
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-1.5 border-b border-gray-200">
-                    <span className="font-semibold text-gray-700">Cycle</span>
-                    <span className="text-blue-500 font-medium">
-                      {order.cycleValue} {order.cycleType}
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-1.5 border-b border-gray-200">
-                    <span className="font-semibold text-gray-700">
-                      {order.cycleType === "hour"
-                        ? "Hourly Income"
-                        : "Daily Income"}
-                    </span>
-                    <span className="text-blue-500 font-medium">
-                      ₹{order.dailyIncome}
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-1.5 border-b border-gray-200">
-                    <span className="font-semibold text-gray-700">
-                      Item Price
-                    </span>
-                    <span className="text-blue-500 font-medium">
-                      ₹{(order.TotalAmount / order.quantity).toFixed(2)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-1.5">
-                    <span className="font-semibold text-gray-700">
-                      Total Amount
-                    </span>
-                    <span className="text-blue-500 font-medium">
-                      ₹{order.TotalAmount}
-                    </span>
-                  </div>
-                </div>
+                  <Card variant="flat" padding="md" className="space-y-2">
+                    <div className="flex justify-between py-1.5 border-b border-gray-200">
+                      <Text
+                        variant="sm"
+                        className="font-semibold text-gray-700"
+                      >
+                        Buy Share
+                      </Text>
+                      <Text variant="sm" className="text-blue-500 font-medium">
+                        {order.quantity}
+                      </Text>
+                    </div>
+                    <div className="flex justify-between py-1.5 border-b border-gray-200">
+                      <Text
+                        variant="sm"
+                        className="font-semibold text-gray-700"
+                      >
+                        Cycle
+                      </Text>
+                      <Text variant="sm" className="text-blue-500 font-medium">
+                        {order.cycleValue} {order.cycleType}
+                      </Text>
+                    </div>
+                    <div className="flex justify-between py-1.5 border-b border-gray-200">
+                      <Text
+                        variant="sm"
+                        className="font-semibold text-gray-700"
+                      >
+                        {order.cycleType === "hour"
+                          ? "Hourly Income"
+                          : "Daily Income"}
+                      </Text>
+                      <Text variant="sm" className="text-blue-500 font-medium">
+                        ₹{order.dailyIncome}
+                      </Text>
+                    </div>
+                    <div className="flex justify-between py-1.5 border-b border-gray-200">
+                      <Text
+                        variant="sm"
+                        className="font-semibold text-gray-700"
+                      >
+                        Item Price
+                      </Text>
+                      <Text variant="sm" className="text-blue-500 font-medium">
+                        ₹{(order.TotalAmount / order.quantity).toFixed(2)}
+                      </Text>
+                    </div>
+                    <div className="flex justify-between py-1.5">
+                      <Text
+                        variant="sm"
+                        className="font-semibold text-gray-700"
+                      >
+                        Total Amount
+                      </Text>
+                      <Text variant="sm" className="text-blue-500 font-medium">
+                        ₹{order.TotalAmount}
+                      </Text>
+                    </div>
+                  </Card>
+                </Card>
               </motion.div>
             );
           })
@@ -431,9 +431,12 @@ export default function Orders() {
             exit={{ scale: 0.8, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-lg font-bold text-purple-900 mb-4 text-center">
+            <Text
+              variant="h3"
+              className="text-purple-900 mb-4 text-center font-bold"
+            >
               {modalOrder.productName} - Claim List
-            </h3>
+            </Text>
 
             <ul className="space-y-2.5">
               {Array.from({ length: Number(modalOrder.cycleValue) }).map(
@@ -455,18 +458,18 @@ export default function Orders() {
                           : "border-red-400 bg-red-50 opacity-80"
                       }`}
                     >
-                      <span className="font-medium text-gray-800">
+                      <Text variant="sm" className="font-medium text-gray-800">
                         {modalOrder.cycleType === "hour"
                           ? `Hour ${i + 1}`
                           : `Day ${i + 1}`}
-                      </span>
-                      <span className="text-sm font-medium text-gray-700">
+                      </Text>
+                      <Text variant="sm" className="text-gray-700">
                         ₹{incomePerCycle.toFixed(2)} -{" "}
                         {renderTimeLeft(modalOrder, i) ===
                           "Time Slot Completed" && !isAvailable
                           ? "Time Slot Completed ✅"
                           : renderTimeLeft(modalOrder, i)}
-                      </span>
+                      </Text>
                     </li>
                   );
                 },

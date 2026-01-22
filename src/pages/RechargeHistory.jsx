@@ -1,6 +1,7 @@
 import React from "react";
-import { Clock, CheckCircle, XCircle, Copy, ArrowLeft } from "lucide-react";
+import { Clock, CheckCircle, XCircle, Copy } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { PageHeader, Card, Text, Button } from "../components";
 
 // Utility function for copying text (standard practice in these projects)
 const copyToClipboard = (text) => {
@@ -62,34 +63,36 @@ const RechargeItem = ({ record }) => {
   const statusInfo = getStatusInfo(record.approved);
 
   return (
-    <div className="flex flex-col gap-2 p-4 bg-white border-l-4 border-orange-400 rounded-lg shadow-sm">
+    <Card className="flex flex-col gap-2 p-4 border-l-4 border-orange-400">
       <div className="flex items-start justify-between pb-2 border-b border-gray-200 border-dashed">
         {/* Amount */}
-        <div className="text-2xl font-bold text-gray-800">
+        <Text variant="h2" className="text-gray-800">
           ₹{record.amount.toLocaleString("en-IN")}
-        </div>
+        </Text>
 
         {/* Status Badge */}
-        <div
+        <button
           className={`${statusInfo.bg} text-white font-bold px-3 py-1 rounded-full text-xs uppercase flex items-center gap-1 shadow-sm`}
         >
           {statusInfo.icon} {record.approved}
-        </div>
+        </button>
       </div>
 
       {/* Date Row */}
       <div className="flex justify-between text-sm text-gray-600">
         <span>Date:</span>
-        <span className="font-medium text-gray-800">
+        <Text variant="sm" className="font-medium text-gray-800">
           {formatDate(record.date)}
-        </span>
+        </Text>
       </div>
 
       {/* UTR/Reference Number Row with Copy Button */}
       <div className="flex justify-between text-sm text-gray-600">
         <span>UTR/Ref No:</span>
         <div className="flex items-center gap-2">
-          <span className="font-semibold text-gray-800">{record.utr}</span>
+          <Text variant="sm" className="font-semibold text-gray-800">
+            {record.utr}
+          </Text>
           <button
             onClick={() => copyToClipboard(record.utr)}
             className="p-1 transition-colors rounded hover:bg-orange-100"
@@ -99,7 +102,7 @@ const RechargeItem = ({ record }) => {
           </button>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
@@ -114,25 +117,19 @@ const RechargeHistory = () => {
   return (
     <div className="w-full max-w-md min-h-screen mx-auto bg-gray-50">
       {/* Header */}
-      <div className="flex items-center px-4 py-4 bg-white border-b border-gray-200">
-        {/* Back Button */}
-        <button
-          className="p-2 transition-colors rounded hover:bg-gray-100"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft className="w-5 h-5 text-gray-800" />
-        </button>
+      <PageHeader
+        title={data.type || "Recharge History"}
+        onBack={() => navigate(-1)}
+      />
 
-        {/* Title and Amount */}
-        <div className="flex-grow mr-10 text-center">
-          <h2 className="text-xl font-bold text-gray-900">{data.type}</h2>
-          <p className="mt-1 text-sm text-gray-600">
-            Total Amount:
-            <span className="ml-1 font-bold text-orange-500">
-              ₹{totalAmount.toLocaleString("en-IN")}
-            </span>
-          </p>
-        </div>
+      {/* Amount Total */}
+      <div className="px-4 py-2 text-center border-b border-gray-200">
+        <Text variant="body" className="text-gray-600">
+          Total Amount:
+          <span className="ml-1 font-bold text-orange-500">
+            ₹{totalAmount.toLocaleString("en-IN")}
+          </span>
+        </Text>
       </div>
 
       {/* List of Records */}
@@ -142,9 +139,9 @@ const RechargeHistory = () => {
             <RechargeItem key={index} record={record} />
           ))
         ) : (
-          <p className="mt-8 text-center text-gray-500">
+          <Text variant="body" className="mt-8 text-center text-gray-500">
             No recharge records found.
-          </p>
+          </Text>
         )}
       </div>
     </div>

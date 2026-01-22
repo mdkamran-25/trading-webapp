@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { PageHeader, Card, Text, Badge } from "../components";
 
 export default function OrderDetails() {
   const location = useLocation();
@@ -10,18 +10,10 @@ export default function OrderDetails() {
   if (!order) {
     return (
       <div className="max-w-md mx-auto min-h-screen bg-gradient-to-br from-white via-yellow-50 to-yellow-100 p-5">
-        <header className="flex items-center justify-center bg-amber-400 p-4 rounded-lg mb-5 relative">
-          <button
-            className="absolute left-4 p-2 hover:bg-amber-500 rounded transition-colors"
-            onClick={() => navigate(-1)}
-          >
-            <ArrowLeft color="black" size={20} />
-          </button>
-          <h1 className="text-xl font-bold text-black">Order Details</h1>
-        </header>
-        <p className="text-center mt-12 text-gray-600">
+        <PageHeader title="Order Details" onBack={() => navigate(-1)} />
+        <Text variant="body" className="text-center mt-12 text-gray-600">
           No order data available.
-        </p>
+        </Text>
       </div>
     );
   }
@@ -29,77 +21,89 @@ export default function OrderDetails() {
   return (
     <div className="max-w-md mx-auto min-h-screen bg-gradient-to-br from-white via-yellow-50 to-yellow-100 p-5">
       {/* Header */}
-      <header className="flex items-center justify-center bg-amber-400 p-4 rounded-lg mb-5 relative">
-        <button
-          className="absolute left-4 p-2 hover:bg-amber-500 rounded transition-colors"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft color="black" size={20} />
-        </button>
-        <h1 className="text-xl font-bold text-black">{order.title}</h1>
-      </header>
+      <PageHeader title={order.title} onBack={() => navigate(-1)} />
 
       {/* Order Summary */}
-      <div className="bg-white rounded-2xl p-5 shadow-md mb-5">
+      <Card className="mb-5">
         <div className="flex justify-between py-2 border-b border-gray-200">
-          <span className="font-semibold text-black">Buy Share:</span>
-          <span className="text-amber-500 font-medium">{order.buyShare}</span>
+          <Text variant="body" className="font-semibold text-black">
+            Buy Share:
+          </Text>
+          <Text variant="body" className="text-amber-500 font-medium">
+            {order.buyShare}
+          </Text>
         </div>
         <div className="flex justify-between py-2 border-b border-gray-200">
-          <span className="font-semibold text-black">Days:</span>
-          <span className="text-amber-500 font-medium">{order.days}</span>
+          <Text variant="body" className="font-semibold text-black">
+            Days:
+          </Text>
+          <Text variant="body" className="text-amber-500 font-medium">
+            {order.days}
+          </Text>
         </div>
         <div className="flex justify-between py-2 border-b border-gray-200">
-          <span className="font-semibold text-black">Daily Income:</span>
-          <span className="text-amber-500 font-medium">
+          <Text variant="body" className="font-semibold text-black">
+            Daily Income:
+          </Text>
+          <Text variant="body" className="text-amber-500 font-medium">
             {order.dailyIncome}
-          </span>
+          </Text>
         </div>
         <div className="flex justify-between py-2 border-b border-gray-200">
-          <span className="font-semibold text-black">Total Income:</span>
-          <span className="text-amber-500 font-medium">
+          <Text variant="body" className="font-semibold text-black">
+            Total Income:
+          </Text>
+          <Text variant="body" className="text-amber-500 font-medium">
             {order.totalIncome}
-          </span>
+          </Text>
         </div>
         <div className="flex justify-between py-2 border-b border-gray-200">
-          <span className="font-semibold text-black">Price:</span>
-          <span className="text-amber-500 font-medium">{order.price}</span>
+          <Text variant="body" className="font-semibold text-black">
+            Price:
+          </Text>
+          <Text variant="body" className="text-amber-500 font-medium">
+            {order.price}
+          </Text>
         </div>
         <div className="flex justify-between py-2 border-b border-gray-200">
-          <span className="font-semibold text-black">Revenue Period:</span>
-          <span className="text-amber-500 font-medium">{order.revenue}</span>
+          <Text variant="body" className="font-semibold text-black">
+            Revenue Period:
+          </Text>
+          <Text variant="body" className="text-amber-500 font-medium">
+            {order.revenue}
+          </Text>
         </div>
         <div className="flex justify-between py-2 border-b border-gray-200">
-          <span className="font-semibold text-black">Generated Income:</span>
-          <span className="text-amber-500 font-medium">
+          <Text variant="body" className="font-semibold text-black">
+            Generated Income:
+          </Text>
+          <Text variant="body" className="text-amber-500 font-medium">
             {order.generatedIncome}
-          </span>
+          </Text>
         </div>
         <div className="flex justify-between py-2 border-b border-gray-200">
-          <span className="font-semibold text-black">Estimate Income:</span>
-          <span className="text-amber-500 font-medium">
+          <Text variant="body" className="font-semibold text-black">
+            Estimate Income:
+          </Text>
+          <Text variant="body" className="text-amber-500 font-medium">
             {order.estimateIncome}
-          </span>
+          </Text>
         </div>
         <div className="flex justify-between py-2">
-          <span className="font-semibold text-black">Status:</span>
-          <span
-            className={`px-3 py-1 rounded-full text-xs font-semibold ${
-              order.status === "finish"
-                ? "bg-green-100 text-green-700 border border-green-700"
-                : "bg-yellow-100 text-amber-500 border border-amber-500"
-            }`}
-          >
+          <Text variant="body" className="font-semibold text-black">
+            Status:
+          </Text>
+          <Badge variant={order.status === "finish" ? "success" : "warning"}>
             {order.status}
-          </span>
+          </Badge>
         </div>
-      </div>
+      </Card>
 
       {/* Settlement History */}
-      <div className="bg-white rounded-2xl p-5 shadow-md">
-        <h2 className="text-lg font-bold text-black mb-3">
+      <Card>
+        <Text variant="h3" className="text-black mb-3">
           Settlement History
-        </h2>
+        </Text>
         {order.settlements && order.settlements.length > 0 ? (
           <ul className="space-y-2">
             {order.settlements.map((s, index) => (
@@ -107,15 +111,21 @@ export default function OrderDetails() {
                 key={index}
                 className="flex justify-between py-2 border-b border-gray-200"
               >
-                <span className="text-gray-600">{s.date}</span>
-                <span className="font-semibold text-amber-500">{s.amount}</span>
+                <Text variant="sm" className="text-gray-600">
+                  {s.date}
+                </Text>
+                <Text variant="sm" className="font-semibold text-amber-500">
+                  {s.amount}
+                </Text>
               </li>
             ))}
           </ul>
         ) : (
-          <p className="text-center text-gray-500">No settlements yet.</p>
+          <Text variant="sm" className="text-center text-gray-500">
+            No settlements yet.
+          </Text>
         )}
-      </div>
+      </Card>
     </div>
   );
 }

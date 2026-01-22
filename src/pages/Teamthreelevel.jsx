@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Card, Text, Button, Badge } from "../components";
 
 const TeamThreeLevel = () => {
   const navigate = useNavigate();
@@ -13,73 +14,79 @@ const TeamThreeLevel = () => {
   return (
     <div className="w-full max-w-md mx-auto min-h-screen bg-gradient-to-br from-white via-yellow-50 to-yellow-100 animate-bgFlow p-5">
       {/* Navbar */}
-      <nav className="flex justify-between items-center p-4 bg-amber-400 text-white rounded-2xl mb-6 shadow-md">
-        <div className="flex items-center gap-3">
-          <h2 className="text-lg font-semibold">Team 3 Members</h2>
-        </div>
+      <Card className="flex justify-between items-center mb-6">
+        <Text variant="h3" className="text-white">
+          Team 3 Members
+        </Text>
         <div className="flex gap-2">
-          <button
+          <Button
+            variant="secondary"
             onClick={() => navigate("/home")}
-            className="text-white hover:text-yellow-100 transition text-sm font-medium"
+            className="text-sm"
           >
             Home
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="secondary"
             onClick={() => navigate("/teams")}
-            className="text-white hover:text-yellow-100 transition text-sm font-medium"
+            className="text-sm"
           >
             Teams
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="secondary"
             onClick={() => navigate("/account")}
-            className="text-white hover:text-yellow-100 transition text-sm font-medium"
+            className="text-sm"
           >
             Account
-          </button>
+          </Button>
         </div>
-      </nav>
+      </Card>
 
       {/* Header */}
-      <header className="text-center mb-6">
-        <h3 className="text-sm font-semibold text-amber-900">
+      <div className="text-center mb-6">
+        <Text variant="body" className="font-semibold text-amber-900">
           Referral (Valid/Total): <span className="text-green-600">0/3</span>
-        </h3>
-      </header>
+        </Text>
+      </div>
 
       {/* Members List */}
-      <section className="bg-white rounded-3xl p-5 shadow-lg animate-slideUp">
-        <h2 className="text-lg font-semibold text-amber-900 mb-4 text-center">
+      <Card className="animate-slideUp">
+        <Text variant="h3" className="text-amber-900 mb-4 text-center">
           Team 3 Members List
-        </h2>
+        </Text>
         <div className="flex flex-col gap-3">
           {teamMembers.map((member, idx) => (
-            <div
+            <Card
               key={idx}
-              className={`flex justify-between items-center p-4 rounded-2xl shadow-md transition-all ${
+              variant="flat"
+              padding="md"
+              className={`flex justify-between items-center ${
                 member.status === "Active"
-                  ? "bg-gray-50 border-l-4 border-green-500"
-                  : "bg-red-50 border-l-4 border-red-400"
+                  ? "border-l-4 border-green-500"
+                  : "border-l-4 border-red-400"
               }`}
             >
               <div className="flex flex-col">
-                <p className="font-semibold text-sm text-amber-900">
+                <Text
+                  variant="body"
+                  className="font-semibold text-sm text-amber-900"
+                >
                   {member.id}
-                </p>
-                <p className="text-xs text-gray-500">{member.date}</p>
+                </Text>
+                <Text variant="sm" className="text-gray-500">
+                  {member.date}
+                </Text>
               </div>
-              <div
-                className={`px-4 py-2 rounded-full text-xs font-semibold min-w-max ${
-                  member.status === "Active"
-                    ? "bg-green-100 text-green-600 border-2 border-green-600"
-                    : "bg-red-100 text-red-600 border-2 border-red-600"
-                }`}
+              <Badge
+                variant={member.status === "Active" ? "success" : "danger"}
               >
                 {member.status}
-              </div>
-            </div>
+              </Badge>
+            </Card>
           ))}
         </div>
-      </section>
+      </Card>
 
       {/* Footer */}
       <footer className="text-center mt-8 text-xs text-gray-600">

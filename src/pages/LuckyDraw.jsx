@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { ArrowLeft } from "lucide-react";
 import {
   checkLuckySpinValidation,
   createLuckySpin,
@@ -8,6 +7,7 @@ import {
   spinItem,
 } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
+import { PageHeader, Card, Button, Text } from "../components";
 
 const mockWinnings = [];
 
@@ -192,25 +192,24 @@ const LuckyDraw = () => {
   const [winningPrizeDetails, setWinningPrizeDetails] = useState(null);
 
   const fetchData = async () => {
-  const data2 = await  getLuckySpinData(userId);
+    const data2 = await getLuckySpinData(userId);
 
-  if(data2.success
-){setWinnings( data2.luckySpin?.History)}
+    if (data2.success) {
+      setWinnings(data2.luckySpin?.History);
+    }
 
+    console.log(data2);
+    const data = await fetchLuckySpinPrizes();
 
-  console.log(data2)
-      const data = await fetchLuckySpinPrizes();
+    setPrizes(data);
+    try {
+    } catch (err) {
+      console.error("Error checking LuckySpin:", err);
+      alert(err?.message || "Something went wrong while checking spin");
+    }
+  };
 
-      setPrizes(data);
-      try {
-      } catch (err) {
-        console.error("Error checking LuckySpin:", err);
-        alert(err?.message || "Something went wrong while checking spin");
-      }
-    }; 
-    
-    useEffect(() => {
-   
+  useEffect(() => {
     fetchData();
   }, []);
   const checkSpinLimit = async () => {
@@ -233,7 +232,7 @@ const LuckyDraw = () => {
       const res = await spinItem();
       const selectedItem = await res.json();
       const newResult = prizes.findIndex(
-        (p) => p.name === selectedItem.itemName
+        (p) => p.name === selectedItem.itemName,
       );
 
       if (newResult === -1) {
@@ -249,11 +248,15 @@ const LuckyDraw = () => {
       try {
         const status = await checkSpinLimit();
         if (status) {
-          const res2 = await createLuckySpin(userId, prizes[newResult].value,prizes[newResult]);
+          const res2 = await createLuckySpin(
+            userId,
+            prizes[newResult].value,
+            prizes[newResult],
+          );
           console.log(res2);
-          if(res2?.success){
-          setWinnings(
-res2?.luckySpin?.History);}
+          if (res2?.success) {
+            setWinnings(res2?.luckySpin?.History);
+          }
         } else {
           setIsSpinning(false);
           return;
@@ -268,7 +271,6 @@ res2?.luckySpin?.History);}
       setIsSpinning(false);
       setWinningPrizeDetails(prizes[newResult]);
       setShowModal(true);
-      
     } catch (err) {
       console.error(err);
       setIsSpinning(false);
@@ -287,29 +289,11 @@ res2?.luckySpin?.History);}
       }}
     >
       <div className="header2">
-        <button className="back-btnR" onClick={() => navigate(-1)}>
-          <ArrowLeft color="black" />
-        </button>
-        <h1 className="header-title">Lucky Draw</h1>
-        <div className="spacer"></div>
+        <PageHeader title="Lucky Draw" onBack={() => navigate(-1)} />
       </div>
 
       {/* Main Container */}
-      <div
-        style={{
-          width: "90%",
-          height: "90vh",
-          backgroundColor: "white",
-          borderRadius: "1.25rem",
-          marginTop: "1.5rem",
-
-          overflow: "hidden",
-          padding: "1.5rem",
-
-          paddingTop: ".5rem",
-          boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-        }}
-      >
+      <Card className="w-11/12 mx-auto mt-6 p-6 pt-2 shadow-2xl flex flex-col h-5/6">
         {/* Slot Machine */}
         <div
           style={{
@@ -335,36 +319,24 @@ res2?.luckySpin?.History);}
         <div
           style={{ display: "flex", justifyContent: "center", width: "100%" }}
         >
-          <button
+          <Button
             onClick={startSpin}
             disabled={!IsLuckyAllow && isSpinning}
+            className="w-1/2"
             style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "50%",
               backgroundColor: isSpinning ? "#febb8cff" : "#fb9246ff",
-              color: "white",
-              borderRadius: "20px",
-              padding: "0.75rem 1rem",
-              fontWeight: "bold",
-              fontSize: "1rem",
               cursor: isSpinning ? "not-allowed" : "pointer",
-              border: "2px solid gray",
-
-              transition: "all 0.3s ease-in-out",
+              opacity: isSpinning ? 0.6 : 1,
             }}
           >
             {isSpinning ? "Spinning..." : "🎯 Start Spin"}
-          </button>
+          </Button>
         </div>
 
         {/* Rewards */}
-        <h3
-          style={{ marginTop: "2rem", textAlign: "center", fontWeight: "bold" }}
-        >
+        <Text variant="h3" className="mt-8 text-center">
           🎁 Rewards
-        </h3>
+        </Text>
         <div
           style={{
             display: "flex",
@@ -372,8 +344,7 @@ res2?.luckySpin?.History);}
             justifyContent: "center",
             gap: "1rem",
             marginTop: "1rem",
-
-            overflow: "scroll",
+            overflow: "auto",
           }}
         >
           {prizes.map((p, i) => (
@@ -400,31 +371,23 @@ res2?.luckySpin?.History);}
         </div>
 
         {/* Winning Record */}
-        <h3
-          style={{ marginTop: "2rem", textAlign: "center", fontWeight: "bold" }}
-        >
+        <Text variant="h3" className="mt-8 text-center">
           🏆 My Winning Record
-        </h3>
+        </Text>
         <div
           style={{
             marginTop: "1rem",
             maxHeight: "35vh",
             minHeight: "35vh",
-
-            overflow: "scroll",
+            overflow: "auto",
           }}
         >
           {winnings.map((win) => (
-            <div
+            <Card
               key={win.today}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "#fff8e1",
-                padding: "0.75rem",
-                borderRadius: "0.75rem",
-                marginBottom: "0.5rem",
-              }}
+              variant="flat"
+              padding="md"
+              className="mb-2 flex items-center"
             >
               <img
                 src={win.data.image}
@@ -436,29 +399,35 @@ res2?.luckySpin?.History);}
                   marginRight: "0.75rem",
                 }}
               />
-              <div>
-                <p style={{ fontWeight: "bold" }}>{win.data.name}</p>
-               <p style={{ fontSize: "0.75rem", color: "#6b7280" }}>
-  {(() => {
-    const d = new Date(win.today);
-    return `${d.getDate().toString().padStart(2, "0")}/${
-      (d.getMonth() + 1).toString().padStart(2, "0")
-    }/${d.getFullYear()} ${d.toLocaleTimeString("en-IN", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    })}`;
-  })()}
-</p>
-
-                <p style={{ color: "#d97706", fontWeight: "600" }}>
+              <div className="flex-1">
+                <Text variant="body" className="font-bold">
+                  {win.data.name}
+                </Text>
+                <Text variant="sm" className="text-gray-500">
+                  {(() => {
+                    const d = new Date(win.today);
+                    return `${d.getDate().toString().padStart(2, "0")}/${(
+                      d.getMonth() + 1
+                    )
+                      .toString()
+                      .padStart(
+                        2,
+                        "0",
+                      )}/${d.getFullYear()} ${d.toLocaleTimeString("en-IN", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}`;
+                  })()}
+                </Text>
+                <Text variant="body" className="text-orange-600 font-semibold">
                   {win.data.value}
-                </p>
+                </Text>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
-      </div>
+      </Card>
 
       {showModal && winningPrizeDetails && (
         <PrizeModal

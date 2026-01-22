@@ -15,6 +15,7 @@ import Support from "./Support";
 import pako from "pako";
 import PopupCard from "./PopupCard";
 import LiveProof from "./LiveProofList";
+import { Card, Text, Button, BottomNavigation, Badge } from "../components";
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState("Home");
@@ -223,7 +224,11 @@ const HomePage = () => {
 
       <div className="min-h-screen px-4 pt-4 pb-28 md:pt-28 md:pb-8 md:px-6 bg-gradient-to-br from-white via-purple-50/50 to-purple-100/30">
         {/* --- Wallet Card --- */}
-        <div className="relative p-5 mb-5 overflow-hidden text-white transition-all transform shadow-xl rounded-xl bg-gradient-to-br from-purple-600 to-purple-700 md:p-6">
+        <Card
+          variant="default"
+          padding="lg"
+          className="relative mb-5 overflow-hidden text-white bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl md:p-6 shadow-xl"
+        >
           {/* Image on Right */}
           <div className="absolute top-0 bottom-0 w-40 -right-8 md:-right-6 md:w-48 opacity-40 md:opacity-50">
             <img
@@ -243,83 +248,120 @@ const HomePage = () => {
                   className="object-contain w-14 h-14"
                 />
               </div>
-              <h3 className="text-2xl font-bold md:text-xl">Main Wallet</h3>
+              <Text
+                variant="h2"
+                className="text-2xl font-bold md:text-xl text-white"
+              >
+                Main Wallet
+              </Text>
             </div>
 
             <div className="grid grid-cols-2 gap-3 pr-4 mb-4 md:gap-4">
               <div>
-                <p className="font-extrabold text-md md:text-sm text-white/90">
+                <Text
+                  variant="sm"
+                  className="font-extrabold text-md md:text-sm text-white/90"
+                >
                   Your Balance
-                </p>
-                <p className="mt-1 text-xl font-bold text-white md:text-2xl">
+                </Text>
+                <Text
+                  variant="h2"
+                  className="mt-1 text-xl font-bold text-white md:text-2xl"
+                >
                   ₹{balance}
-                </p>
+                </Text>
               </div>
               <div>
-                <p className="font-extrabold text-md md:text-sm text-white/90">
+                <Text
+                  variant="sm"
+                  className="font-extrabold text-md md:text-sm text-white/90"
+                >
                   Total Profit
-                </p>
-                <p className="mt-1 text-xl font-bold text-white md:text-2xl">
+                </Text>
+                <Text
+                  variant="h2"
+                  className="mt-1 text-xl font-bold text-white md:text-2xl"
+                >
                   ₹{withdraw}
-                </p>
+                </Text>
               </div>
             </div>
 
             <div className="flex gap-3 pr-4">
-              <button
+              <Button
+                variant="primary"
                 onClick={() => navigate("/recharge")}
-                className="flex-1 px-4 py-2 text-sm font-bold text-purple-600 transition-all bg-white rounded-lg shadow-md hover:shadow-lg md:text-base"
+                className="flex-1 text-sm md:text-base"
               >
                 Recharge
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="primary"
                 onClick={() => navigate("/withdraw")}
-                className="flex-1 px-4 py-2 text-sm font-bold text-purple-600 transition-all bg-white rounded-lg shadow-md hover:shadow-lg md:text-base"
+                className="flex-1 text-sm md:text-base"
               >
                 Withdraw
-              </button>
+              </Button>
             </div>
           </div>
-        </div>
+        </Card>
 
         {/* --- Icon Grid --- */}
         <div className="grid grid-cols-1 gap-4 mb-5 md:grid-cols-2">
-          <div
-            className="p-4 text-center transition-all border shadow-md cursor-pointer bg-gradient-to-br from-white to-purple-50 md:p-6 rounded-xl border-purple-200/50 hover:shadow-lg hover:border-purple-500 "
+          <Card
+            variant="default"
+            padding="lg"
+            className="text-center cursor-pointer bg-gradient-to-br from-white to-purple-50 border border-purple-200/50 hover:border-purple-500 hover:shadow-lg transition-all"
             onClick={() => navigate("/teams")}
           >
             <Users size={28} className="mx-auto mb-2 text-purple-600" />
-            <span className="text-xs font-semibold text-gray-800 md:text-sm">
+            <Text
+              variant="sm"
+              className="text-xs font-semibold text-gray-800 md:text-sm"
+            >
               Teams
-            </span>
-          </div>
+            </Text>
+          </Card>
 
-          <div
-            className="p-4 text-center transition-all border shadow-md cursor-pointer bg-gradient-to-br from-white to-purple-50 md:p-6 rounded-xl border-purple-200/50 hover:shadow-lg hover:border-purple-500 "
+          <Card
+            variant="default"
+            padding="lg"
+            className="text-center cursor-pointer bg-gradient-to-br from-white to-purple-50 border border-purple-200/50 hover:border-purple-500 hover:shadow-lg transition-all"
             onClick={() => navigate("/orders")}
           >
             <ShoppingBag size={28} className="mx-auto mb-2 text-purple-600" />
-            <span className="text-xs font-semibold text-gray-800 md:text-sm">
+            <Text
+              variant="sm"
+              className="text-xs font-semibold text-gray-800 md:text-sm"
+            >
               Orders
-            </span>
-          </div>
+            </Text>
+          </Card>
         </div>
 
         <PopupCard />
 
         {/* --- Invitation Card --- */}
-        <div className="p-5 mb-5 transition-all bg-white border shadow-lg rounded-2xl md:p-6 border-purple-200/50 hover:shadow-xl">
+        <Card
+          variant="default"
+          padding="lg"
+          className="mb-5 border border-purple-200/50 hover:shadow-xl transition-all"
+        >
           <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <h3 className="text-lg font-bold text-gray-800 md:text-xl">
+            <Text
+              variant="h3"
+              className="text-lg font-bold text-gray-800 md:text-xl"
+            >
               🎁 Invitation
-            </h3>
-            <button
+            </Text>
+            <Button
+              variant="secondary"
               onClick={() => navigate("/teams")}
-              className="flex items-center gap-1 text-xs font-semibold text-purple-600 transition-all md:gap-2 md:text-sm hover:gap-3"
+              className="flex items-center gap-1 text-xs md:gap-2 md:text-sm hover:gap-3"
             >
               My team{" "}
               <ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />
-            </button>
+            </Button>
           </div>
 
           <div className="flex flex-wrap items-start gap-3 mb-4 md:gap-4 md:flex-nowrap">
@@ -331,53 +373,75 @@ const HomePage = () => {
               />
             </div>
             <div className="flex-1">
-              <p className="mb-2 text-xs font-medium text-gray-600 md:text-sm">
+              <Text
+                variant="sm"
+                className="mb-2 text-xs font-medium text-gray-600 md:text-sm"
+              >
                 📱 Promotional Links
-              </p>
-              <p className="text-xs font-semibold text-gray-700 bg-purple-50 p-2 md:p-3 rounded border-l-4 border-purple-500 break-all max-h-[80px] overflow-y-auto">
+              </Text>
+              <Text
+                variant="sm"
+                className="text-xs font-semibold text-gray-700 bg-purple-50 p-2 md:p-3 rounded border-l-4 border-purple-500 break-all max-h-[80px] overflow-y-auto"
+              >
                 http://realstateinvest.in/register?invitation_code=
                 {UserData.referralCode}
-              </p>
+              </Text>
             </div>
           </div>
 
-          <button
-            onClick={copyLink}
-            className="w-full px-4 py-2 text-sm font-bold text-white transition-all rounded-full shadow-md bg-gradient-to-r from-purple-600 to-purple-700 md:py-3 hover:shadow-lg hover:scale-105 md:text-base"
-          >
+          <Button variant="primary" onClick={copyLink} className="w-full">
             {copied ? "✅ Copied!" : "📋 Copy Invitation Link"}
-          </button>
-        </div>
+          </Button>
+        </Card>
 
         {/* --- Lucky Draw --- */}
-        <div className="relative p-5 mb-5 overflow-hidden text-white transition-all transform shadow-xl bg-gradient-to-br from-purple-600 to-purple-700 rounded-2xl md:p-6 hover:shadow-2xl hover:scale-105">
+        <Card
+          variant="default"
+          padding="lg"
+          className="relative mb-5 overflow-hidden text-white bg-gradient-to-br from-purple-600 to-purple-700 rounded-2xl md:p-6 shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
+        >
           <div className="relative z-10">
-            <h3 className="mb-2 text-lg font-bold md:text-xl">🎡 Lucky Draw</h3>
-            <p className="mb-4 text-xs md:text-sm text-white/90">
+            <Text variant="h3" className="mb-2 text-lg font-bold md:text-xl">
+              🎡 Lucky Draw
+            </Text>
+            <Text
+              variant="body"
+              className="mb-4 text-xs md:text-sm text-white/90"
+            >
               🎯 The lucky wheel keeps spinning with great gifts!
-            </p>
-            <button
+            </Text>
+            <Button
+              variant="primary"
               onClick={() => navigate("/luckydraw", { state: UserData?._id })}
-              className="w-full px-4 py-2 text-sm font-bold text-purple-600 transition-all bg-white rounded-full shadow-md md:py-3 hover:shadow-lg hover:scale-105 md:text-base"
+              className="w-full"
             >
               Try Your Luck →
-            </button>
+            </Button>
           </div>
-        </div>
+        </Card>
 
         <LiveProof />
 
         {/* --- Quest Rewards --- */}
-        <div className="p-5 mb-8 border shadow-lg bg-gradient-to-br from-white to-purple-50/50 rounded-2xl md:p-6 border-purple-200/50">
-          <h3 className="mb-4 text-lg font-bold text-gray-800 md:text-xl">
+        <Card
+          variant="default"
+          padding="lg"
+          className="mb-8 border border-purple-200/50 bg-gradient-to-br from-white to-purple-50/50"
+        >
+          <Text
+            variant="h3"
+            className="mb-4 text-lg font-bold text-gray-800 md:text-xl"
+          >
             🏆 Quest Rewards
-          </h3>
+          </Text>
 
           <div className="space-y-3 md:space-y-4">
             {questRewards.map((quest) => (
-              <div
+              <Card
                 key={quest.id}
-                className="flex items-center gap-3 p-3 transition-all bg-white border rounded-lg md:gap-4 md:p-4 border-purple-200/50 hover:border-purple-500 hover:shadow-md"
+                variant="default"
+                padding="md"
+                className="flex items-center gap-3 border border-purple-200/50 hover:border-purple-500 hover:shadow-md transition-all md:gap-4"
               >
                 <div className="flex-shrink-0 w-12 h-12 overflow-hidden rounded-lg md:w-14 md:h-14 bg-gradient-to-br from-purple-50 to-purple-100">
                   <img
@@ -388,9 +452,12 @@ const HomePage = () => {
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-semibold text-gray-800 truncate md:text-sm">
+                  <Text
+                    variant="sm"
+                    className="text-xs font-semibold text-gray-800 truncate md:text-sm"
+                  >
                     {quest.text}
-                  </p>
+                  </Text>
                   <div className="w-full h-1.5 md:h-2 bg-gray-200 rounded-full overflow-hidden mt-2 border border-purple-200/50">
                     <div
                       className="h-full transition-all duration-300 rounded-full bg-gradient-to-r from-purple-600 to-purple-700"
@@ -402,17 +469,23 @@ const HomePage = () => {
                 </div>
 
                 <div className="flex-shrink-0 text-right">
-                  <p className="text-xs font-bold text-purple-600 md:text-sm">
+                  <Text
+                    variant="sm"
+                    className="text-xs font-bold text-purple-600 md:text-sm"
+                  >
                     💰{quest.reward}
-                  </p>
-                  <p className="text-xs font-medium text-gray-500">
+                  </Text>
+                  <Text
+                    variant="sm"
+                    className="text-xs font-medium text-gray-500"
+                  >
                     {TeamSize}/{quest.progress.total}
-                  </p>
+                  </Text>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
-        </div>
+        </Card>
       </div>
 
       <Support />

@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MessageCircle } from "lucide-react";
 import { getSocialLinks } from "../api";
+import { Card, Text } from "../components";
 
-// ✅ Telegram logo (from Icons8)
 const TELEGRAM_ICON_URL =
   "https://img.icons8.com/color/48/telegram-app--v1.png";
-
-// ✅ Support icon (custom or fallback)
 const SUPPORT_ICON_URL =
   "https://img.icons8.com/?size=100&id=RntMFwIniVlj&format=png&color=000000";
 
@@ -73,15 +71,15 @@ const Support = () => {
         <div className="flex items-center justify-center">
           <SupportIcon className="w-14 h-14" />
         </div>
-        <div className="bg-white/64 rounded-3xl px-2.5 py-1.5 shadow-lg inline-block text-black font-extrabold text-center">
-          <h3 className="text-sm">Support</h3>
-        </div>
+        <Card className="px-2.5 py-1.5 inline-block text-black font-extrabold text-center">
+          <Text variant="sm">Support</Text>
+        </Card>
       </button>
 
       {/* Support Dropdown */}
-      <div
+      <Card
         ref={menuRef}
-        className={`absolute right-2 bottom-24 bg-white/67 rounded-3xl shadow-lg transition-all ${open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"}`}
+        className={`absolute right-2 bottom-24 transition-all ${open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"}`}
       >
         {/* Personal Chat */}
         <a
@@ -104,7 +102,7 @@ const Support = () => {
         >
           <img src={TELEGRAM_ICON_URL} alt="Telegram" className="w-10 h-10" />
         </a>
-      </div>
+      </Card>
     </div>
   );
 };

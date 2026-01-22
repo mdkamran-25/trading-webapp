@@ -170,195 +170,210 @@ const Withdraw = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gray-100">
-      <div className="relative w-full py-3 px-4 bg-gradient-to-b from-yellow-400 to-orange-400 text-gray-900 flex items-center justify-between rounded-b-3xl">
-        <button
-          className="hover:opacity-70 transition"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft color="black" size={22} />
-        </button>
-        <h1 className="text-xl font-bold flex-1 text-center">Withdraw</h1>
-        <div className="w-6"></div>
-      </div>
+    <div className="w-full min-h-screen bg-gray-100 pb-8">
+      <PageHeader title="Withdraw" onBack={() => navigate(-1)} />
 
-      <div className="relative z-10 mx-4 mt-[-2rem]">
-        <div className="bg-white rounded-3xl shadow-lg p-6 mb-6 border border-yellow-300">
+      <div className="relative z-10 mx-4 mt-4">
+        <Card
+          variant="default"
+          padding="lg"
+          className="border border-yellow-300 shadow-lg"
+        >
           <div className="flex items-center justify-between mb-4 text-sm">
-            <span className="text-gray-600">Withdrawal Balance:</span>
-            <span className="text-lg font-bold text-gray-900">
+            <Text variant="body" className="text-gray-600">
+              Withdrawal Balance:
+            </Text>
+            <Text variant="h3" className="text-lg font-bold text-gray-900">
               ₹ {balance || 0}
-            </span>
+            </Text>
           </div>
 
           <div className="flex flex-col gap-4">
             {responseMessage && (
-              <div
-                className={`p-4 rounded-2xl font-semibold text-center ${
+              <Card
+                variant={
+                  responseMessage.type === "success" ? "default" : "default"
+                }
+                padding="md"
+                className={`rounded-2xl font-semibold text-center border ${
                   responseMessage.type === "success"
-                    ? "bg-green-50 border border-green-500 text-green-800"
-                    : "bg-red-50 border border-red-500 text-red-800"
+                    ? "bg-green-50 border-green-500"
+                    : "bg-red-50 border-red-500"
                 }`}
               >
-                {responseMessage.message}
-              </div>
+                <Text
+                  variant="body"
+                  className={
+                    responseMessage.type === "success"
+                      ? "text-green-800"
+                      : "text-red-800"
+                  }
+                >
+                  {responseMessage.message}
+                </Text>
+              </Card>
             )}
 
             {/* Bank Details */}
             {!hasBankDetails ? (
               <>
                 {!isAdding ? (
-                  <button
-                    className="w-full py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-semibold rounded-full hover:shadow-lg transition"
+                  <Button
+                    variant="primary"
                     onClick={() => setIsAdding(true)}
+                    className="w-full"
                   >
                     + Add Bank Details
-                  </button>
+                  </Button>
                 ) : (
                   <>
-                    <input
+                    <Input
                       type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
                       placeholder="Account Holder Name"
                       value={holderName}
                       onChange={(e) => setHolderName(e.target.value)}
                     />
-                    <input
+                    <Input
                       type="number"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
                       placeholder="Account Number"
                       value={accountNumber}
                       onChange={(e) => setAccountNumber(e.target.value)}
                     />
-                    <input
+                    <Input
                       type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
                       placeholder="IFSC Code"
                       value={ifscCode}
                       onChange={(e) => setIfscCode(e.target.value)}
                     />
-                    <input
+                    <Input
                       type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
                       placeholder="Bank Name"
                       value={bankName}
                       onChange={(e) => setBankName(e.target.value)}
                     />
-                    <input
+                    <Input
                       type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
                       placeholder="UPI ID (Optional)"
                       value={upiId}
                       onChange={(e) => setUpiId(e.target.value)}
                     />
                     <div className="flex gap-3">
-                      <button
+                      <Button
+                        variant="primary"
                         onClick={handleAddBank}
-                        className="flex-1 py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-semibold rounded-full hover:shadow-lg transition"
+                        className="flex-1"
                       >
                         Save
-                      </button>
-                      <button
+                      </Button>
+                      <Button
+                        variant="secondary"
                         onClick={() => setIsAdding(false)}
-                        className="flex-1 py-3 bg-gray-300 text-gray-900 font-semibold rounded-full hover:bg-gray-400 transition"
+                        className="flex-1"
                       >
                         Cancel
-                      </button>
+                      </Button>
                     </div>
                   </>
                 )}
               </>
             ) : (
               <div>
-                <span className="text-gray-600 text-sm font-medium">
+                <Text variant="sm" className="text-gray-600 font-medium">
                   My Bank Details
-                </span>
+                </Text>
                 {isEditing ? (
                   <>
-                    <input
+                    <Input
                       type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition mt-2"
                       value={holderName}
                       onChange={(e) => setHolderName(e.target.value)}
                       placeholder="Holder Name"
+                      className="mt-2"
                     />
-                    <input
+                    <Input
                       type="number"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition mt-2"
                       value={accountNumber}
                       onChange={(e) => setAccountNumber(e.target.value)}
                       placeholder="Account Number"
+                      className="mt-2"
                     />
-                    <input
+                    <Input
                       type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition mt-2"
                       value={ifscCode}
                       onChange={(e) => setIfscCode(e.target.value)}
                       placeholder="IFSC Code"
+                      className="mt-2"
                     />
-                    <input
+                    <Input
                       type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition mt-2"
                       value={bankName}
                       onChange={(e) => setBankName(e.target.value)}
                       placeholder="Bank Name"
+                      className="mt-2"
                     />
-                    <input
+                    <Input
                       type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition mt-2"
                       value={upiId}
                       onChange={(e) => setUpiId(e.target.value)}
                       placeholder="UPI ID (Optional)"
+                      className="mt-2"
                     />
-                    <input
+                    <Input
                       type="password"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition mt-2"
                       placeholder="Trade Password"
                       value={BUpTRadePassword}
                       onChange={(e) => setBUpTRadePassword(e.target.value)}
+                      className="mt-2"
                     />
                     <div className="flex gap-3 mt-3">
-                      <button
+                      <Button
+                        variant="primary"
                         onClick={handleUpdateBank}
-                        className="flex-1 py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-semibold rounded-full hover:shadow-lg transition"
+                        className="flex-1"
                       >
                         Save
-                      </button>
-                      <button
+                      </Button>
+                      <Button
+                        variant="secondary"
                         onClick={() => setIsEditing(false)}
-                        className="flex-1 py-3 bg-gray-300 text-gray-900 font-semibold rounded-full hover:bg-gray-400 transition"
+                        className="flex-1"
                       >
                         Cancel
-                      </button>
+                      </Button>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="mt-3 space-y-2 text-sm">
-                      <p>
+                    <Card
+                      variant="flat"
+                      padding="md"
+                      className="mt-3 space-y-2 text-sm"
+                    >
+                      <Text variant="sm">
                         <b>Holder:</b> {bankDetails.holderName ?? ""}
-                      </p>
-                      <p>
+                      </Text>
+                      <Text variant="sm">
                         <b>Account:</b> {bankDetails.accountNumber ?? ""}
-                      </p>
-                      <p>
+                      </Text>
+                      <Text variant="sm">
                         <b>IFSC:</b> {bankDetails.ifscCode ?? ""}
-                      </p>
-                      <p>
+                      </Text>
+                      <Text variant="sm">
                         <b>Bank:</b> {bankDetails.bankName ?? ""}
-                      </p>
+                      </Text>
                       {bankDetails.upiId && (
-                        <p>
+                        <Text variant="sm">
                           <b>UPI:</b> {bankDetails.upiId ?? ""}
-                        </p>
+                        </Text>
                       )}
-                    </div>
-                    <button
+                    </Card>
+                    <Button
+                      variant="primary"
                       onClick={() => setIsEditing(true)}
-                      className="w-full py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-semibold rounded-full hover:shadow-lg transition mt-3"
+                      className="w-full mt-3"
                     >
                       Edit
-                    </button>
+                    </Button>
                   </>
                 )}
               </div>
@@ -367,46 +382,51 @@ const Withdraw = () => {
             {/* Withdrawal */}
             {hasBankDetails && (
               <>
-                <input
+                <Input
                   type="number"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
                   placeholder="Withdrawal Amount"
                   value={withdrawalAmount}
                   onChange={(e) => setWithdrawalAmount(e.target.value)}
                 />
-                <input
+                <Input
                   type="password"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
                   placeholder="Trade Password"
                   value={tradePassword}
                   onChange={(e) => setTradePassword(e.target.value)}
                 />
-                <button
+                <Button
+                  variant="primary"
                   onClick={handleWithdrawal}
                   disabled={isLoading}
-                  className="w-full py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-semibold rounded-full hover:shadow-lg transition disabled:opacity-50"
+                  className="w-full"
                 >
                   {isLoading ? (
                     <Loader2 className="inline animate-spin" />
                   ) : (
                     "Apply Withdrawal"
-                  )}{" "}
-                </button>
+                  )}
+                </Button>
               </>
             )}
 
             {/* Rules */}
-            <div className="mt-6 pt-4 border-t border-gray-300">
-              <h2 className="text-gray-900 font-bold mb-2">Explain</h2>
+            <Card
+              variant="default"
+              padding="lg"
+              className="mt-6 border-t border-gray-300 pt-4"
+            >
+              <Text variant="h3" className="text-gray-900 font-bold mb-2">
+                Explain
+              </Text>
               <ol className="text-xs text-gray-600 space-y-2 list-decimal list-inside">
                 <li>Daily marketing from 00:00:00 to 23:59:59.</li>
                 <li>Withdraw amount between 300 to 500000.</li>
                 <li>Only one withdrawal per day.</li>
                 <li>Withdrawal rate 5%.</li>
               </ol>
-            </div>
+            </Card>
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

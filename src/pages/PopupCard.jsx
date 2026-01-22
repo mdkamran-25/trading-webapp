@@ -7,9 +7,7 @@ import {
   ChevronRight,
   ExternalLink,
 } from "lucide-react";
-
-// Import from your actual API file
-// import { getSocialLinks } from "../api";
+import { Card, Button, Text, Badge } from "../components";
 
 const PopupCard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +41,7 @@ const PopupCard = () => {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50 p-4">
-      <div className="bg-gray-50 rounded-2xl border border-gray-300 shadow-2xl w-full max-w-sm p-6 relative">
+      <Card className="w-full max-w-sm p-6 relative">
         <button
           onClick={handleClose}
           className="absolute top-3 right-3 text-gray-400 hover:text-gray-900 transition"
@@ -54,54 +52,55 @@ const PopupCard = () => {
 
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-orange-600 mb-3">
           <ShieldCheck size={14} />
-          Verified Platform
+          <Text variant="sm">Verified Platform</Text>
         </div>
 
-        <h2 className="text-2xl font-extrabold mb-1 text-gray-900">
+        <Text variant="h3" className="mb-1 text-gray-900">
           Realstate Investment
-        </h2>
-        <p className="text-sm text-gray-600 mb-4">
+        </Text>
+        <Text variant="sm" className="text-gray-600 mb-4">
           Professional property asset management.
-        </p>
+        </Text>
 
         <div className="flex justify-center gap-2 mb-4">
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-xs font-semibold text-orange-600">
+          <Badge className="flex items-center gap-2 px-3 py-1 bg-orange-50 text-xs font-semibold text-orange-600">
             <TrendingUp size={14} />
             <span>Founded 2022</span>
-          </div>
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-xs font-semibold text-orange-600">
+          </Badge>
+          <Badge className="flex items-center gap-2 px-3 py-1 bg-orange-50 text-xs font-semibold text-orange-600">
             <ExternalLink size={14} />
             <span>Early Access</span>
-          </div>
+          </Badge>
         </div>
 
         <div className="space-y-2 mb-5">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-orange-200">
+          <Card variant="flat" padding="sm" className="flex items-center gap-2">
             <Zap size={16} className="fill-orange-600 text-orange-600" />
-            <span className="text-sm font-medium text-gray-900">
+            <Text variant="sm" className="font-medium text-gray-900">
               Instant Deposit Processing
-            </span>
-          </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-orange-200">
+            </Text>
+          </Card>
+          <Card variant="flat" padding="sm" className="flex items-center gap-2">
             <Zap size={16} className="fill-orange-600 text-orange-600" />
-            <span className="text-sm font-medium text-gray-900">
+            <Text variant="sm" className="font-medium text-gray-900">
               Instant Withdrawal Processing
-            </span>
-          </div>
+            </Text>
+          </Card>
         </div>
 
-        <button
+        <Button
           onClick={() => window.open(groupLink || "https://t.me/", "_blank")}
-          className="w-full py-3 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 transition flex items-center justify-center gap-2 mb-3"
+          variant="primary"
+          className="w-full flex items-center justify-center gap-2 mb-3"
         >
           Join Telegram Portal
           <ChevronRight size={18} />
-        </button>
+        </Button>
 
-        <p className="text-center text-xs text-gray-500 italic">
+        <Text variant="sm" className="text-center text-gray-500 italic">
           Secure community for real-time market updates.
-        </p>
-      </div>
+        </Text>
+      </Card>
     </div>
   );
 };
