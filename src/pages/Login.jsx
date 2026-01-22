@@ -5,20 +5,24 @@ import Cookies from "js-cookie";
 import { loginUser, SECRET_KEY } from "../api";
 import Password from "./Password";
 import pako from "pako";
+import { Card, Text, Button } from "../components";
 
 const Login = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [password1, setPassword1] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRegisterRedirect = () => navigate("/register");
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!mobileNumber || !password) {
       alert("Phone and password are required");
+      setLoading(false);
       return;
     }
 
@@ -30,35 +34,23 @@ const Login = () => {
       const response = await loginUser(credentials);
 
       if (response.token && response.user) {
-        // ✅ 1. Convert to JSON string
         const jsonString = JSON.stringify(response.user);
-
-        // ✅ 2. Compress and get Uint8Array
         const compressed = pako.deflate(jsonString);
-
-        // ✅ 3. Convert compressed binary → Base64 string
         const compressedBase64 = btoa(String.fromCharCode(...compressed));
-
-        // ✅ 4. Encrypt compressed Base64
         const encryptedUser = CryptoJS.AES.encrypt(
           compressedBase64,
           SECRET_KEY,
         ).toString();
-
-        // ✅ 5. Make Base64URL safe (optional)
         const base64url = encryptedUser
           .replace(/\+/g, "-")
           .replace(/\//g, "_")
           .replace(/=+$/, "");
 
-        // ✅ 6. Store securely
         Cookies.set("tredingWeb", response.token, { expires: 7, path: "/" });
         Cookies.set("tredingWebUser", base64url, { expires: 7, path: "/" });
-
         localStorage.setItem("userData", JSON.stringify(response.user));
 
         alert(response.message || "Login successful");
-
         setTimeout(() => navigate("/"), 200);
       } else {
         alert("Invalid response from server");
@@ -66,6 +58,8 @@ const Login = () => {
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,35 +84,33 @@ const Login = () => {
       />
 
       {/* Login Card */}
-      <div className="bg-gradient-to-b from-yellow-300 to-orange-400 border-2 border-yellow-300 rounded-2xl p-8 w-11/12 shadow-lg mt-6 z-10">
-        {password1 === false ? (
+      <Card variant="gradient" padding="lg" className="w-11/12 mt-6 z-10">
+        {!showPassword ? (
           <>
             <div className="flex justify-between items-center mb-5">
-              <h2 className="text-2xl font-bold text-gray-700">Login</h2>
-              <button
+              <Text variant="h2" weight="bold" color="primary">
+                Login
+              </Text>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={handleRegisterRedirect}
-                className="text-gray-800 font-semibold text-sm hover:opacity-80 transition"
               >
                 Register
-              </button>
+              </Button>
             </div>
 
-            {/* Form */}
-            <form onSubmit={handleLogin} className="flex flex-col gap-6">
+            <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <label
-                  htmlFor="mobileNumber"
-                  className="block text-sm font-medium text-white mb-2"
-                >
+                <label className="block text-sm font-medium text-white mb-2">
                   Mobile Number
                 </label>
-                <div className="flex border border-white">
+                <div className="flex border border-white rounded">
                   <span className="bg-white text-gray-800 px-3 py-2 font-semibold flex items-center">
                     +91
                   </span>
                   <input
                     type="text"
-                    id="mobileNumber"
                     placeholder="Please enter your number"
                     value={mobileNumber}
                     onChange={(e) => setMobileNumber(e.target.value)}
@@ -129,15 +121,11 @@ const Login = () => {
               </div>
 
               <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-white mb-2"
-                >
+                <label className="block text-sm font-medium text-white mb-2">
                   Password
                 </label>
                 <input
                   type="password"
-                  id="password"
                   placeholder="Please enter password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -146,17 +134,19 @@ const Login = () => {
                 />
               </div>
 
-              <button
+              <Button
                 type="submit"
-                className="bg-white text-gray-800 font-bold py-2 rounded-lg hover:bg-gray-100 transition"
+                variant="primary"
+                fullWidth
+                disabled={loading}
               >
-                Login
-              </button>
+                {loading ? "Logging in..." : "Login"}
+              </Button>
             </form>
 
             <div className="flex justify-end mt-3">
               <button
-                onClick={() => setPassword1(true)}
+                onClick={() => setShowPassword(true)}
                 className="text-black text-sm font-semibold underline hover:opacity-80 transition"
               >
                 Forget Password
@@ -165,16 +155,18 @@ const Login = () => {
           </>
         ) : (
           <>
-            <button
-              onClick={() => setPassword1(false)}
-              className="bg-white text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-100 transition w-full mb-4"
+            <Button
+              variant="primary"
+              fullWidth
+              onClick={() => setShowPassword(false)}
+              className="mb-4"
             >
               Back To Login
-            </button>
+            </Button>
             <Password />
           </>
         )}
-      </div>
+      </Card>
     </div>
   );
 };

@@ -4,11 +4,12 @@ import { registerUser, SECRET_KEY, sendOtpNoCheck } from "../api";
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import pako from "pako";
+import { Card, Button, Text } from "../components";
+
 const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // --- State ---
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [refCode, setRefCode] = useState("");
@@ -19,21 +20,18 @@ const Register = () => {
   const [otpVerified, setOtpVerified] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // --- Auto fill referral code from URL ---
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const invite = params.get("invitation_code");
     if (invite) setRefCode(invite);
   }, [location.search]);
 
-  // --- Send OTP ---
   const handleSendOtp = async () => {
     if (!phone) return alert("Please enter your phone number");
 
     try {
       setLoading(true);
       const data = await sendOtpNoCheck(phone);
-
       console.log("OTP Response:", data);
 
       if (data.success) {
@@ -51,10 +49,9 @@ const Register = () => {
     }
   };
 
-  // --- Verify OTP ---
   const handleVerifyOtp = () => {
     if (!otp) return alert("Enter OTP");
-    if (otp == generatedOtp) {
+    if (otp === generatedOtp) {
       setOtpVerified(true);
       alert("OTP verified successfully!");
     } else {
@@ -62,7 +59,6 @@ const Register = () => {
     }
   };
 
-  // --- Register ---
   const handleRegister = async () => {
     if (!otpVerified) return alert("Please verify OTP first");
     if (!password || !tradePassword)
@@ -82,29 +78,19 @@ const Register = () => {
 
       if (response.token) {
         const jsonString = JSON.stringify(response.user);
-
-        // ✅ 2. Compress and get Uint8Array
         const compressed = pako.deflate(jsonString);
-
-        // ✅ 3. Convert compressed binary → Base64 string
         const compressedBase64 = btoa(String.fromCharCode(...compressed));
-
-        // ✅ 4. Encrypt compressed Base64
         const encryptedUser = CryptoJS.AES.encrypt(
           compressedBase64,
           SECRET_KEY,
         ).toString();
-
-        // ✅ 5. Make Base64URL safe (optional)
         const base64url = encryptedUser
           .replace(/\+/g, "-")
           .replace(/\//g, "_")
           .replace(/=+$/, "");
 
-        // ✅ 6. Store securely
         Cookies.set("tredingWeb", response.token, { expires: 7, path: "/" });
         Cookies.set("tredingWebUser", base64url, { expires: 7, path: "/" });
-
         localStorage.setItem("userData", JSON.stringify(response.user));
 
         alert(response.message || "Registered successfully!");
@@ -139,10 +125,10 @@ const Register = () => {
       />
 
       {/* Register Card */}
-      <div className="bg-gradient-to-b from-yellow-300 to-orange-400 rounded-3xl p-6 shadow-lg w-11/12 mt-10 z-10">
-        <h2 className="text-2xl font-bold text-gray-700 mb-5 text-center">
+      <Card variant="gradient" padding="lg" className="w-11/12 mt-10 z-10">
+        <Text variant="h2" weight="bold" className="text-center mb-5">
           Register
-        </h2>
+        </Text>
 
         {/* Phone + Send OTP */}
         <div className="flex items-center bg-white rounded-full border-2 border-yellow-300 px-4 py-3 mb-4">
@@ -154,19 +140,15 @@ const Register = () => {
             disabled={otpVerified}
             className="flex-1 outline-none bg-transparent text-gray-800 disabled:bg-gray-100 disabled:cursor-not-allowed"
           />
-          <button
+          <Button
+            variant={otpVerified ? "ghost" : "primary"}
+            size="sm"
             onClick={handleSendOtp}
             disabled={loading || otpSent || otpVerified}
-            className={`ml-2 px-3.5 py-1.5 rounded text-xs font-semibold text-white transition-all ${
-              otpVerified
-                ? "bg-yellow-500 cursor-not-allowed opacity-60"
-                : otpSent
-                  ? "bg-amber-500 cursor-not-allowed opacity-60"
-                  : "bg-black hover:bg-gray-800"
-            }`}
+            className="ml-2"
           >
             {loading ? "Sending..." : otpVerified ? "Verified" : "Send OTP"}
-          </button>
+          </Button>
         </div>
 
         {/* OTP Input */}
@@ -179,12 +161,14 @@ const Register = () => {
               onChange={(e) => setOtp(e.target.value)}
               className="flex-1 outline-none bg-transparent text-gray-800"
             />
-            <button
+            <Button
+              variant="primary"
+              size="sm"
               onClick={handleVerifyOtp}
-              className="ml-2 px-3.5 py-1.5 rounded text-xs font-semibold text-white bg-yellow-500 hover:bg-yellow-600 transition-colors"
+              className="ml-2"
             >
               Verify
-            </button>
+            </Button>
           </div>
         )}
 
@@ -225,7 +209,7 @@ const Register = () => {
         </div>
 
         {/* Login Redirect */}
-        <p className="text-sm text-gray-700 text-center">
+        <Text variant="body" className="text-center">
           Already have an account?{" "}
           <span
             onClick={() => navigate("/login")}
@@ -233,17 +217,18 @@ const Register = () => {
           >
             Login
           </span>
-        </p>
-      </div>
+        </Text>
+      </Card>
 
       {/* Register Button */}
-      <button
+      <Button
         onClick={handleRegister}
         disabled={!otpVerified || loading}
-        className="w-1/2 py-3.5 mt-6 bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold rounded-full hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed transition-all z-10"
+        variant="gradient"
+        className="w-1/2 mt-6 z-10"
       >
         {loading ? "Please wait..." : "Register"}
-      </button>
+      </Button>
     </div>
   );
 };

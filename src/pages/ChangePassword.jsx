@@ -54,22 +54,22 @@ function ChangePassword() {
 
   return (
     <div className="w-full min-h-screen bg-gray-100">
-      <div className="relative w-full py-3 px-4 bg-gradient-to-b from-yellow-400 to-orange-400 text-gray-900 flex items-center justify-between rounded-b-3xl">
+      <div className="relative flex items-center justify-between w-full px-4 py-3 text-gray-900 bg-gradient-to-b from-yellow-400 to-orange-400 rounded-b-3xl">
         <button
-          className="hover:opacity-70 transition"
+          className="transition hover:opacity-70"
           onClick={() => navigate(-1)}
         >
           <ArrowLeft color="black" size={22} />
         </button>
-        <h2 className="text-xl font-bold flex-1 text-center">
+        <h2 className="flex-1 text-xl font-bold text-center">
           Change Password
         </h2>
         <div className="w-6"></div>
       </div>
 
       <form className="relative z-10 mx-4 mt-[-2rem]" onSubmit={handleSubmit}>
-        <div className="bg-white rounded-3xl shadow-lg p-6">
-          <label className="text-gray-600 text-sm font-medium">
+        <div className="p-6 bg-white shadow-lg rounded-3xl">
+          <label className="text-sm font-medium text-gray-600">
             Phone Number
           </label>
           <input
@@ -77,10 +77,10 @@ function ChangePassword() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="Enter phone number"
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition mt-2 mb-4"
+            className="w-full px-4 py-3 mt-2 mb-4 transition border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none"
           />
 
-          <label className="text-gray-600 text-sm font-medium">
+          <label className="text-sm font-medium text-gray-600">
             Current Password
           </label>
           <div className="relative mt-2 mb-4">
@@ -89,17 +89,17 @@ function ChangePassword() {
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="Enter current password"
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
+              className="w-full px-4 py-3 transition border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none"
             />
             <span
-              className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700 transition"
+              className="absolute text-gray-500 transition -translate-y-1/2 cursor-pointer right-3 top-1/2 hover:text-gray-700"
               onClick={() => setShowCurrent(!showCurrent)}
             >
               {showCurrent ? "👁️" : "👁️‍🗨️"}
             </span>
           </div>
 
-          <label className="text-gray-600 text-sm font-medium">
+          <label className="text-sm font-medium text-gray-600">
             New Password
           </label>
           <div className="relative mt-2 mb-6">
@@ -108,10 +108,10 @@ function ChangePassword() {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Enter new password"
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition"
+              className="w-full px-4 py-3 transition border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none"
             />
             <span
-              className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700 transition"
+              className="absolute text-gray-500 transition -translate-y-1/2 cursor-pointer right-3 top-1/2 hover:text-gray-700"
               onClick={() => setShowNew(!showNew)}
             >
               {showNew ? "👁️" : "👁️‍🗨️"}
@@ -120,7 +120,7 @@ function ChangePassword() {
 
           <button
             type="submit"
-            className="w-full py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-semibold rounded-full hover:shadow-lg transition"
+            className="w-full py-3 font-semibold text-gray-900 transition rounded-full bg-gradient-to-r from-yellow-400 to-orange-400 hover:shadow-lg"
           >
             Update Password
           </button>
