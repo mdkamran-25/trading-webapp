@@ -68,7 +68,7 @@ const Login = () => {
     <div className="flex flex-col min-h-screen overflow-hidden font-sans lg:flex-row">
       {/* Left Column - Login Form */}
       <div
-        className="relative flex flex-col items-center justify-center w-full px-4 py-8 overflow-hidden lg:w-1/2 lg:px-12 lg:py-0"
+        className="relative flex flex-col items-center justify-center w-full min-h-screen px-4 py-8 overflow-hidden sm:px-6 md:px-8 lg:w-1/2 lg:px-12 lg:py-0 lg:min-h-0"
         style={{ backgroundColor: "#F5F7FF" }}
       >
         {/* Decorative curved shape - bottom left */}
@@ -83,15 +83,15 @@ const Login = () => {
         {!showPassword ? (
           <>
             {/* Login Heading */}
-            <div className="w-full max-w-md mb-8">
+            <div className="w-full max-w-md mb-6 text-center sm:mb-8 sm:text-left">
               <h1
-                className="text-4xl font-extrabold"
+                className="text-3xl font-extrabold sm:text-4xl"
                 style={{ color: colors.darkPurple }}
               >
                 Login
               </h1>
               <p
-                className="mt-2 text-sm"
+                className="mt-1 text-xs sm:mt-2 sm:text-sm"
                 style={{ color: colors.mediumPurple }}
               >
                 Access your trading account
@@ -99,11 +99,14 @@ const Login = () => {
             </div>
 
             {/* Login Form */}
-            <form onSubmit={handleLogin} className="w-full max-w-md space-y-5">
+            <form
+              onSubmit={handleLogin}
+              className="w-full max-w-xs space-y-4 sm:max-w-sm md:max-w-md sm:space-y-5"
+            >
               {/* Mobile Number Input */}
               <div>
                 <label
-                  className="block mb-2 text-sm font-medium"
+                  className="block mb-2 text-xs font-medium sm:text-sm"
                   style={{ color: colors.darkPurple }}
                 >
                   Mobile Number
@@ -113,7 +116,7 @@ const Login = () => {
                   style={{ borderColor: colors.lightPurple }}
                 >
                   <span
-                    className="flex items-center px-4 py-3 font-semibold"
+                    className="flex items-center px-3 sm:px-4 py-2.5 sm:py-3 font-semibold text-xs sm:text-sm"
                     style={{
                       backgroundColor: colors.lightPurple,
                       color: colors.darkPurple,
@@ -126,7 +129,7 @@ const Login = () => {
                     placeholder="Enter your number"
                     value={mobileNumber}
                     onChange={(e) => setMobileNumber(e.target.value)}
-                    className="flex-1 px-4 py-3 text-gray-800 outline-none"
+                    className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-800 outline-none"
                     required
                   />
                 </div>
@@ -135,7 +138,7 @@ const Login = () => {
               {/* Password Input */}
               <div>
                 <label
-                  className="block mb-2 text-sm font-medium"
+                  className="block mb-2 text-xs font-medium sm:text-sm"
                   style={{ color: colors.darkPurple }}
                 >
                   Password
@@ -145,7 +148,7 @@ const Login = () => {
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 transition border-2 outline-none rounded-xl"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base transition border-2 outline-none rounded-xl"
                   style={{ borderColor: colors.lightPurple }}
                   required
                 />
@@ -155,7 +158,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 mt-6 font-semibold text-white transition rounded-xl hover:opacity-90 disabled:opacity-60"
+                className="w-full py-2.5 sm:py-3 mt-4 sm:mt-6 font-semibold text-white text-sm sm:text-base transition rounded-xl hover:opacity-90 disabled:opacity-60 active:scale-95"
                 style={{ backgroundColor: colors.darkPurple }}
               >
                 {loading ? "Logging in..." : "Login"}
@@ -163,7 +166,7 @@ const Login = () => {
             </form>
 
             {/* Footer Links */}
-            <div className="flex items-center justify-between w-full max-w-md mt-6 text-sm">
+            <div className="flex items-center justify-between w-full max-w-xs mt-4 text-xs sm:max-w-sm md:max-w-md sm:mt-6 sm:text-sm">
               <button
                 onClick={() => setShowPassword(true)}
                 className="font-semibold transition hover:opacity-70"
@@ -181,38 +184,50 @@ const Login = () => {
             </div>
 
             {/* Social Media Icons */}
-            <div className="relative z-10 flex gap-4 mt-10">
+            <div className="relative z-10 flex gap-3 mt-8 sm:gap-4 sm:mt-10">
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition hover:opacity-70"
+                className="transition hover:opacity-70 active:scale-90"
               >
-                <img src="/Facebook.svg" alt="Facebook" className="w-16 h-16" />
+                <img
+                  src="/Facebook.svg"
+                  alt="Facebook"
+                  className="w-12 h-12 sm:w-16 sm:h-16"
+                />
               </a>
               <a
                 href="https://wa.me"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition hover:opacity-70"
+                className="transition hover:opacity-70 active:scale-90"
               >
-                <img src="/Whatsapp.svg" alt="WhatsApp" className="w-16 h-16" />
+                <img
+                  src="/Whatsapp.svg"
+                  alt="WhatsApp"
+                  className="w-12 h-12 sm:w-16 sm:h-16"
+                />
               </a>
               <a
                 href="https://t.me"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition hover:opacity-70"
+                className="transition hover:opacity-70 active:scale-90"
               >
-                <img src="/Telegram.svg" alt="Telegram" className="w-16 h-16" />
+                <img
+                  src="/Telegram.svg"
+                  alt="Telegram"
+                  className="w-12 h-12 sm:w-16 sm:h-16"
+                />
               </a>
             </div>
           </>
         ) : (
-          <div className="w-full max-w-md">
+          <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
             <button
               onClick={() => setShowPassword(false)}
-              className="px-4 py-2 mb-6 font-semibold text-white transition rounded-xl hover:opacity-90"
+              className="px-4 py-2 mb-6 text-sm font-semibold text-white transition sm:text-base rounded-xl hover:opacity-90 active:scale-95"
               style={{ backgroundColor: colors.mediumPurple }}
             >
               ← Back To Login
@@ -249,27 +264,30 @@ const Login = () => {
           />
 
           {/* Tagline */}
-          <h2 className="mb-4 text-3xl font-bold leading-tight lg:text-4xl">
+          <h2 className="mb-3 text-xl font-bold leading-tight sm:mb-4 sm:text-3xl lg:text-4xl">
             Begin Your Investment Journey
           </h2>
 
           {/* Sub-message */}
-          <p className="text-lg" style={{ color: colors.lightPurple }}>
+          <p
+            className="px-2 text-sm sm:text-base lg:text-lg"
+            style={{ color: colors.lightPurple }}
+          >
             Access your portfolio, track gains, and grow your wealth
           </p>
 
           {/* Investment Features Icons */}
-          <div className="w-full max-w-2xl p-8 mt-12 bg-white rounded-2xl">
-            <div className="flex justify-center gap-28">
+          <div className="w-full max-w-2xl px-4 py-6 mt-8 bg-white sm:px-6 lg:px-8 sm:py-8 sm:mt-12 rounded-2xl">
+            <div className="flex justify-center gap-6 sm:gap-16 lg:gap-28">
               {/* Real Estate Investment */}
               <div className="flex flex-col items-center gap-2">
                 <img
                   src="/Real Estate Investment_-Euro.svg"
                   alt="Real Estate Investment"
-                  className="w-14 h-14"
+                  className="w-10 h-10 sm:w-14 sm:h-14"
                 />
                 <p
-                  className="text-sm font-semibold"
+                  className="text-xs font-semibold text-center sm:text-sm"
                   style={{ color: colors.darkPurple }}
                 >
                   Real Estate
@@ -281,10 +299,10 @@ const Login = () => {
                 <img
                   src="/Stock chart- Rupee.svg"
                   alt="Stock Chart"
-                  className="w-14 h-14"
+                  className="w-10 h-10 sm:w-14 sm:h-14"
                 />
                 <p
-                  className="text-sm font-semibold"
+                  className="text-xs font-semibold text-center sm:text-sm"
                   style={{ color: colors.darkPurple }}
                 >
                   Stocks
@@ -293,9 +311,13 @@ const Login = () => {
 
               {/* ROI */}
               <div className="flex flex-col items-center gap-2">
-                <img src="/Roi-Rupee.svg" alt="ROI" className="w-14 h-14" />
+                <img
+                  src="/Roi-Rupee.svg"
+                  alt="ROI"
+                  className="w-10 h-10 sm:w-14 sm:h-14"
+                />
                 <p
-                  className="text-sm font-semibold"
+                  className="text-xs font-semibold text-center sm:text-sm"
                   style={{ color: colors.darkPurple }}
                 >
                   High Returns
@@ -306,10 +328,12 @@ const Login = () => {
 
           {/* CTA Hint */}
           <div
-            className="px-6 py-3 mt-8 rounded-lg"
+            className="max-w-sm px-4 py-2 mt-6 rounded-lg sm:px-6 sm:py-3 sm:mt-8"
             style={{ backgroundColor: colors.darkPurple }}
           >
-            <p className="font-semibold">Don't have an account? Register now</p>
+            <p className="text-sm font-semibold text-center sm:text-base">
+              Don't have an account? Register now
+            </p>
           </div>
         </div>
       </div>

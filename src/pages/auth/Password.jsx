@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
 import pako from "pako";
 import { Card, Input, Button, Text, Label } from "../../components";
+import { colors } from "../../utils/colors";
 function Password() {
   const navigate = useNavigate();
   const [phone, setPhone] = useState("");
@@ -127,80 +128,145 @@ function Password() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto min-h-screen bg-gradient-to-br from-white via-yellow-50 to-yellow-100 p-5">
-      <Card className="p-5 animate-fadeIn space-y-3.5">
-        {!otpSent && (
-          <>
-            <Label htmlFor="phone">Phone Number</Label>
-            <Input
-              id="phone"
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="Enter phone number"
-            />
-            <Button
-              type="button"
-              onClick={handleSendOtp}
-              variant="primary"
-              className="w-full mt-2"
-            >
-              Send OTP
-            </Button>
-          </>
-        )}
+    <div className="w-full max-w-xs sm:max-w-sm md:max-w-md space-y-4 sm:space-y-5">
+      {/* Heading */}
+      <div className="mb-6 sm:mb-8">
+        <h2
+          className="text-2xl sm:text-3xl font-extrabold"
+          style={{ color: colors.darkPurple }}
+        >
+          {!otpSent
+            ? "Forgot Password"
+            : otpVerified
+              ? "Set Password"
+              : "Verify OTP"}
+        </h2>
+        <p
+          className="mt-1 sm:mt-2 text-xs sm:text-sm"
+          style={{ color: colors.mediumPurple }}
+        >
+          {!otpSent
+            ? "Enter your phone to reset password"
+            : otpVerified
+              ? "Create your new password"
+              : "Enter OTP sent to your phone"}
+        </p>
+      </div>
 
-        {otpSent && !otpVerified && (
-          <>
-            <Label htmlFor="otp">Enter OTP</Label>
-            <Input
-              id="otp"
-              type="tel"
+      {/* Phone Number Input */}
+      {!otpSent && (
+        <div className="space-y-4 sm:space-y-5">
+          <div>
+            <label
+              className="block mb-2 text-xs sm:text-sm font-medium"
+              style={{ color: colors.darkPurple }}
+            >
+              Phone Number
+            </label>
+            <div
+              className="flex overflow-hidden border-2 rounded-xl"
+              style={{ borderColor: colors.lightPurple }}
+            >
+              <span
+                className="flex items-center px-3 sm:px-4 py-2.5 sm:py-3 font-semibold text-xs sm:text-sm"
+                style={{
+                  backgroundColor: colors.lightPurple,
+                  color: colors.darkPurple,
+                }}
+              >
+                +91
+              </span>
+              <input
+                type="text"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Enter your number"
+                className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-800 outline-none"
+              />
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleSendOtp}
+            className="w-full py-2.5 sm:py-3 mt-4 sm:mt-6 font-semibold text-white text-sm sm:text-base transition rounded-xl hover:opacity-90 disabled:opacity-60 active:scale-95"
+            style={{ backgroundColor: colors.darkPurple }}
+          >
+            Send OTP
+          </button>
+        </div>
+      )}
+
+      {/* OTP Verification */}
+      {otpSent && !otpVerified && (
+        <div className="space-y-4 sm:space-y-5">
+          <div>
+            <label
+              className="block mb-2 text-xs sm:text-sm font-medium"
+              style={{ color: colors.darkPurple }}
+            >
+              Enter OTP
+            </label>
+            <input
+              type="text"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              placeholder="Enter OTP"
+              placeholder="Enter OTP code"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base transition border-2 outline-none rounded-xl"
+              style={{ borderColor: colors.lightPurple }}
             />
-            <Button
-              type="button"
-              onClick={handleVerifyOtp}
-              variant="primary"
-              className="w-full mt-2"
-            >
-              Verify OTP
-            </Button>
-          </>
-        )}
+          </div>
 
-        {otpVerified && (
-          <>
-            <Label htmlFor="password">New Password</Label>
+          <button
+            type="button"
+            onClick={handleVerifyOtp}
+            className="w-full py-2.5 sm:py-3 mt-4 sm:mt-6 font-semibold text-white text-sm sm:text-base transition rounded-xl hover:opacity-90 disabled:opacity-60 active:scale-95"
+            style={{ backgroundColor: colors.darkPurple }}
+          >
+            Verify OTP
+          </button>
+        </div>
+      )}
+
+      {/* New Password Input */}
+      {otpVerified && (
+        <div className="space-y-4 sm:space-y-5">
+          <div>
+            <label
+              className="block mb-2 text-xs sm:text-sm font-medium"
+              style={{ color: colors.darkPurple }}
+            >
+              New Password
+            </label>
             <div className="relative">
-              <Input
-                id="password"
+              <input
                 type={showNew ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Enter new password"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base transition border-2 outline-none rounded-xl"
+                style={{ borderColor: colors.lightPurple }}
               />
               <button
                 type="button"
                 onClick={() => setShowNew(!showNew)}
-                className="absolute right-3 top-2.5 p-1 hover:bg-gray-100 rounded transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-lg sm:text-xl hover:opacity-70 transition"
               >
                 {showNew ? "👁" : "👁‍🗨"}
               </button>
             </div>
-            <Button
-              type="submit"
-              onClick={handleSubmit}
-              variant="primary"
-              className="w-full mt-2"
-            >
-              Update Password
-            </Button>
-          </>
-        )}
-      </Card>
+          </div>
+
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="w-full py-2.5 sm:py-3 mt-4 sm:mt-6 font-semibold text-white text-sm sm:text-base transition rounded-xl hover:opacity-90 disabled:opacity-60 active:scale-95"
+            style={{ backgroundColor: colors.darkPurple }}
+          >
+            Update Password
+          </button>
+        </div>
+      )}
     </div>
   );
 }
