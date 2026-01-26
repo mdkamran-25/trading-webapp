@@ -6,6 +6,7 @@ import {
   Users,
   ShoppingBag,
   ArrowRight,
+  Wallet,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js";
@@ -15,7 +16,15 @@ import Support from "../support/Support";
 import pako from "pako";
 import PopupCard from "./PopupCard";
 import LiveProof from "../invest/LiveProofList";
-import { Card, Text, Button, BottomNavigation, Badge } from "../../components";
+import { colors } from "../../utils/colors";
+import {
+  Card,
+  Text,
+  Button,
+  BottomNavigation,
+  Badge,
+  Sidebar,
+} from "../../components";
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState("Home");
@@ -56,7 +65,6 @@ const HomePage = () => {
         }
         const res1 = await tokenVerify(token, UserData?.phone);
         try {
-          console.log(res1);
           if (res1.status === 200 && res1.data.success) {
             // ✅ Token valid, user data in res.data.data
           } else {
@@ -86,7 +94,6 @@ const HomePage = () => {
         setUserData(UserData);
 
         const res = await getUserInfo(UserData._id); // fetch user info
-        console.log(res?.data?.users?.team1);
         setTeamSize(res?.data?.activeCount || 0);
         setBalance(res?.data?.users?.balance || "0");
         setwithdraw(res?.data?.users?.Withdrawal || "0");
@@ -163,333 +170,344 @@ const HomePage = () => {
   ];
 
   return (
-    <>
-      {/* --- Top Navigation (Desktop Only) --- */}
-      <nav className="fixed top-0 left-0 right-0 z-50 hidden border-b-2 shadow-lg bg-gradient-to-b from-white to-white/95 backdrop-blur-md border-purple-300/30 md:block">
-        <div className="flex items-center justify-between gap-2 px-4 py-3 md:px-6 md:py-4">
-          {/* Logo */}
-          <div className="flex-shrink-0 min-w-[50px]">
-            <img
-              src="/Sub Container1.svg"
-              alt="Real Estate Logo"
-              className="object-cover w-12 h-12 border-2 rounded-full shadow-lg md:w-12 md:h-12"
-            />
-          </div>
+    <div className="flex w-full min-h-screen bg-gray-50">
+      {/* Sidebar - Desktop & Mobile */}
+      <div className="fixed inset-0 lg:relative lg:inset-auto">
+        <Sidebar />
+      </div>
 
-          {/* Nav Items */}
-          <div className="flex items-center justify-around flex-1 gap-0">
-            {tabs.map((tab) => (
-              <button
-                key={tab.name}
-                className={`flex flex-col items-center gap-1 px-2 md:px-3 py-2 rounded-lg transition-all flex-1 justify-center min-w-[60px] md:min-w-[80px] font-semibold text-xs md:text-sm whitespace-nowrap ${
-                  activeTab === tab.name
-                    ? "text-purple-600 bg-gradient-to-b from-purple-100 to-purple-50 border-b-3 border-purple-600"
-                    : "text-gray-400 hover:text-purple-600 hover:bg-purple-50"
-                }`}
-                onClick={() => {
-                  setActiveTab(tab.name);
-                  navigate(tab.path);
+      {/* Main Content */}
+      <div className="flex flex-col flex-1 w-full lg:ml-0">
+        <div
+          className="flex-1 px-4 pt-16 pb-28 sm:pt-6 sm:pb-8 sm:px-6 lg:px-8 lg:pt-4 lg:pb-8"
+          style={{ backgroundColor: colors.lightBgContent }}
+        >
+          {/* Welcome Section - ChatGPT Style */}
+          <div className="max-w-4xl mx-auto mb-8">
+            {/* Greeting */}
+            <div className="mb-12 text-center">
+              <h1
+                style={{ color: colors.darkPurple }}
+                className="mb-2 text-4xl font-bold md:text-5xl"
+              >
+                Welcome back, {UserData.name || "User"}! 👋
+              </h1>
+              <p
+                style={{ color: colors.mediumPurple }}
+                className="text-lg md:text-xl"
+              >
+                What would you like to do today?
+              </p>
+            </div>
+
+            {/* Quick Action Cards - Grid */}
+            <div className="grid grid-cols-1 gap-4 mb-8 md:grid-cols-2">
+              {/* Invest Card */}
+              <div
+                onClick={() => navigate("/invest")}
+                className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                style={{
+                  backgroundColor: colors.lightBgCard,
+                  border: `1px solid ${colors.lightPurpleOverlay50}`,
+                  boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
                 }}
               >
-                {tab.icon}
-                <span>{tab.name}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </nav>
-
-      {/* --- Bottom Navigation (Mobile & Tablet) --- */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 border-t-2 shadow-lg bg-gradient-to-t from-white to-white/95 backdrop-blur-md border-purple-300/30 md:hidden">
-        <div className="flex items-center justify-around gap-0 px-2 py-3">
-          {tabs.map((tab) => (
-            <button
-              key={tab.name}
-              className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-all flex-1 justify-center min-w-[50px] font-semibold text-xs ${
-                activeTab === tab.name
-                  ? "text-purple-600 bg-gradient-to-b from-purple-100 to-purple-50 border-t-3 border-purple-600"
-                  : "text-gray-400 hover:text-purple-600 hover:bg-purple-50"
-              }`}
-              onClick={() => {
-                setActiveTab(tab.name);
-                navigate(tab.path);
-              }}
-            >
-              {tab.icon}
-              <span>{tab.name}</span>
-            </button>
-          ))}
-        </div>
-      </nav>
-
-      <div className="min-h-screen px-4 pt-4 pb-28 md:pt-28 md:pb-8 md:px-6 bg-gradient-to-br from-white via-purple-50/50 to-purple-100/30">
-        {/* --- Wallet Card --- */}
-        <Card
-          variant="default"
-          padding="lg"
-          className="relative mb-5 overflow-hidden text-white bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl md:p-6 shadow-xl"
-        >
-          {/* Image on Right */}
-          <div className="absolute top-0 bottom-0 w-40 -right-8 md:-right-6 md:w-48 opacity-40 md:opacity-50">
-            <img
-              src="/Image.png"
-              alt="Wallet Decoration"
-              className="object-cover w-full h-full"
-            />
-          </div>
-
-          {/* Content on Left */}
-          <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex items-center justify-center w-20 h-20 bg-white rounded-full ring-2 ring-white/30">
-                <img
-                  src="/logo.svg"
-                  alt="Logo"
-                  className="object-contain w-14 h-14"
-                />
+                <div className="flex items-start gap-4">
+                  <div
+                    className="p-3 rounded-lg"
+                    style={{ backgroundColor: colors.lightPurple }}
+                  >
+                    <DollarSign
+                      size={24}
+                      style={{ color: colors.darkPurple }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3
+                      style={{ color: colors.darkPurple }}
+                      className="mb-1 font-semibold"
+                    >
+                      Start Investing
+                    </h3>
+                    <p
+                      style={{ color: colors.mediumPurple }}
+                      className="text-sm"
+                    >
+                      Browse investment opportunities
+                    </p>
+                  </div>
+                </div>
               </div>
-              <Text
-                variant="h2"
-                className="text-2xl font-bold md:text-xl text-white"
+
+              {/* Teams Card */}
+              <div
+                onClick={() => navigate("/teams")}
+                className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                style={{
+                  backgroundColor: colors.lightBgCard,
+                  border: `1px solid ${colors.lightPurpleOverlay50}`,
+                  boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
+                }}
               >
-                Main Wallet
-              </Text>
+                <div className="flex items-start gap-4">
+                  <div
+                    className="p-3 rounded-lg"
+                    style={{ backgroundColor: colors.lightPurple }}
+                  >
+                    <Users size={24} style={{ color: colors.darkPurple }} />
+                  </div>
+                  <div className="flex-1">
+                    <h3
+                      style={{ color: colors.darkPurple }}
+                      className="mb-1 font-semibold"
+                    >
+                      My Team
+                    </h3>
+                    <p
+                      style={{ color: colors.mediumPurple }}
+                      className="text-sm"
+                    >
+                      Manage your team members
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Wallet Card */}
+              <div
+                onClick={() => navigate("/wallet")}
+                className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                style={{
+                  backgroundColor: colors.lightBgCard,
+                  border: `1px solid ${colors.lightPurpleOverlay50}`,
+                  boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
+                }}
+              >
+                <div className="flex items-start gap-4">
+                  <div
+                    className="p-3 rounded-lg"
+                    style={{ backgroundColor: colors.lightPurple }}
+                  >
+                    <Wallet size={24} style={{ color: colors.darkPurple }} />
+                  </div>
+                  <div className="flex-1">
+                    <h3
+                      style={{ color: colors.darkPurple }}
+                      className="mb-1 font-semibold"
+                    >
+                      My Wallet
+                    </h3>
+                    <p
+                      style={{ color: colors.mediumPurple }}
+                      className="text-sm"
+                    >
+                      View balance & transactions
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Account Card */}
+              <div
+                onClick={() => navigate("/account")}
+                className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                style={{
+                  backgroundColor: colors.lightBgCard,
+                  border: `1px solid ${colors.lightPurpleOverlay50}`,
+                  boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
+                }}
+              >
+                <div className="flex items-start gap-4">
+                  <div
+                    className="p-3 rounded-lg"
+                    style={{ backgroundColor: colors.lightPurple }}
+                  >
+                    <User size={24} style={{ color: colors.darkPurple }} />
+                  </div>
+                  <div className="flex-1">
+                    <h3
+                      style={{ color: colors.darkPurple }}
+                      className="mb-1 font-semibold"
+                    >
+                      My Account
+                    </h3>
+                    <p
+                      style={{ color: colors.mediumPurple }}
+                      className="text-sm"
+                    >
+                      Update your profile
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 pr-4 mb-4 md:gap-4">
-              <div>
-                <Text
-                  variant="sm"
-                  className="font-extrabold text-md md:text-sm text-white/90"
-                >
-                  Your Balance
-                </Text>
-                <Text
-                  variant="h2"
-                  className="mt-1 text-xl font-bold text-white md:text-2xl"
+            {/* Stats Section */}
+            <div className="grid grid-cols-3 gap-4 mb-12">
+              <div
+                className="p-4 text-center rounded-lg"
+                style={{ backgroundColor: colors.lightPurpleOverlay15 }}
+              >
+                <p
+                  style={{ color: colors.darkPurple }}
+                  className="mb-1 text-2xl font-bold md:text-3xl"
                 >
                   ₹{balance}
-                </Text>
-              </div>
-              <div>
-                <Text
-                  variant="sm"
-                  className="font-extrabold text-md md:text-sm text-white/90"
+                </p>
+                <p
+                  style={{ color: colors.mediumPurple }}
+                  className="text-xs md:text-sm"
                 >
-                  Total Profit
-                </Text>
-                <Text
-                  variant="h2"
-                  className="mt-1 text-xl font-bold text-white md:text-2xl"
+                  Balance
+                </p>
+              </div>
+              <div
+                className="p-4 text-center rounded-lg"
+                style={{ backgroundColor: `${colors.lightPurple}15` }}
+              >
+                <p
+                  style={{ color: colors.darkPurple }}
+                  className="mb-1 text-2xl font-bold md:text-3xl"
+                >
+                  {TeamSize}
+                </p>
+                <p
+                  style={{ color: colors.mediumPurple }}
+                  className="text-xs md:text-sm"
+                >
+                  Team Members
+                </p>
+              </div>
+              <div
+                className="p-4 text-center rounded-lg"
+                style={{ backgroundColor: colors.lightPurpleOverlay15 }}
+              >
+                <p
+                  style={{ color: colors.darkPurple }}
+                  className="mb-1 text-2xl font-bold md:text-3xl"
                 >
                   ₹{withdraw}
-                </Text>
+                </p>
+                <p
+                  style={{ color: colors.mediumPurple }}
+                  className="text-xs md:text-sm"
+                >
+                  Withdrawable
+                </p>
               </div>
             </div>
-
-            <div className="flex gap-3 pr-4">
-              <Button
-                variant="primary"
-                onClick={() => navigate("/recharge")}
-                className="flex-1 text-sm md:text-base"
-              >
-                Recharge
-              </Button>
-              <Button
-                variant="primary"
-                onClick={() => navigate("/withdraw")}
-                className="flex-1 text-sm md:text-base"
-              >
-                Withdraw
-              </Button>
-            </div>
-          </div>
-        </Card>
-
-        {/* --- Icon Grid --- */}
-        <div className="grid grid-cols-1 gap-4 mb-5 md:grid-cols-2">
-          <Card
-            variant="default"
-            padding="lg"
-            className="text-center cursor-pointer bg-gradient-to-br from-white to-purple-50 border border-purple-200/50 hover:border-purple-500 hover:shadow-lg transition-all"
-            onClick={() => navigate("/teams")}
-          >
-            <Users size={28} className="mx-auto mb-2 text-purple-600" />
-            <Text
-              variant="sm"
-              className="text-xs font-semibold text-gray-800 md:text-sm"
-            >
-              Teams
-            </Text>
-          </Card>
-
-          <Card
-            variant="default"
-            padding="lg"
-            className="text-center cursor-pointer bg-gradient-to-br from-white to-purple-50 border border-purple-200/50 hover:border-purple-500 hover:shadow-lg transition-all"
-            onClick={() => navigate("/orders")}
-          >
-            <ShoppingBag size={28} className="mx-auto mb-2 text-purple-600" />
-            <Text
-              variant="sm"
-              className="text-xs font-semibold text-gray-800 md:text-sm"
-            >
-              Orders
-            </Text>
-          </Card>
-        </div>
-
-        <PopupCard />
-
-        {/* --- Invitation Card --- */}
-        <Card
-          variant="default"
-          padding="lg"
-          className="mb-5 border border-purple-200/50 hover:shadow-xl transition-all"
-        >
-          <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <Text
-              variant="h3"
-              className="text-lg font-bold text-gray-800 md:text-xl"
-            >
-              🎁 Invitation
-            </Text>
-            <Button
-              variant="secondary"
-              onClick={() => navigate("/teams")}
-              className="flex items-center gap-1 text-xs md:gap-2 md:text-sm hover:gap-3"
-            >
-              My team{" "}
-              <ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />
-            </Button>
           </div>
 
-          <div className="flex flex-wrap items-start gap-3 mb-4 md:gap-4 md:flex-nowrap">
-            <div className="flex-shrink-0 w-16 h-16 overflow-hidden border-2 border-purple-500 rounded-full md:w-20 md:h-20 bg-gradient-to-br from-purple-50 to-purple-100">
-              <img
-                src="https://img.freepik.com/free-vector/contact-concept-landing-page_52683-21298.jpg?semt=ais_hybrid&w=740"
-                alt="Invitation Icon"
-                className="object-cover w-full h-full"
-              />
-            </div>
-            <div className="flex-1">
-              <Text
-                variant="sm"
-                className="mb-2 text-xs font-medium text-gray-600 md:text-sm"
+          {/* Additional Sections */}
+          <div className="max-w-4xl mx-auto space-y-8">
+            {/* Invitation Card */}
+            <div
+              className="p-6 mb-8 rounded-lg"
+              style={{
+                backgroundColor: colors.lightPurpleOverlay10,
+                border: `1px solid ${colors.lightPurpleOverlay40}`,
+              }}
+            >
+              <h3
+                style={{ color: colors.darkPurple }}
+                className="mb-4 text-lg font-semibold"
               >
-                📱 Promotional Links
-              </Text>
-              <Text
-                variant="sm"
-                className="text-xs font-semibold text-gray-700 bg-purple-50 p-2 md:p-3 rounded border-l-4 border-purple-500 break-all max-h-[80px] overflow-y-auto"
+                🎁 Invite Friends & Earn
+              </h3>
+              <p
+                style={{ color: colors.mediumPurple }}
+                className="mb-4 text-sm"
+              >
+                Share your referral link and get rewards when they join!
+              </p>
+              <div
+                className="p-3 mb-4 font-mono text-xs break-all rounded-lg md:text-sm"
+                style={{
+                  backgroundColor: colors.lightPurpleOverlay20,
+                  color: colors.darkPurple,
+                  border: `1px solid ${colors.lightPurpleOverlay30}`,
+                }}
               >
                 http://realstateinvest.in/register?invitation_code=
                 {UserData.referralCode}
-              </Text>
+              </div>
+              <button
+                onClick={copyLink}
+                className="w-full px-4 py-2.5 rounded-lg font-medium transition-all text-sm"
+                style={{
+                  backgroundColor: colors.lightPurple,
+                  color: colors.darkPurple,
+                }}
+              >
+                {copied ? "✅ Copied!" : "📋 Copy Link"}
+              </button>
+            </div>
+
+            {/* Popular Features */}
+            <div>
+              <h2
+                style={{ color: colors.darkPurple }}
+                className="mb-4 text-lg font-semibold"
+              >
+                Popular Features
+              </h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {/* Lucky Draw */}
+                <div
+                  onClick={() =>
+                    navigate("/luckydraw", { state: UserData?._id })
+                  }
+                  className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                  style={{
+                    backgroundColor: colors.lightBgCard,
+                    border: `1px solid ${colors.lightPurpleOverlay50}`,
+                    boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
+                  }}
+                >
+                  <h4
+                    style={{ color: colors.darkPurple }}
+                    className="mb-2 font-semibold"
+                  >
+                    🍡 Lucky Draw
+                  </h4>
+                  <p style={{ color: colors.mediumPurple }} className="text-sm">
+                    Win amazing prizes daily
+                  </p>
+                </div>
+
+                {/* Help & Support */}
+                <div
+                  onClick={() => navigate("/support")}
+                  className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                  style={{
+                    backgroundColor: colors.lightBgCard,
+                    border: `1px solid ${colors.lightPurpleOverlay50}`,
+                    boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
+                  }}
+                >
+                  <h4
+                    style={{ color: colors.darkPurple }}
+                    className="mb-2 font-semibold"
+                  >
+                    💬 Support
+                  </h4>
+                  <p style={{ color: colors.mediumPurple }} className="text-sm">
+                    Get help anytime
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <Button variant="primary" onClick={copyLink} className="w-full">
-            {copied ? "✅ Copied!" : "📋 Copy Invitation Link"}
-          </Button>
-        </Card>
+          <Support />
+        </div>
 
-        {/* --- Lucky Draw --- */}
-        <Card
-          variant="default"
-          padding="lg"
-          className="relative mb-5 overflow-hidden text-white bg-gradient-to-br from-purple-600 to-purple-700 rounded-2xl md:p-6 shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
-        >
-          <div className="relative z-10">
-            <Text variant="h3" className="mb-2 text-lg font-bold md:text-xl">
-              🎡 Lucky Draw
-            </Text>
-            <Text
-              variant="body"
-              className="mb-4 text-xs md:text-sm text-white/90"
-            >
-              🎯 The lucky wheel keeps spinning with great gifts!
-            </Text>
-            <Button
-              variant="primary"
-              onClick={() => navigate("/luckydraw", { state: UserData?._id })}
-              className="w-full"
-            >
-              Try Your Luck →
-            </Button>
-          </div>
-        </Card>
-
-        <LiveProof />
-
-        {/* --- Quest Rewards --- */}
-        <Card
-          variant="default"
-          padding="lg"
-          className="mb-8 border border-purple-200/50 bg-gradient-to-br from-white to-purple-50/50"
-        >
-          <Text
-            variant="h3"
-            className="mb-4 text-lg font-bold text-gray-800 md:text-xl"
-          >
-            🏆 Quest Rewards
-          </Text>
-
-          <div className="space-y-3 md:space-y-4">
-            {questRewards.map((quest) => (
-              <Card
-                key={quest.id}
-                variant="default"
-                padding="md"
-                className="flex items-center gap-3 border border-purple-200/50 hover:border-purple-500 hover:shadow-md transition-all md:gap-4"
-              >
-                <div className="flex-shrink-0 w-12 h-12 overflow-hidden rounded-lg md:w-14 md:h-14 bg-gradient-to-br from-purple-50 to-purple-100">
-                  <img
-                    src="https://img.freepik.com/free-vector/young-couple-using-tablet_603843-987.jpg?semt=ais_hybrid&w=740&q=80"
-                    alt="Quest Icon"
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <Text
-                    variant="sm"
-                    className="text-xs font-semibold text-gray-800 truncate md:text-sm"
-                  >
-                    {quest.text}
-                  </Text>
-                  <div className="w-full h-1.5 md:h-2 bg-gray-200 rounded-full overflow-hidden mt-2 border border-purple-200/50">
-                    <div
-                      className="h-full transition-all duration-300 rounded-full bg-gradient-to-r from-purple-600 to-purple-700"
-                      style={{
-                        width: `${(TeamSize / quest.progress.total) * 100}%`,
-                      }}
-                    ></div>
-                  </div>
-                </div>
-
-                <div className="flex-shrink-0 text-right">
-                  <Text
-                    variant="sm"
-                    className="text-xs font-bold text-purple-600 md:text-sm"
-                  >
-                    💰{quest.reward}
-                  </Text>
-                  <Text
-                    variant="sm"
-                    className="text-xs font-medium text-gray-500"
-                  >
-                    {TeamSize}/{quest.progress.total}
-                  </Text>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </Card>
+        {/* Bottom Navigation - Mobile Only */}
+        <div className="lg:hidden">
+          <BottomNavigation activeId="home" />
+        </div>
       </div>
-
-      <Support />
-    </>
+    </div>
   );
 };
 

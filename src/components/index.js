@@ -30,4 +30,5 @@ export {
   FormCard,
   TabsNavigation,
   ProfileCard,
+  Sidebar,
 } from './organisms';

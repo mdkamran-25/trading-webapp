@@ -39,6 +39,20 @@ export const colors = {
   lightPurple: '#AFB3FF',  // Light purple - accents/borders
   darkPurple: '#100A55',   // Dark purple - backgrounds/headings
   mediumPurple: '#838CF1', // Medium purple - secondary elements
+  
+  // Light theme backgrounds
+  lightBg: '#f8f7ff',      // Very light purple/white background
+  lightBgContent: '#fafbff', // Light content area background
+  lightBgCard: '#ffffff',  // White card background
+  
+  // Light theme transparency overlays
+  lightPurpleOverlay15: 'rgba(175, 179, 255, 0.15)', // Light purple overlay for backgrounds
+  lightPurpleOverlay30: 'rgba(175, 179, 255, 0.3)',  // Light purple overlay for hover
+  lightPurpleOverlay10: 'rgba(175, 179, 255, 0.1)',  // Very light purple overlay
+  lightPurpleOverlay50: 'rgba(175, 179, 255, 0.5)',  // Medium light purple overlay
+  lightPurpleOverlay33: 'rgba(175, 179, 255, 0.33)', // Border overlay
+  lightPurpleOverlay40: 'rgba(175, 179, 255, 0.4)',  // Medium overlay
+  lightPurpleOverlay20: 'rgba(175, 179, 255, 0.2)',  // Light overlay for small elements
 };
 
 // Typography Scales
