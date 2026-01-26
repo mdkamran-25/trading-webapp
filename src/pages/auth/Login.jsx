@@ -235,7 +235,7 @@ const Login = () => {
         ) : (
           <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
             {/* Logo */}
-            <div className="relative z-10 w-full mb-6 text-center sm:text-left">
+            <div className="relative z-10 w-full mb-6 text-center sm:text-left sm:mb-12">
               <img
                 src="/MainLogo.svg"
                 alt="Logo"
