@@ -5,6 +5,7 @@ import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import pako from "pako";
 import { Card, Button, Text } from "../../components";
+import { colors } from "../../utils/colors";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -105,130 +106,297 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-white font-sans pb-2">
-      {/* Top Bar with Gradient */}
-      <div className="w-full h-36 bg-gradient-to-b from-yellow-300 to-orange-400 rounded-b-3xl flex justify-center items-center pt-5">
-        <div className="bg-white rounded-full p-1 shadow-lg">
-          <img
-            src="/logo.jpg"
-            alt="Logo"
-            className="w-12 h-12 object-contain"
-          />
+    <div className="flex flex-col min-h-screen overflow-hidden font-sans lg:flex-row">
+      {/* Left Column - Register Form */}
+      <div
+        className="relative flex flex-col items-center justify-center w-full min-h-screen px-4 py-8 overflow-hidden sm:px-6 md:px-8 lg:w-1/2 lg:px-12 lg:py-0 lg:min-h-0"
+        style={{ backgroundColor: "#F5F7FF" }}
+      >
+        {/* Decorative curved shape - bottom left */}
+        <div
+          className="absolute bottom-0 left-0 -mb-48 -ml-48 rounded-full w-96 h-96 opacity-20"
+          style={{ backgroundColor: colors.mediumPurple }}
+        />
+        <div
+          className="absolute top-0 right-0 w-40 h-40 -mt-20 -mr-20 rounded-full opacity-10"
+          style={{ backgroundColor: colors.lightPurple }}
+        />
+
+        {/* Register Heading */}
+        <div className="relative z-10 w-full max-w-md mb-6 text-center sm:mb-8 sm:text-left">
+          <h1
+            className="text-3xl font-extrabold sm:text-4xl"
+            style={{ color: colors.darkPurple }}
+          >
+            Register
+          </h1>
+          <p
+            className="mt-1 text-xs sm:mt-2 sm:text-sm"
+            style={{ color: colors.mediumPurple }}
+          >
+            Create your trading account
+          </p>
+        </div>
+
+        {/* Register Form */}
+        <form className="relative z-10 w-full max-w-xs space-y-4 sm:max-w-sm md:max-w-md sm:space-y-5">
+          {/* Phone Number Input */}
+          <div>
+            <label
+              className="block mb-2 text-xs font-medium sm:text-sm"
+              style={{ color: colors.darkPurple }}
+            >
+              Phone Number
+            </label>
+            <div className="flex gap-2">
+              <div
+                className="flex flex-1 overflow-hidden border-2 rounded-xl"
+                style={{ borderColor: colors.lightPurple }}
+              >
+                <span
+                  className="flex items-center px-3 sm:px-4 py-2.5 sm:py-3 font-semibold text-xs sm:text-sm"
+                  style={{
+                    backgroundColor: colors.lightPurple,
+                    color: colors.darkPurple,
+                  }}
+                >
+                  +91
+                </span>
+                <input
+                  type="text"
+                  placeholder="Enter your number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  disabled={otpVerified}
+                  className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-800 outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={handleSendOtp}
+                disabled={loading || otpSent || otpVerified}
+                className="px-3 sm:px-4 py-2.5 sm:py-3 font-semibold text-white text-xs sm:text-sm rounded-xl transition hover:opacity-90 disabled:opacity-60"
+                style={{ backgroundColor: colors.darkPurple }}
+              >
+                {loading ? "Sending..." : otpVerified ? "✓" : "Send"}
+              </button>
+            </div>
+          </div>
+
+          {/* OTP Input */}
+          {otpSent && !otpVerified && (
+            <div>
+              <label
+                className="block mb-2 text-xs font-medium sm:text-sm"
+                style={{ color: colors.darkPurple }}
+              >
+                Enter OTP
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Enter OTP code"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base transition border-2 outline-none rounded-xl"
+                  style={{ borderColor: colors.lightPurple }}
+                />
+                <button
+                  type="button"
+                  onClick={handleVerifyOtp}
+                  className="px-3 sm:px-4 py-2.5 sm:py-3 font-semibold text-white text-xs sm:text-sm rounded-xl transition hover:opacity-90"
+                  style={{ backgroundColor: colors.darkPurple }}
+                >
+                  Verify
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Password Field */}
+          <div>
+            <label
+              className="block mb-2 text-xs font-medium sm:text-sm"
+              style={{ color: colors.darkPurple }}
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={!otpVerified}
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base transition border-2 outline-none rounded-xl disabled:bg-gray-100 disabled:cursor-not-allowed"
+              style={{ borderColor: colors.lightPurple }}
+            />
+          </div>
+
+          {/* Trade Password Field */}
+          <div>
+            <label
+              className="block mb-2 text-xs font-medium sm:text-sm"
+              style={{ color: colors.darkPurple }}
+            >
+              Trade Password
+            </label>
+            <input
+              type="password"
+              placeholder="Enter your trade password"
+              value={tradePassword}
+              onChange={(e) => setTradePassword(e.target.value)}
+              disabled={!otpVerified}
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base transition border-2 outline-none rounded-xl disabled:bg-gray-100 disabled:cursor-not-allowed"
+              style={{ borderColor: colors.lightPurple }}
+            />
+          </div>
+
+          {/* Invitation Code Field */}
+          <div>
+            <label
+              className="block mb-2 text-xs font-medium sm:text-sm"
+              style={{ color: colors.darkPurple }}
+            >
+              Invitation Code (Optional)
+            </label>
+            <input
+              type="text"
+              placeholder="Enter invitation code"
+              value={refCode}
+              onChange={(e) => setRefCode(e.target.value)}
+              disabled={!otpVerified}
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base transition border-2 outline-none rounded-xl disabled:bg-gray-100 disabled:cursor-not-allowed"
+              style={{ borderColor: colors.lightPurple }}
+            />
+          </div>
+
+          {/* Register Button */}
+          <button
+            type="button"
+            onClick={handleRegister}
+            disabled={!otpVerified || loading}
+            className="w-full py-2.5 sm:py-3 mt-4 sm:mt-6 font-semibold text-white text-sm sm:text-base transition rounded-xl hover:opacity-90 disabled:opacity-60 active:scale-95"
+            style={{ backgroundColor: colors.darkPurple }}
+          >
+            {loading ? "Please wait..." : "Register"}
+          </button>
+        </form>
+
+        {/* Login Link */}
+        <div className="relative z-10 flex items-center justify-center w-full max-w-md mt-4 text-xs sm:mt-6 sm:text-sm">
+          <p style={{ color: colors.darkPurple }}>
+            Already have an account?{" "}
+            <button
+              onClick={() => navigate("/login")}
+              className="font-semibold transition hover:opacity-70"
+              style={{ color: colors.mediumPurple }}
+            >
+              Login
+            </button>
+          </p>
         </div>
       </div>
 
-      {/* Hero Image */}
-      <img
-        src="/fe9af9f2fc1bb01a72b9e6dc233b320ba46ce7ff.png"
-        alt="real estate"
-        className="w-11/12 h-48 object-cover rounded-2xl mt-8 z-10"
-      />
-
-      {/* Register Card */}
-      <Card variant="gradient" padding="lg" className="w-11/12 mt-10 z-10">
-        <Text variant="h2" weight="bold" className="text-center mb-5">
-          Register
-        </Text>
-
-        {/* Phone + Send OTP */}
-        <div className="flex items-center bg-white rounded-full border-2 border-yellow-300 px-4 py-3 mb-4">
-          <input
-            type="text"
-            placeholder="Please enter your number"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            disabled={otpVerified}
-            className="flex-1 outline-none bg-transparent text-gray-800 disabled:bg-gray-100 disabled:cursor-not-allowed"
-          />
-          <Button
-            variant={otpVerified ? "ghost" : "primary"}
-            size="sm"
-            onClick={handleSendOtp}
-            disabled={loading || otpSent || otpVerified}
-            className="ml-2"
-          >
-            {loading ? "Sending..." : otpVerified ? "Verified" : "Send OTP"}
-          </Button>
-        </div>
-
-        {/* OTP Input */}
-        {otpSent && !otpVerified && (
-          <div className="flex items-center bg-white rounded-full border-2 border-yellow-300 px-4 py-3 mb-4">
-            <input
-              type="text"
-              placeholder="Enter OTP"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              className="flex-1 outline-none bg-transparent text-gray-800"
-            />
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={handleVerifyOtp}
-              className="ml-2"
-            >
-              Verify
-            </Button>
-          </div>
-        )}
-
-        {/* Password Field */}
-        <div className="bg-white rounded-full border-2 border-yellow-300 px-4 py-3 mb-4">
-          <input
-            type="password"
-            placeholder="Please enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            disabled={!otpVerified}
-            className="w-full outline-none bg-transparent text-gray-800 disabled:bg-gray-100 disabled:cursor-not-allowed"
-          />
-        </div>
-
-        {/* Trade Password Field */}
-        <div className="bg-white rounded-full border-2 border-yellow-300 px-4 py-3 mb-4">
-          <input
-            type="password"
-            placeholder="Please enter your trade password"
-            value={tradePassword}
-            onChange={(e) => setTradePassword(e.target.value)}
-            disabled={!otpVerified}
-            className="w-full outline-none bg-transparent text-gray-800 disabled:bg-gray-100 disabled:cursor-not-allowed"
-          />
-        </div>
-
-        {/* Invitation Code Field */}
-        <div className="bg-white rounded-full border-2 border-yellow-300 px-4 py-3 mb-6">
-          <input
-            type="text"
-            placeholder="Enter Invitation Code"
-            value={refCode}
-            onChange={(e) => setRefCode(e.target.value)}
-            disabled={!otpVerified}
-            className="w-full outline-none bg-transparent text-gray-800 disabled:bg-gray-100 disabled:cursor-not-allowed"
-          />
-        </div>
-
-        {/* Login Redirect */}
-        <Text variant="body" className="text-center">
-          Already have an account?{" "}
-          <span
-            onClick={() => navigate("/login")}
-            className="text-black font-semibold underline cursor-pointer hover:opacity-80 transition"
-          >
-            Login
-          </span>
-        </Text>
-      </Card>
-
-      {/* Register Button */}
-      <Button
-        onClick={handleRegister}
-        disabled={!otpVerified || loading}
-        variant="gradient"
-        className="w-1/2 mt-6 z-10"
+      {/* Right Column - Illustration & Messaging */}
+      <div
+        className="relative flex-col items-center justify-between hidden w-1/2 p-12 overflow-hidden lg:flex"
+        style={{
+          background: `linear-gradient(135deg, ${colors.darkPurple} 0%, ${colors.mediumPurple} 100%)`,
+        }}
       >
-        {loading ? "Please wait..." : "Register"}
-      </Button>
+        {/* Decorative circles background */}
+        <div
+          className="absolute w-40 h-40 rounded-full top-10 right-10 opacity-10"
+          style={{ backgroundColor: colors.lightPurple }}
+        />
+        <div
+          className="absolute w-56 h-56 rounded-full bottom-10 left-10 opacity-10"
+          style={{ backgroundColor: colors.lightPurple }}
+        />
+
+        {/* Content Container */}
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+          {/* Illustration */}
+          <img
+            src="/kindpng_2190956 1.png"
+            alt="Trading Illustration"
+            className="object-contain h-64 mb-8"
+          />
+
+          {/* Tagline */}
+          <h2 className="mb-3 text-xl font-bold leading-tight sm:mb-4 sm:text-3xl lg:text-4xl">
+            Start Your Investment Journey
+          </h2>
+
+          {/* Sub-message */}
+          <p
+            className="px-2 text-sm sm:text-base lg:text-lg"
+            style={{ color: colors.lightPurple }}
+          >
+            Join thousands of successful investors today
+          </p>
+
+          {/* Investment Features Icons */}
+          <div className="w-full max-w-2xl px-4 py-6 mt-8 bg-white sm:px-6 lg:px-8 sm:py-8 sm:mt-12 rounded-2xl">
+            <div className="flex justify-center gap-6 sm:gap-16 lg:gap-28">
+              {/* Real Estate Investment */}
+              <div className="flex flex-col items-center gap-2">
+                <img
+                  src="/Real Estate Investment_-Euro.svg"
+                  alt="Real Estate Investment"
+                  className="w-10 h-10 sm:w-14 sm:h-14"
+                />
+                <p
+                  className="text-xs font-semibold text-center sm:text-sm"
+                  style={{ color: colors.darkPurple }}
+                >
+                  Real Estate
+                </p>
+              </div>
+
+              {/* Stock Chart */}
+              <div className="flex flex-col items-center gap-2">
+                <img
+                  src="/Stock chart- Rupee.svg"
+                  alt="Stock Chart"
+                  className="w-10 h-10 sm:w-14 sm:h-14"
+                />
+                <p
+                  className="text-xs font-semibold text-center sm:text-sm"
+                  style={{ color: colors.darkPurple }}
+                >
+                  Stocks
+                </p>
+              </div>
+
+              {/* ROI */}
+              <div className="flex flex-col items-center gap-2">
+                <img
+                  src="/Roi-Rupee.svg"
+                  alt="ROI"
+                  className="w-10 h-10 sm:w-14 sm:h-14"
+                />
+                <p
+                  className="text-xs font-semibold text-center sm:text-sm"
+                  style={{ color: colors.darkPurple }}
+                >
+                  High Returns
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA Hint */}
+          <div
+            className="max-w-sm px-4 py-2 mt-6 rounded-lg sm:px-6 sm:py-3 sm:mt-8"
+            style={{ backgroundColor: colors.darkPurple }}
+          >
+            <p className="text-sm font-semibold text-center sm:text-base">
+              Get started in minutes
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

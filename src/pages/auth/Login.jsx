@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import { loginUser, SECRET_KEY } from "../../api";
-import Password from "./Password";
+import Password from "./ForgotPassword";
 import pako from "pako";
 import { Card, Text, Button } from "../../components";
 import { colors } from "../../utils/colors";

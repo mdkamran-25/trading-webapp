@@ -7,7 +7,7 @@ import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import ChangePassword from "./pages/auth/ChangePassword";
 import TradePassword from "./pages/auth/TradePassword";
-import Password from "./pages/auth/Password";
+import Password from "./pages/auth/ForgotPassword";
 
 // Account
 import Account from "./pages/account/Account";
