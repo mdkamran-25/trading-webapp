@@ -122,6 +122,15 @@ const Register = () => {
           style={{ backgroundColor: colors.lightPurple }}
         />
 
+        {/* Logo */}
+        <div className="relative z-10 w-full max-w-xs mb-6 text-center sm:max-w-sm sm:text-left md:max-w-md sm:mb-12">
+          <img
+            src="/MainLogo.svg"
+            alt="Logo"
+            className="inline-block object-contain h-12"
+          />
+        </div>
+
         {/* Register Heading */}
         <div className="relative z-10 w-full max-w-md mb-6 text-center sm:mb-8 sm:text-left">
           <h1

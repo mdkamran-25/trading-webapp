@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js";
 import pako from "pako";
 import { Card, Input, Button, Text, Label } from "../../components";
 import { colors } from "../../utils/colors";
-function Password() {
+function ForgotPassword() {
   const navigate = useNavigate();
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
@@ -271,4 +271,4 @@ function Password() {
   );
 }
 
-export default Password;
+export default ForgotPassword;

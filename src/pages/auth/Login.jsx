@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import { loginUser, SECRET_KEY } from "../../api";
-import Password from "./ForgotPassword";
+import ForgotPassword from "./ForgotPassword";
 import pako from "pako";
 import { Card, Text, Button } from "../../components";
 import { colors } from "../../utils/colors";
@@ -82,6 +82,15 @@ const Login = () => {
         />
         {!showPassword ? (
           <>
+            {/* Logo */}
+            <div className="relative z-10 w-full max-w-xs mb-6 text-center sm:max-w-sm sm:text-left md:max-w-md sm:mb-20">
+              <img
+                src="/MainLogo.svg"
+                alt="Logo"
+                className="inline-block object-contain h-12"
+              />
+            </div>
+
             {/* Login Heading */}
             <div className="w-full max-w-md mb-6 text-center sm:mb-8 sm:text-left">
               <h1
@@ -225,6 +234,15 @@ const Login = () => {
           </>
         ) : (
           <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
+            {/* Logo */}
+            <div className="relative z-10 w-full mb-6 text-center sm:text-left">
+              <img
+                src="/MainLogo.svg"
+                alt="Logo"
+                className="inline-block object-contain h-12"
+              />
+            </div>
+
             <button
               onClick={() => setShowPassword(false)}
               className="px-4 py-2 mb-6 text-sm font-semibold text-white transition sm:text-base rounded-xl hover:opacity-90 active:scale-95"
@@ -232,7 +250,7 @@ const Login = () => {
             >
               ← Back To Login
             </button>
-            <Password />
+            <ForgotPassword />
           </div>
         )}
       </div>
@@ -332,7 +350,13 @@ const Login = () => {
             style={{ backgroundColor: colors.darkPurple }}
           >
             <p className="text-sm font-semibold text-center sm:text-base">
-              Don't have an account? Register now
+              Don't have an account?{" "}
+              <button
+                onClick={handleRegisterRedirect}
+                className="underline transition hover:opacity-70"
+              >
+                Register now
+              </button>
             </p>
           </div>
         </div>
