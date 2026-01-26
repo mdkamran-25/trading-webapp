@@ -225,7 +225,7 @@ const Profile = ({ userInfo, accountData }) => {
                           ? (item.value / 1000).toFixed(1) + "K"
                           : item.value
                     }
-                    icon={<DollarSign size={16} />}
+                    icon={DollarSign}
                   />
                 ))}
               </div>

@@ -6,6 +6,7 @@ import { loginUser, SECRET_KEY } from "../../api";
 import Password from "./Password";
 import pako from "pako";
 import { Card, Text, Button } from "../../components";
+import { colors } from "../../utils/colors";
 
 const Login = () => {
   const [mobileNumber, setMobileNumber] = useState("");
@@ -64,109 +65,254 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-orange-100 overflow-y-auto font-sans">
-      {/* Top Bar with Gradient */}
-      <div className="w-full h-32 bg-gradient-to-b from-yellow-300 to-orange-400 rounded-b-3xl flex justify-center items-center">
-        <div className="bg-white rounded-full p-1 shadow-lg">
-          <img
-            src="/logo.jpg"
-            alt="Logo"
-            className="w-12 h-12 object-contain"
-          />
-        </div>
-      </div>
-
-      {/* Hero Image */}
-      <img
-        src="https://i.pinimg.com/736x/21/fa/e8/21fae80dd33394b8c7622e6d136f9597.jpg"
-        alt="real state"
-        className="w-11/12 h-48 object-cover rounded-2xl mt-4 z-10"
-      />
-
-      {/* Login Card */}
-      <Card variant="gradient" padding="lg" className="w-11/12 mt-6 z-10">
+    <div className="flex flex-col min-h-screen overflow-hidden font-sans lg:flex-row">
+      {/* Left Column - Login Form */}
+      <div
+        className="relative flex flex-col items-center justify-center w-full px-4 py-8 overflow-hidden lg:w-1/2 lg:px-12 lg:py-0"
+        style={{ backgroundColor: "#F5F7FF" }}
+      >
+        {/* Decorative curved shape - bottom left */}
+        <div
+          className="absolute bottom-0 left-0 -mb-48 -ml-48 rounded-full w-96 h-96 opacity-20"
+          style={{ backgroundColor: colors.mediumPurple }}
+        />
+        <div
+          className="absolute top-0 right-0 w-40 h-40 -mt-20 -mr-20 rounded-full opacity-10"
+          style={{ backgroundColor: colors.lightPurple }}
+        />
         {!showPassword ? (
           <>
-            <div className="flex justify-between items-center mb-5">
-              <Text variant="h2" weight="bold" color="primary">
-                Login
-              </Text>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleRegisterRedirect}
+            {/* Login Heading */}
+            <div className="w-full max-w-md mb-8">
+              <h1
+                className="text-4xl font-extrabold"
+                style={{ color: colors.darkPurple }}
               >
-                Register
-              </Button>
+                Login
+              </h1>
+              <p
+                className="mt-2 text-sm"
+                style={{ color: colors.mediumPurple }}
+              >
+                Access your trading account
+              </p>
             </div>
 
-            <form onSubmit={handleLogin} className="space-y-4">
+            {/* Login Form */}
+            <form onSubmit={handleLogin} className="w-full max-w-md space-y-5">
+              {/* Mobile Number Input */}
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
+                <label
+                  className="block mb-2 text-sm font-medium"
+                  style={{ color: colors.darkPurple }}
+                >
                   Mobile Number
                 </label>
-                <div className="flex border border-white rounded">
-                  <span className="bg-white text-gray-800 px-3 py-2 font-semibold flex items-center">
+                <div
+                  className="flex overflow-hidden border-2 rounded-xl"
+                  style={{ borderColor: colors.lightPurple }}
+                >
+                  <span
+                    className="flex items-center px-4 py-3 font-semibold"
+                    style={{
+                      backgroundColor: colors.lightPurple,
+                      color: colors.darkPurple,
+                    }}
+                  >
                     +91
                   </span>
                   <input
                     type="text"
-                    placeholder="Please enter your number"
+                    placeholder="Enter your number"
                     value={mobileNumber}
                     onChange={(e) => setMobileNumber(e.target.value)}
-                    className="flex-1 px-3 py-2 bg-white text-gray-800 outline-none"
+                    className="flex-1 px-4 py-3 text-gray-800 outline-none"
                     required
                   />
                 </div>
               </div>
 
+              {/* Password Input */}
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
+                <label
+                  className="block mb-2 text-sm font-medium"
+                  style={{ color: colors.darkPurple }}
+                >
                   Password
                 </label>
                 <input
                   type="password"
-                  placeholder="Please enter password"
+                  placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-2 bg-white text-gray-800 rounded outline-none"
+                  className="w-full px-4 py-3 transition border-2 outline-none rounded-xl"
+                  style={{ borderColor: colors.lightPurple }}
                   required
                 />
               </div>
 
-              <Button
+              {/* Login Button */}
+              <button
                 type="submit"
-                variant="primary"
-                fullWidth
                 disabled={loading}
+                className="w-full py-3 mt-6 font-semibold text-white transition rounded-xl hover:opacity-90 disabled:opacity-60"
+                style={{ backgroundColor: colors.darkPurple }}
               >
                 {loading ? "Logging in..." : "Login"}
-              </Button>
+              </button>
             </form>
 
-            <div className="flex justify-end mt-3">
+            {/* Footer Links */}
+            <div className="flex items-center justify-between w-full max-w-md mt-6 text-sm">
               <button
                 onClick={() => setShowPassword(true)}
-                className="text-black text-sm font-semibold underline hover:opacity-80 transition"
+                className="font-semibold transition hover:opacity-70"
+                style={{ color: colors.mediumPurple }}
               >
-                Forget Password
+                Forgot Password?
               </button>
+              <button
+                onClick={handleRegisterRedirect}
+                className="font-semibold transition hover:opacity-70"
+                style={{ color: colors.mediumPurple }}
+              >
+                Register
+              </button>
+            </div>
+
+            {/* Social Media Icons */}
+            <div className="relative z-10 flex gap-4 mt-10">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:opacity-70"
+              >
+                <img src="/Facebook.svg" alt="Facebook" className="w-16 h-16" />
+              </a>
+              <a
+                href="https://wa.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:opacity-70"
+              >
+                <img src="/Whatsapp.svg" alt="WhatsApp" className="w-16 h-16" />
+              </a>
+              <a
+                href="https://t.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:opacity-70"
+              >
+                <img src="/Telegram.svg" alt="Telegram" className="w-16 h-16" />
+              </a>
             </div>
           </>
         ) : (
-          <>
-            <Button
-              variant="primary"
-              fullWidth
+          <div className="w-full max-w-md">
+            <button
               onClick={() => setShowPassword(false)}
-              className="mb-4"
+              className="px-4 py-2 mb-6 font-semibold text-white transition rounded-xl hover:opacity-90"
+              style={{ backgroundColor: colors.mediumPurple }}
             >
-              Back To Login
-            </Button>
+              ← Back To Login
+            </button>
             <Password />
-          </>
+          </div>
         )}
-      </Card>
+      </div>
+
+      {/* Right Column - Illustration & Messaging */}
+      <div
+        className="relative flex-col items-center justify-between hidden w-1/2 p-12 overflow-hidden lg:flex"
+        style={{
+          background: `linear-gradient(135deg, ${colors.darkPurple} 0%, ${colors.mediumPurple} 100%)`,
+        }}
+      >
+        {/* Decorative circles background */}
+        <div
+          className="absolute w-40 h-40 rounded-full top-10 right-10 opacity-10"
+          style={{ backgroundColor: colors.lightPurple }}
+        />
+        <div
+          className="absolute w-56 h-56 rounded-full bottom-10 left-10 opacity-10"
+          style={{ backgroundColor: colors.lightPurple }}
+        />
+
+        {/* Content Container */}
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+          {/* Illustration */}
+          <img
+            src="/kindpng_2190956 1.png"
+            alt="Trading Illustration"
+            className="object-contain h-64 mb-8"
+          />
+
+          {/* Tagline */}
+          <h2 className="mb-4 text-3xl font-bold leading-tight lg:text-4xl">
+            Begin Your Investment Journey
+          </h2>
+
+          {/* Sub-message */}
+          <p className="text-lg" style={{ color: colors.lightPurple }}>
+            Access your portfolio, track gains, and grow your wealth
+          </p>
+
+          {/* Investment Features Icons */}
+          <div className="w-full max-w-2xl p-8 mt-12 bg-white rounded-2xl">
+            <div className="flex justify-center gap-28">
+              {/* Real Estate Investment */}
+              <div className="flex flex-col items-center gap-2">
+                <img
+                  src="/Real Estate Investment_-Euro.svg"
+                  alt="Real Estate Investment"
+                  className="w-14 h-14"
+                />
+                <p
+                  className="text-sm font-semibold"
+                  style={{ color: colors.darkPurple }}
+                >
+                  Real Estate
+                </p>
+              </div>
+
+              {/* Stock Chart */}
+              <div className="flex flex-col items-center gap-2">
+                <img
+                  src="/Stock chart- Rupee.svg"
+                  alt="Stock Chart"
+                  className="w-14 h-14"
+                />
+                <p
+                  className="text-sm font-semibold"
+                  style={{ color: colors.darkPurple }}
+                >
+                  Stocks
+                </p>
+              </div>
+
+              {/* ROI */}
+              <div className="flex flex-col items-center gap-2">
+                <img src="/Roi-Rupee.svg" alt="ROI" className="w-14 h-14" />
+                <p
+                  className="text-sm font-semibold"
+                  style={{ color: colors.darkPurple }}
+                >
+                  High Returns
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA Hint */}
+          <div
+            className="px-6 py-3 mt-8 rounded-lg"
+            style={{ backgroundColor: colors.darkPurple }}
+          >
+            <p className="font-semibold">Don't have an account? Register now</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

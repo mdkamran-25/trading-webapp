@@ -34,6 +34,11 @@ export const colors = {
   orangeEnd: '#ff6600',    // Dark orange
   yellowStart: '#ffc800',  // Bright yellow
   yellowEnd: '#ffaa00',    // Golden yellow
+  
+  // Purple/Lavender theme (for auth pages)
+  lightPurple: '#AFB3FF',  // Light purple - accents/borders
+  darkPurple: '#100A55',   // Dark purple - backgrounds/headings
+  mediumPurple: '#838CF1', // Medium purple - secondary elements
 };
 
 // Typography Scales
