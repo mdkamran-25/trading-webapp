@@ -63,10 +63,10 @@ function App() {
     <Router>
       <Routes>
         {/* Main Pages */}
-        <Route path="/" element={<Splash />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/splash" element={<Splash />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<HomePage />} />
         <Route path="/recharge" element={<Recharge />} />
         <Route path="/RechargeHistory" element={<RechargeHistory />} />
         <Route path="/WithdrawHistory" element={<WithdrawalHistory />} />

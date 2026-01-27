@@ -21,7 +21,7 @@ const TeamThreeLevel = () => {
         <div className="flex gap-2">
           <Button
             variant="secondary"
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/")
             className="text-sm"
           >
             Home

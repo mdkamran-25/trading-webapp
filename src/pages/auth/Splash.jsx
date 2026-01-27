@@ -10,7 +10,7 @@ function Splash() {
   useEffect(() => {
     const token = Cookies.get("tredingWeb");
     if (token) {
-      navigate("/home");
+      navigate("/");
     }
   }, [navigate]);
 

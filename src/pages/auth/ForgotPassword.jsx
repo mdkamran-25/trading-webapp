@@ -112,7 +112,7 @@ function ForgotPassword() {
 
         //         // ✅ Wait a bit before navigating (ensures cookie save)
         setTimeout(() => {
-          navigate("/home");
+          navigate("/");
         }, 200);
 
         //     } catch (err) {

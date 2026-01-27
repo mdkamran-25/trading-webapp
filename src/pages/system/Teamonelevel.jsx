@@ -24,7 +24,7 @@ const TeamOneLevel = () => {
         <div className="flex gap-3">
           <Button
             variant="secondary"
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/")}
             className="text-sm"
           >
             Home

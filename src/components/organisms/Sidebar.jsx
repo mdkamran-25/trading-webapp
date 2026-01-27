@@ -70,7 +70,7 @@ const Sidebar = () => {
   }, []);
 
   const menuItems = [
-    { name: "Home", icon: Home, path: "/home", badge: null },
+    { name: "Home", icon: Home, path: "/", badge: null },
     { name: "Invest", icon: DollarSign, path: "/invest", badge: null },
     { name: "Teams", icon: Users, path: "/teams", badge: "3" },
     { name: "My Wallet", icon: Wallet, path: "/wallet", badge: null },

@@ -95,7 +95,7 @@ const Register = () => {
         localStorage.setItem("userData", JSON.stringify(response.user));
 
         alert(response.message || "Registered successfully!");
-        navigate("/home");
+        navigate("/");
       }
     } catch (err) {
       console.error(err);

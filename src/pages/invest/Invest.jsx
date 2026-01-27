@@ -9,7 +9,7 @@ const Invest = ({ products }) => {
   const [activeTab, setActiveTab] = useState("Basic");
 
   const tabs = [
-    { name: "Home", path: "/home" },
+    { name: "Home", path: "/" },
     { name: "invest", path: "/invest" },
     { name: "Teams", path: "/teams" },
     { name: "Profile", path: "/account" },
