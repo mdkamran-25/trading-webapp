@@ -494,7 +494,7 @@ const HomePage = () => {
               </div>
             </div>
 
-            <Support />
+            {/* <Support /> */}
           </div>
 
           {/* Bottom Navigation - Mobile Only */}

@@ -84,15 +84,6 @@ const Sidebar = () => {
     { name: "Settings", icon: Settings, path: "/settings", badge: null },
   ];
 
-  const handleLogout = () => {
-    if (window.confirm("Are you sure you want to logout?")) {
-      Cookies.remove("tredingWeb");
-      Cookies.remove("tredingWebUser");
-      localStorage.removeItem("userData");
-      navigate("/login");
-    }
-  };
-
   const isActive = (path) => location.pathname === path;
 
   // Close mobile menu when navigating
@@ -271,41 +262,6 @@ const Sidebar = () => {
                 }}
               >
                 Support
-              </div>
-            )}
-          </button>
-
-          {/* Logout */}
-          <button
-            onClick={handleLogout}
-            className={`w-full flex items-center transition-all duration-300 text-sm relative rounded-lg py-2 ${
-              isCollapsed ? "justify-center px-1.5" : "gap-2.5 px-2.5"
-            } group`}
-            style={{
-              color: "#ef4444",
-            }}
-            title={isCollapsed ? "Log Out" : ""}
-          >
-            <LogOut
-              size={20}
-              className="flex-shrink-0 transition-all duration-300"
-            />
-            {!isCollapsed && (
-              <span className="flex-1 font-medium text-left truncate transition-all duration-300">
-                Log Out
-              </span>
-            )}
-
-            {isCollapsed && (
-              <div
-                className="absolute z-50 hidden px-3 py-2 ml-2 text-xs transition-all duration-300 -translate-y-1/2 rounded-lg left-full top-1/2 group-hover:block whitespace-nowrap"
-                style={{
-                  backgroundColor: "#ef4444",
-                  color: "white",
-                  fontWeight: "600",
-                }}
-              >
-                Logout
               </div>
             )}
           </button>
