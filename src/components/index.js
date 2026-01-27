@@ -31,4 +31,5 @@ export {
   TabsNavigation,
   ProfileCard,
   Sidebar,
+  Navbar,
 } from './organisms';

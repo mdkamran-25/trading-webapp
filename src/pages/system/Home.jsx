@@ -24,6 +24,7 @@ import {
   BottomNavigation,
   Badge,
   Sidebar,
+  Navbar,
 } from "../../components";
 
 const HomePage = () => {
@@ -170,341 +171,336 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="flex w-full min-h-screen bg-gray-50">
-      {/* Sidebar - Desktop & Mobile */}
-      <div className="fixed inset-0 lg:relative lg:inset-auto">
-        <Sidebar />
-      </div>
+    <div className="flex flex-col w-full min-h-screen">
+      {/* Navbar - Fixed Top */}
+      <Navbar />
 
-      {/* Main Content */}
-      <div className="flex flex-col flex-1 w-full lg:ml-0">
-        <div
-          className="flex-1 px-4 pt-16 pb-28 sm:pt-6 sm:pb-8 sm:px-6 lg:px-8 lg:pt-4 lg:pb-8"
-          style={{ backgroundColor: colors.lightBgContent }}
-        >
-          {/* Welcome Section - ChatGPT Style */}
-          <div className="max-w-4xl mx-auto mb-8">
-            {/* Greeting */}
-            <div className="mb-12 text-center">
-              <h1
-                style={{ color: colors.darkPurple }}
-                className="mb-2 text-4xl font-bold md:text-5xl"
-              >
-                Welcome back, {UserData.name || "User"}! 👋
-              </h1>
-              <p
-                style={{ color: colors.mediumPurple }}
-                className="text-lg md:text-xl"
-              >
-                What would you like to do today?
-              </p>
-            </div>
-
-            {/* Quick Action Cards - Grid */}
-            <div className="grid grid-cols-1 gap-4 mb-8 md:grid-cols-2">
-              {/* Invest Card */}
-              <div
-                onClick={() => navigate("/invest")}
-                className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
-                style={{
-                  backgroundColor: colors.lightBgCard,
-                  border: `1px solid ${colors.lightPurpleOverlay50}`,
-                  boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
-                }}
-              >
-                <div className="flex items-start gap-4">
-                  <div
-                    className="p-3 rounded-lg"
-                    style={{ backgroundColor: colors.lightPurple }}
-                  >
-                    <DollarSign
-                      size={24}
-                      style={{ color: colors.darkPurple }}
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <h3
-                      style={{ color: colors.darkPurple }}
-                      className="mb-1 font-semibold"
-                    >
-                      Start Investing
-                    </h3>
-                    <p
-                      style={{ color: colors.mediumPurple }}
-                      className="text-sm"
-                    >
-                      Browse investment opportunities
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Teams Card */}
-              <div
-                onClick={() => navigate("/teams")}
-                className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
-                style={{
-                  backgroundColor: colors.lightBgCard,
-                  border: `1px solid ${colors.lightPurpleOverlay50}`,
-                  boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
-                }}
-              >
-                <div className="flex items-start gap-4">
-                  <div
-                    className="p-3 rounded-lg"
-                    style={{ backgroundColor: colors.lightPurple }}
-                  >
-                    <Users size={24} style={{ color: colors.darkPurple }} />
-                  </div>
-                  <div className="flex-1">
-                    <h3
-                      style={{ color: colors.darkPurple }}
-                      className="mb-1 font-semibold"
-                    >
-                      My Team
-                    </h3>
-                    <p
-                      style={{ color: colors.mediumPurple }}
-                      className="text-sm"
-                    >
-                      Manage your team members
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Wallet Card */}
-              <div
-                onClick={() => navigate("/wallet")}
-                className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
-                style={{
-                  backgroundColor: colors.lightBgCard,
-                  border: `1px solid ${colors.lightPurpleOverlay50}`,
-                  boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
-                }}
-              >
-                <div className="flex items-start gap-4">
-                  <div
-                    className="p-3 rounded-lg"
-                    style={{ backgroundColor: colors.lightPurple }}
-                  >
-                    <Wallet size={24} style={{ color: colors.darkPurple }} />
-                  </div>
-                  <div className="flex-1">
-                    <h3
-                      style={{ color: colors.darkPurple }}
-                      className="mb-1 font-semibold"
-                    >
-                      My Wallet
-                    </h3>
-                    <p
-                      style={{ color: colors.mediumPurple }}
-                      className="text-sm"
-                    >
-                      View balance & transactions
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Account Card */}
-              <div
-                onClick={() => navigate("/account")}
-                className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
-                style={{
-                  backgroundColor: colors.lightBgCard,
-                  border: `1px solid ${colors.lightPurpleOverlay50}`,
-                  boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
-                }}
-              >
-                <div className="flex items-start gap-4">
-                  <div
-                    className="p-3 rounded-lg"
-                    style={{ backgroundColor: colors.lightPurple }}
-                  >
-                    <User size={24} style={{ color: colors.darkPurple }} />
-                  </div>
-                  <div className="flex-1">
-                    <h3
-                      style={{ color: colors.darkPurple }}
-                      className="mb-1 font-semibold"
-                    >
-                      My Account
-                    </h3>
-                    <p
-                      style={{ color: colors.mediumPurple }}
-                      className="text-sm"
-                    >
-                      Update your profile
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Stats Section */}
-            <div className="grid grid-cols-3 gap-4 mb-12">
-              <div
-                className="p-4 text-center rounded-lg"
-                style={{ backgroundColor: colors.lightPurpleOverlay15 }}
-              >
-                <p
-                  style={{ color: colors.darkPurple }}
-                  className="mb-1 text-2xl font-bold md:text-3xl"
-                >
-                  ₹{balance}
-                </p>
-                <p
-                  style={{ color: colors.mediumPurple }}
-                  className="text-xs md:text-sm"
-                >
-                  Balance
-                </p>
-              </div>
-              <div
-                className="p-4 text-center rounded-lg"
-                style={{ backgroundColor: `${colors.lightPurple}15` }}
-              >
-                <p
-                  style={{ color: colors.darkPurple }}
-                  className="mb-1 text-2xl font-bold md:text-3xl"
-                >
-                  {TeamSize}
-                </p>
-                <p
-                  style={{ color: colors.mediumPurple }}
-                  className="text-xs md:text-sm"
-                >
-                  Team Members
-                </p>
-              </div>
-              <div
-                className="p-4 text-center rounded-lg"
-                style={{ backgroundColor: colors.lightPurpleOverlay15 }}
-              >
-                <p
-                  style={{ color: colors.darkPurple }}
-                  className="mb-1 text-2xl font-bold md:text-3xl"
-                >
-                  ₹{withdraw}
-                </p>
-                <p
-                  style={{ color: colors.mediumPurple }}
-                  className="text-xs md:text-sm"
-                >
-                  Withdrawable
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Additional Sections */}
-          <div className="max-w-4xl mx-auto space-y-8">
-            {/* Invitation Card */}
-            <div
-              className="p-6 mb-8 rounded-lg"
-              style={{
-                backgroundColor: colors.lightPurpleOverlay10,
-                border: `1px solid ${colors.lightPurpleOverlay40}`,
-              }}
-            >
-              <h3
-                style={{ color: colors.darkPurple }}
-                className="mb-4 text-lg font-semibold"
-              >
-                🎁 Invite Friends & Earn
-              </h3>
-              <p
-                style={{ color: colors.mediumPurple }}
-                className="mb-4 text-sm"
-              >
-                Share your referral link and get rewards when they join!
-              </p>
-              <div
-                className="p-3 mb-4 font-mono text-xs break-all rounded-lg md:text-sm"
-                style={{
-                  backgroundColor: colors.lightPurpleOverlay20,
-                  color: colors.darkPurple,
-                  border: `1px solid ${colors.lightPurpleOverlay30}`,
-                }}
-              >
-                http://realstateinvest.in/register?invitation_code=
-                {UserData.referralCode}
-              </div>
-              <button
-                onClick={copyLink}
-                className="w-full px-4 py-2.5 rounded-lg font-medium transition-all text-sm"
-                style={{
-                  backgroundColor: colors.lightPurple,
-                  color: colors.darkPurple,
-                }}
-              >
-                {copied ? "✅ Copied!" : "📋 Copy Link"}
-              </button>
-            </div>
-
-            {/* Popular Features */}
-            <div>
-              <h2
-                style={{ color: colors.darkPurple }}
-                className="mb-4 text-lg font-semibold"
-              >
-                Popular Features
-              </h2>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {/* Lucky Draw */}
-                <div
-                  onClick={() =>
-                    navigate("/luckydraw", { state: UserData?._id })
-                  }
-                  className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
-                  style={{
-                    backgroundColor: colors.lightBgCard,
-                    border: `1px solid ${colors.lightPurpleOverlay50}`,
-                    boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
-                  }}
-                >
-                  <h4
-                    style={{ color: colors.darkPurple }}
-                    className="mb-2 font-semibold"
-                  >
-                    🍡 Lucky Draw
-                  </h4>
-                  <p style={{ color: colors.mediumPurple }} className="text-sm">
-                    Win amazing prizes daily
-                  </p>
-                </div>
-
-                {/* Help & Support */}
-                <div
-                  onClick={() => navigate("/support")}
-                  className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
-                  style={{
-                    backgroundColor: colors.lightBgCard,
-                    border: `1px solid ${colors.lightPurpleOverlay50}`,
-                    boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
-                  }}
-                >
-                  <h4
-                    style={{ color: colors.darkPurple }}
-                    className="mb-2 font-semibold"
-                  >
-                    💬 Support
-                  </h4>
-                  <p style={{ color: colors.mediumPurple }} className="text-sm">
-                    Get help anytime
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <Support />
+      <div className="flex flex-1 w-full">
+        {/* Sidebar - Desktop & Mobile */}
+        <div className="fixed inset-0 lg:relative lg:inset-auto">
+          <Sidebar />
         </div>
 
-        {/* Bottom Navigation - Mobile Only */}
-        <div className="lg:hidden">
-          <BottomNavigation activeId="home" />
+        {/* Main Content */}
+        <div className="flex flex-col flex-1 w-full lg:ml-0">
+          <div
+            className="flex-1 px-4 pt-20 pb-28 sm:pt-20 sm:pb-8 sm:px-6 lg:px-8 lg:pt-20 lg:pb-8"
+            style={{ backgroundColor: colors.lightBgContent }}
+          >
+            {/* Welcome Section - ChatGPT Style */}
+            <div className="max-w-4xl mx-auto mb-8">
+              {/* Quick Action Cards - Grid */}
+              <div className="grid grid-cols-1 gap-4 mb-8 md:grid-cols-2">
+                {/* Invest Card */}
+                <div
+                  onClick={() => navigate("/invest")}
+                  className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                  style={{
+                    backgroundColor: colors.lightBgCard,
+                    border: `1px solid ${colors.lightPurpleOverlay50}`,
+                    boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
+                  }}
+                >
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="p-3 rounded-lg"
+                      style={{ backgroundColor: colors.lightPurple }}
+                    >
+                      <DollarSign
+                        size={24}
+                        style={{ color: colors.darkPurple }}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h3
+                        style={{ color: colors.darkPurple }}
+                        className="mb-1 font-semibold"
+                      >
+                        Start Investing
+                      </h3>
+                      <p
+                        style={{ color: colors.mediumPurple }}
+                        className="text-sm"
+                      >
+                        Browse investment opportunities
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Teams Card */}
+                <div
+                  onClick={() => navigate("/teams")}
+                  className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                  style={{
+                    backgroundColor: colors.lightBgCard,
+                    border: `1px solid ${colors.lightPurpleOverlay50}`,
+                    boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
+                  }}
+                >
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="p-3 rounded-lg"
+                      style={{ backgroundColor: colors.lightPurple }}
+                    >
+                      <Users size={24} style={{ color: colors.darkPurple }} />
+                    </div>
+                    <div className="flex-1">
+                      <h3
+                        style={{ color: colors.darkPurple }}
+                        className="mb-1 font-semibold"
+                      >
+                        My Team
+                      </h3>
+                      <p
+                        style={{ color: colors.mediumPurple }}
+                        className="text-sm"
+                      >
+                        Manage your team members
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Wallet Card */}
+                <div
+                  onClick={() => navigate("/wallet")}
+                  className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                  style={{
+                    backgroundColor: colors.lightBgCard,
+                    border: `1px solid ${colors.lightPurpleOverlay50}`,
+                    boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
+                  }}
+                >
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="p-3 rounded-lg"
+                      style={{ backgroundColor: colors.lightPurple }}
+                    >
+                      <Wallet size={24} style={{ color: colors.darkPurple }} />
+                    </div>
+                    <div className="flex-1">
+                      <h3
+                        style={{ color: colors.darkPurple }}
+                        className="mb-1 font-semibold"
+                      >
+                        My Wallet
+                      </h3>
+                      <p
+                        style={{ color: colors.mediumPurple }}
+                        className="text-sm"
+                      >
+                        View balance & transactions
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Account Card */}
+                <div
+                  onClick={() => navigate("/account")}
+                  className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                  style={{
+                    backgroundColor: colors.lightBgCard,
+                    border: `1px solid ${colors.lightPurpleOverlay50}`,
+                    boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
+                  }}
+                >
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="p-3 rounded-lg"
+                      style={{ backgroundColor: colors.lightPurple }}
+                    >
+                      <User size={24} style={{ color: colors.darkPurple }} />
+                    </div>
+                    <div className="flex-1">
+                      <h3
+                        style={{ color: colors.darkPurple }}
+                        className="mb-1 font-semibold"
+                      >
+                        My Account
+                      </h3>
+                      <p
+                        style={{ color: colors.mediumPurple }}
+                        className="text-sm"
+                      >
+                        Update your profile
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats Section */}
+              <div className="grid grid-cols-3 gap-4 mb-12">
+                <div
+                  className="p-4 text-center rounded-lg"
+                  style={{ backgroundColor: colors.lightPurpleOverlay15 }}
+                >
+                  <p
+                    style={{ color: colors.darkPurple }}
+                    className="mb-1 text-2xl font-bold md:text-3xl"
+                  >
+                    ₹{balance}
+                  </p>
+                  <p
+                    style={{ color: colors.mediumPurple }}
+                    className="text-xs md:text-sm"
+                  >
+                    Balance
+                  </p>
+                </div>
+                <div
+                  className="p-4 text-center rounded-lg"
+                  style={{ backgroundColor: `${colors.lightPurple}15` }}
+                >
+                  <p
+                    style={{ color: colors.darkPurple }}
+                    className="mb-1 text-2xl font-bold md:text-3xl"
+                  >
+                    {TeamSize}
+                  </p>
+                  <p
+                    style={{ color: colors.mediumPurple }}
+                    className="text-xs md:text-sm"
+                  >
+                    Team Members
+                  </p>
+                </div>
+                <div
+                  className="p-4 text-center rounded-lg"
+                  style={{ backgroundColor: colors.lightPurpleOverlay15 }}
+                >
+                  <p
+                    style={{ color: colors.darkPurple }}
+                    className="mb-1 text-2xl font-bold md:text-3xl"
+                  >
+                    ₹{withdraw}
+                  </p>
+                  <p
+                    style={{ color: colors.mediumPurple }}
+                    className="text-xs md:text-sm"
+                  >
+                    Withdrawable
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Sections */}
+            <div className="max-w-4xl mx-auto space-y-8">
+              {/* Invitation Card */}
+              <div
+                className="p-6 mb-8 rounded-lg"
+                style={{
+                  backgroundColor: colors.lightPurpleOverlay10,
+                  border: `1px solid ${colors.lightPurpleOverlay40}`,
+                }}
+              >
+                <h3
+                  style={{ color: colors.darkPurple }}
+                  className="mb-4 text-lg font-semibold"
+                >
+                  🎁 Invite Friends & Earn
+                </h3>
+                <p
+                  style={{ color: colors.mediumPurple }}
+                  className="mb-4 text-sm"
+                >
+                  Share your referral link and get rewards when they join!
+                </p>
+                <div
+                  className="p-3 mb-4 font-mono text-xs break-all rounded-lg md:text-sm"
+                  style={{
+                    backgroundColor: colors.lightPurpleOverlay20,
+                    color: colors.darkPurple,
+                    border: `1px solid ${colors.lightPurpleOverlay30}`,
+                  }}
+                >
+                  http://realstateinvest.in/register?invitation_code=
+                  {UserData.referralCode}
+                </div>
+                <button
+                  onClick={copyLink}
+                  className="w-full px-4 py-2.5 rounded-lg font-medium transition-all text-sm"
+                  style={{
+                    backgroundColor: colors.lightPurple,
+                    color: colors.darkPurple,
+                  }}
+                >
+                  {copied ? "✅ Copied!" : "📋 Copy Link"}
+                </button>
+              </div>
+
+              {/* Popular Features */}
+              <div>
+                <h2
+                  style={{ color: colors.darkPurple }}
+                  className="mb-4 text-lg font-semibold"
+                >
+                  Popular Features
+                </h2>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  {/* Lucky Draw */}
+                  <div
+                    onClick={() =>
+                      navigate("/luckydraw", { state: UserData?._id })
+                    }
+                    className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                    style={{
+                      backgroundColor: colors.lightBgCard,
+                      border: `1px solid ${colors.lightPurpleOverlay50}`,
+                      boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
+                    }}
+                  >
+                    <h4
+                      style={{ color: colors.darkPurple }}
+                      className="mb-2 font-semibold"
+                    >
+                      🍡 Lucky Draw
+                    </h4>
+                    <p
+                      style={{ color: colors.mediumPurple }}
+                      className="text-sm"
+                    >
+                      Win amazing prizes daily
+                    </p>
+                  </div>
+
+                  {/* Help & Support */}
+                  <div
+                    onClick={() => navigate("/support")}
+                    className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+                    style={{
+                      backgroundColor: colors.lightBgCard,
+                      border: `1px solid ${colors.lightPurpleOverlay50}`,
+                      boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
+                    }}
+                  >
+                    <h4
+                      style={{ color: colors.darkPurple }}
+                      className="mb-2 font-semibold"
+                    >
+                      💬 Support
+                    </h4>
+                    <p
+                      style={{ color: colors.mediumPurple }}
+                      className="text-sm"
+                    >
+                      Get help anytime
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <Support />
+          </div>
+
+          {/* Bottom Navigation - Mobile Only */}
+          <div className="lg:hidden">
+            <BottomNavigation activeId="home" />
+          </div>
         </div>
       </div>
     </div>
