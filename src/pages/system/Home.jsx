@@ -114,7 +114,7 @@ const HomePage = () => {
             className="flex-1 overflow-y-auto"
             style={{ backgroundColor: colors.lightBgContent }}
           >
-            <div className="flex-1 px-2 pt-20 pb-28 sm:pt-20 sm:pb-8 sm:px-3 lg:px-4 lg:pt-20 lg:pb-8">
+            <div className="flex-1 pt-40 pl-2 pr-4 pb-28 sm:pt-20 sm:pb-8 sm:pl-3 sm:pr-6 lg:pl-4 lg:pr-8 lg:pt-20 lg:pb-8">
               {/* Show Marketing Section for Unauthenticated Users */}
               {!isAuthenticated && (
                 <>
