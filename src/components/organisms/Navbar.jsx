@@ -15,6 +15,7 @@ const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notificationBadge, setNotificationBadge] = useState(3);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -58,12 +59,19 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    Cookies.remove("tredingWeb");
-    Cookies.remove("tredingWebUser");
-    localStorage.removeItem("userData");
-    setIsAuthenticated(false);
-    setUserData({ name: "", profileImage: "" });
-    navigate("/");
+    setIsLoggingOut(true);
+
+    // Show logout screen for 1.5 seconds, then clear data and navigate
+    setTimeout(() => {
+      Cookies.remove("tredingWeb");
+      Cookies.remove("tredingWebUser");
+      localStorage.removeItem("userData");
+      setIsAuthenticated(false);
+      setUserData({ name: "", profileImage: "" });
+      setDropdownOpen(false);
+      navigate("/");
+      setIsLoggingOut(false);
+    }, 1500);
   };
 
   const handleNotificationClick = () => {
@@ -251,6 +259,31 @@ const Navbar = () => {
           </>
         )}
       </div>
+
+      {/* Logout Modal */}
+      {isLoggingOut && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="text-center">
+            <div className="mb-4 animate-spin">
+              <div
+                className="w-16 h-16 border-4 border-transparent rounded-full"
+                style={{
+                  borderTopColor: colors.lightPurple,
+                }}
+              ></div>
+            </div>
+            <h2
+              style={{ color: colors.darkPurple }}
+              className="text-2xl font-bold mb-2"
+            >
+              Logging Out
+            </h2>
+            <p style={{ color: colors.mediumPurple }} className="text-sm">
+              See you next time!
+            </p>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

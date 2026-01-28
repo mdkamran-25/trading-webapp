@@ -20,6 +20,7 @@ export {
   InfoRow,
   BottomNavItem,
   StatCard,
+  QuickActionCard,
 } from './molecules';
 
 // Organisms
@@ -32,4 +33,12 @@ export {
   ProfileCard,
   Sidebar,
   Navbar,
+  HeroSection,
+  MarketingSection,
+  HomePromotionalCard,
+  PortfolioCard,
+  QuickActionsGrid,
+  ReferralCard,
+  PopularFeaturesSection,
+  HomeContent,
 } from './organisms';

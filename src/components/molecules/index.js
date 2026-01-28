@@ -6,3 +6,4 @@ export { default as TabButton } from './TabButton';
 export { default as InfoRow } from './InfoRow';
 export { default as BottomNavItem } from './BottomNavItem';
 export { default as StatCard } from './StatCard';
+export { default as QuickActionCard } from './QuickActionCard';
