@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import { Card, Button, Text, PageHeader } from "../../components";
 
 const Recharge = () => {
   const navigate = useNavigate();
+
+  // Check if user is authenticated
+  useEffect(() => {
+    const token = Cookies.get("tredingWeb");
+    const encryptedUser = Cookies.get("tredingWebUser");
+    if (!token || !encryptedUser) {
+      navigate("/register");
+    }
+  }, [navigate]);
 
   const quickAmounts = [
     100, 200, 300, 500, 1000, 1200, 1500, 2000, 2500, 3000, 4000, 5000,

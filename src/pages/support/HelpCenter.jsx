@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import { MessageCircle, Send, Headphones } from "lucide-react";
 import { PageHeader, Card, Text } from "../../components";
 
 export default function HelpCenter() {
   const navigate = useNavigate();
+
+  // Check if user is authenticated
+  useEffect(() => {
+    const token = Cookies.get("tredingWeb");
+    const encryptedUser = Cookies.get("tredingWebUser");
+    if (!token || !encryptedUser) {
+      navigate("/register");
+    }
+  }, [navigate]);
   const helpOptions = [
     {
       id: 1,

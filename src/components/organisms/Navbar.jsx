@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bell, LogOut, User, ChevronDown } from "lucide-react";
 import Cookies from "js-cookie";
@@ -6,9 +6,11 @@ import CryptoJS from "crypto-js";
 import pako from "pako";
 import { colors } from "../../utils/colors";
 import { SECRET_KEY } from "../../api";
+import { SidebarContext } from "../../context/SidebarContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { isCollapsed } = useContext(SidebarContext);
   const [userData, setUserData] = useState({ name: "", profileImage: "" });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,7 +20,7 @@ const Navbar = () => {
     const checkAuth = () => {
       const token = Cookies.get("tredingWeb");
       const encryptedData = Cookies.get("tredingWebUser");
-      
+
       setIsAuthenticated(!!token && !!encryptedData);
 
       if (token && encryptedData) {
@@ -76,13 +78,28 @@ const Navbar = () => {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-30 flex items-center justify-between h-16 px-4 transition-all duration-500 border-b sm:px-6 lg:px-8 lg:pl-80"
+      className={`fixed top-0 left-0 right-0 z-30 flex items-center justify-between h-16 px-4 transition-all duration-500 border-b sm:px-6 lg:px-8 ${
+        isCollapsed ? "lg:pl-24" : "lg:pl-80"
+      }`}
       style={{
         backgroundColor: colors.lightBg,
         borderColor: colors.lightPurpleOverlay33,
       }}
     >
-      {/* Left Side - Empty for future content */}
+      {/* Left Side - Logo and App Name */}
+      <button
+        onClick={() => navigate("/")}
+        className="flex items-center gap-3 transition-all duration-300 hover:opacity-80"
+      >
+        <img src="/MainLogo.svg" alt="InvestPro" className="w-auto h-8" />
+        <span
+          style={{ color: colors.darkPurple }}
+          className="hidden text-lg font-bold sm:inline"
+        >
+          InvestPro
+        </span>
+      </button>
+
       <div className="flex-1" />
 
       {/* Right Side - Actions & Auth Buttons */}
@@ -210,7 +227,7 @@ const Navbar = () => {
             {/* Login Button */}
             <button
               onClick={() => navigate("/login")}
-              className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 hover:opacity-80"
+              className="px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:opacity-80"
               style={{
                 color: colors.darkPurple,
                 backgroundColor: colors.lightPurpleOverlay15,
@@ -223,10 +240,10 @@ const Navbar = () => {
             {/* Signup Button */}
             <button
               onClick={() => navigate("/register")}
-              className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 hover:opacity-80"
+              className="px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:opacity-80"
               style={{
                 color: "white",
-                backgroundColor: colors.lightPurple,
+                backgroundColor: colors.darkPurple,
               }}
             >
               Sign Up

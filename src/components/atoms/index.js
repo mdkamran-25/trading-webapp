@@ -6,3 +6,4 @@ export { default as Text } from './Text';
 export { default as Label } from './Label';
 export { default as Divider } from './Divider';
 export { default as Icon } from './Icon';
+export { default as LoadingScreen } from './LoadingScreen';

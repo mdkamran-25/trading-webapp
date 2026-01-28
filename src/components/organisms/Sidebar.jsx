@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Home,
@@ -8,7 +8,6 @@ import {
   User,
   Bell,
   Settings,
-  LogOut,
   HelpCircle,
   Menu,
   X,
@@ -19,12 +18,13 @@ import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import { SECRET_KEY } from "../../api";
 import pako from "pako";
+import { SidebarContext } from "../../context/SidebarContext";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOpen } =
+    useContext(SidebarContext);
   const [userData, setUserData] = useState({
     name: "User",
     phone: "",

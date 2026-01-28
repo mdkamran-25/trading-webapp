@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
+import LoadingScreen from "../../components/atoms/LoadingScreen";
 import { API_BASE_URL, SECRET_KEY } from "../../api";
 import Profile from "./Profile";
 import pako from "pako";
@@ -10,6 +11,7 @@ import { Card } from "../../components";
 
 export default function AccountPage() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("Profile");
 
   const [accountData, setAccountData] = useState({
@@ -37,11 +39,16 @@ export default function AccountPage() {
 
   const fetchAccountData = async () => {
     try {
+      setIsLoading(true);
       // ✅ Step 1: Read encrypted user info from cookie
       const encryptedUser = Cookies.get("tredingWebUser");
-      if (!encryptedUser) {
-        console.warn("No user cookie found — redirecting to login");
-        navigate("/login");
+      const token = Cookies.get("tredingWeb");
+      if (!encryptedUser || !token) {
+        console.warn("No user cookie found — redirecting to signup");
+        // Show loading screen for 500ms then redirect
+        setTimeout(() => {
+          navigate("/register");
+        }, 500);
         return;
       }
 
@@ -131,8 +138,11 @@ export default function AccountPage() {
   }, []);
 
   return (
-    <div className="min-h-screen pb-8 font-sans bg-gradient-to-r from-amber-100 to-yellow-300">
-      <Profile userInfo={userInfo} accountData={accountData} />
-    </div>
+    <>
+      {isLoading && <LoadingScreen />}
+      <div className="min-h-screen pb-8 font-sans bg-gradient-to-r from-amber-100 to-yellow-300">
+        <Profile userInfo={userInfo} accountData={accountData} />
+      </div>
+    </>
   );
 }

@@ -19,6 +19,15 @@ const encryptedUser = Cookies.get("tredingWebUser");
 const Withdraw = () => {
   const navigate = useNavigate();
 
+  // Check if user is authenticated
+  useEffect(() => {
+    const token = Cookies.get("tredingWeb");
+    const encryptedUser = Cookies.get("tredingWebUser");
+    if (!token || !encryptedUser) {
+      navigate("/register");
+    }
+  }, [navigate]);
+
   const [bankDetails, setBankDetails] = useState(null);
   const [hasBankDetails, setHasBankDetails] = useState(false);
   const [isAdding, setIsAdding] = useState(false);

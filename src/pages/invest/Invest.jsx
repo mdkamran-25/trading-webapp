@@ -1,12 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import LoadingScreen from "../../components/atoms/LoadingScreen";
 import ProductCard from "./prod";
 import { TabButton, BottomNavigation, Card, Text } from "../../components";
 
 const Invest = ({ products }) => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("Basic");
+
+  // Check if user is authenticated
+  useEffect(() => {
+    setIsLoading(true);
+    const token = Cookies.get("tredingWeb");
+    const encryptedUser = Cookies.get("tredingWebUser");
+    if (!token || !encryptedUser) {
+      // Show loading screen for 500ms then redirect
+      setTimeout(() => {
+        navigate("/register");
+      }, 500);
+      return;
+    }
+    setIsLoading(false);
+  }, [navigate]);
 
   const tabs = [
     { name: "Home", path: "/" },
@@ -51,6 +69,7 @@ const Invest = ({ products }) => {
   console.log(products);
   return (
     <>
+      {isLoading && <LoadingScreen />}
       <div className="relative flex flex-col w-full max-h-screen min-h-screen mx-auto mb-56 bg-gradient-to-br from-orange-300 via-yellow-100 to-yellow-200 animate-bgFlow">
         {/* Header */}
         <div className="flex items-center justify-between p-4">
