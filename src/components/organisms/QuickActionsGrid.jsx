@@ -41,8 +41,8 @@ const QuickActionsGrid = () => {
   ];
 
   return (
-    <div className="w-full pl-32 pr-8 mx-auto mb-12">
-      <div className="grid grid-cols-2 gap-4">
+    <div className="w-full px-3 mx-auto mb-4 sm:px-4 sm:mb-6 md:px-6 md:mb-8 lg:pl-24 lg:pr-24 xl:pl-32 xl:pr-8 lg:mb-10">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:gap-5">
         {quickActions.map((action, index) => (
           <QuickActionCard
             key={index}

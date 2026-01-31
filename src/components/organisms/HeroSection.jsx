@@ -6,36 +6,37 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full py-12 mb-16 text-center">
+    <div className="w-full px-4 py-8 mb-8 text-center sm:px-6 sm:py-10 sm:mb-10 md:py-12 md:mb-12 lg:mb-16">
       <h1
         style={{ color: colors.darkPurple }}
-        className="mb-6 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl"
+        className="mb-4 text-2xl font-bold leading-tight sm:mb-5 sm:text-3xl md:text-4xl md:mb-6 lg:text-5xl xl:text-6xl"
       >
         Invest in Real Estate and
-        <br />
+        <br className="hidden sm:block" />
+        <span className="sm:hidden"> </span>
         Build Your Future
       </h1>
       <p
         style={{ color: colors.mediumPurple }}
-        className="max-w-2xl mx-auto mb-10 text-lg md:text-xl"
+        className="max-w-2xl px-2 mx-auto mb-6 text-sm leading-relaxed sm:mb-8 sm:text-base md:text-lg md:mb-10 lg:text-xl"
       >
         Start your wealth journey with smart real estate investments
       </p>
-      <div className="flex flex-wrap justify-center gap-6">
+      <div className="flex flex-col justify-center w-full gap-3 px-4 sm:flex-row sm:flex-wrap sm:gap-4 md:gap-6">
         <button
           onClick={() => navigate("/login")}
-          className="px-12 py-4 text-lg font-bold transition-all duration-300 rounded-lg hover:opacity-80 hover:shadow-lg"
+          className="w-full px-8 py-3 text-base font-bold transition-all duration-300 rounded-lg sm:w-auto sm:px-10 sm:py-3.5 md:px-12 md:py-4 md:text-lg hover:opacity-80 hover:shadow-lg active:scale-95"
           style={{
             color: colors.darkPurple,
             backgroundColor: colors.lightPurpleOverlay15,
-            border: `3px solid ${colors.lightPurple}`,
+            border: `2px solid ${colors.lightPurple}`,
           }}
         >
           Login
         </button>
         <button
           onClick={() => navigate("/register")}
-          className="px-12 py-4 text-lg font-bold transition-all duration-300 rounded-lg hover:opacity-80 hover:shadow-lg"
+          className="w-full px-8 py-3 text-base font-bold transition-all duration-300 rounded-lg sm:w-auto sm:px-10 sm:py-3.5 md:px-12 md:py-4 md:text-lg hover:opacity-80 hover:shadow-lg active:scale-95"
           style={{
             color: "white",
             backgroundColor: colors.darkPurple,

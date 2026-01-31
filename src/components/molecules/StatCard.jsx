@@ -37,17 +37,17 @@ const StatCard = ({
     <Card
       variant="flat"
       padding="md"
-      className={`${variants[variant]} cursor-pointer hover:shadow-md transition ${className}`}
+      className={`${variants[variant]} cursor-pointer hover:shadow-md transition-all active:scale-95 ${className}`}
       onClick={onClick}
       {...props}
     >
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-2.5 sm:gap-3">
         {Icon && (
-          <div className="p-2 bg-opacity-10 rounded-lg">
-            <Icon size={24} className={textColor[variant]} />
+          <div className="flex-shrink-0 p-1.5 bg-opacity-10 rounded-lg sm:p-2">
+            <Icon size={20} className={`sm:w-6 sm:h-6 ${textColor[variant]}`} />
           </div>
         )}
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <Text variant="caption" color="secondary">
             {label}
           </Text>

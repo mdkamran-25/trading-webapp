@@ -22,7 +22,7 @@ const Button = ({
   ...props
 }) => {
   const baseClasses =
-    "font-semibold rounded-full transition duration-200 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2";
+    "font-semibold rounded-full transition-all duration-200 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2";
 
   const variants = {
     primary:
@@ -36,9 +36,9 @@ const Button = ({
   };
 
   const sizes = {
-    sm: "px-3 py-1.5 text-sm",
-    md: "px-4 py-2.5 text-base",
-    lg: "px-6 py-3 text-lg",
+    sm: "px-3 py-2 text-xs sm:text-sm min-h-[36px]",
+    md: "px-4 py-2.5 text-sm sm:text-base min-h-[40px]",
+    lg: "px-6 py-3 text-base sm:text-lg min-h-[44px]",
   };
 
   const widthClass = fullWidth ? "w-full" : "";

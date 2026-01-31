@@ -8,11 +8,13 @@ import { colors } from "../../utils/colors";
 import { SidebarProvider } from "../../context/SidebarContext";
 import {
   BottomNavigation,
+  MobileBottomNav,
   Sidebar,
   Navbar,
   HeroSection,
   MarketingSection,
   HomeContent,
+  Footer,
 } from "../../components";
 
 const HomePage = () => {
@@ -107,14 +109,17 @@ const HomePage = () => {
   return (
     <SidebarProvider>
       <div className="flex h-screen overflow-hidden">
-        <Sidebar />
+        {/* Sidebar - Hidden on mobile devices */}
+        <div className="hidden md:block">
+          <Sidebar />
+        </div>
         <div className="flex flex-col flex-1">
           <Navbar />
           <div
             className="flex-1 overflow-y-auto"
             style={{ backgroundColor: colors.lightBgContent }}
           >
-            <div className="flex-1 pt-40 pl-2 pr-4 pb-28 sm:pt-20 sm:pb-8 sm:pl-3 sm:pr-6 lg:pl-4 lg:pr-8 lg:pt-20 lg:pb-8">
+            <div className="flex-1 pt-14 pb-20 sm:pt-16 sm:pb-24 md:pt-20 md:pb-12 lg:pl-4 lg:pr-8 lg:pt-20 lg:pb-8">
               {/* Show Marketing Section for Unauthenticated Users */}
               {!isAuthenticated && (
                 <>
@@ -135,9 +140,15 @@ const HomePage = () => {
               )}
             </div>
 
+            {/* Footer */}
+            <Footer />
+
+            {/* Mobile Bottom Navigation - Always visible on mobile */}
+            <MobileBottomNav />
+
             {/* Bottom Navigation - Mobile Only - Only for authenticated users */}
             {isAuthenticated && (
-              <div className="lg:hidden">
+              <div className="hidden lg:hidden">
                 <BottomNavigation activeId="home" />
               </div>
             )}

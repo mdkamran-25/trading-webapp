@@ -8,18 +8,18 @@ const PopularFeaturesSection = ({ navigate: navProp, UserData = {} }) => {
   const userId = UserData?._id || "";
 
   return (
-    <div className="w-full pl-32 pr-8 mx-auto mb-12">
+    <div className="w-full px-3 mx-auto mb-4 sm:px-4 sm:mb-6 md:px-6 md:mb-8 lg:pl-24 lg:pr-24 xl:pl-32 xl:pr-8 lg:mb-10">
       <h2
         style={{ color: colors.darkPurple }}
-        className="mb-4 text-lg font-semibold"
+        className="mb-3 text-base font-semibold sm:mb-4 sm:text-lg md:text-xl"
       >
         Popular Features
       </h2>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 sm:gap-4 md:gap-5 md:grid-cols-2">
         {/* Lucky Draw */}
         <div
           onClick={() => navigate("/luckydraw", { state: userId })}
-          className="relative p-10 overflow-hidden transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+          className="relative p-6 overflow-hidden transition-all rounded-lg cursor-pointer sm:p-8 md:p-10 hover:scale-105 hover:shadow-lg"
           style={{
             backgroundColor: colors.lightBgCard,
             border: `1px solid ${colors.lightPurpleOverlay50}`,
@@ -27,7 +27,7 @@ const PopularFeaturesSection = ({ navigate: navProp, UserData = {} }) => {
           }}
         >
           {/* Floating Lottery Balls */}
-          <div className="absolute right-14 top-10">
+          <div className="absolute top-4 right-6 sm:top-6 sm:right-8 md:right-14 md:top-10">
             <div
               className="absolute w-4 h-4 rounded-full animate-bounce"
               style={{
@@ -55,7 +55,7 @@ const PopularFeaturesSection = ({ navigate: navProp, UserData = {} }) => {
           </div>
 
           {/* Treasure Sparkles */}
-          <div className="absolute top-6 right-12">
+          <div className="absolute top-8 right-8 sm:top-10 sm:right-10 md:top-12 md:right-12">
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
@@ -73,13 +73,13 @@ const PopularFeaturesSection = ({ navigate: navProp, UserData = {} }) => {
 
           <h4
             style={{ color: colors.darkPurple }}
-            className="flex items-center gap-3 mb-4 text-lg font-semibold"
+            className="flex items-center gap-2 mb-3 text-base font-semibold sm:gap-3 sm:mb-4 sm:text-lg"
           >
             <div className="relative">
               <img
                 src="/Money bag-Rupee.svg"
                 alt="Money bag"
-                className="w-9 h-9"
+                className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9"
               />
               {/* Golden glow effect */}
               <div

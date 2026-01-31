@@ -62,28 +62,32 @@ const ReferralCard = ({ UserData = {} }) => {
   };
 
   return (
-    <div className="w-full pl-32 pr-8 mx-auto mb-12">
+    <div className="w-full">
       <div
-        className="relative p-8 transition-all duration-300 border-0 shadow-lg rounded-xl hover:shadow-xl"
+        className="relative p-4 transition-all duration-300 border-0 shadow-lg sm:p-5 md:p-6 lg:p-8 rounded-xl hover:shadow-xl"
         style={{
           background: `linear-gradient(135deg, ${colors.lightPurpleOverlay10} 0%, ${colors.lightPurpleOverlay20} 100%)`,
           backdropFilter: "blur(10px)",
         }}
       >
         {/* QR Code Section - Top Right */}
-        <div className="flex flex-col lg:flex-row gap-6 items-start">
+        <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 lg:flex-row lg:items-start">
           {/* Left side - Content */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <h3
               style={{ color: colors.darkPurple }}
-              className="flex items-center gap-3 mb-4 text-xl font-bold"
+              className="flex items-center gap-2 mb-2 text-base font-bold sm:gap-3 sm:mb-3 sm:text-lg md:text-xl"
             >
-              <img src="/UPI-Rupee.svg" alt="Money bag" className="w-8 h-8" />
-              Invite Friends & Earn Rewards
+              <img
+                src="/UPI-Rupee.svg"
+                alt="Money bag"
+                className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7"
+              />
+              <span className="truncate">Invite Friends & Earn Rewards</span>
             </h3>
             <p
               style={{ color: colors.mediumPurple }}
-              className="mb-6 text-sm leading-relaxed"
+              className="mb-3 text-xs leading-relaxed sm:mb-4 sm:text-sm md:mb-5"
             >
               Share your referral link and get exclusive rewards when your
               friends join our investment platform!
@@ -91,7 +95,7 @@ const ReferralCard = ({ UserData = {} }) => {
 
             {/* Referral Link Display */}
             <div
-              className="p-4 mb-6 font-mono text-sm break-all border rounded-lg"
+              className="p-2.5 mb-3 text-xs font-mono break-all border rounded-lg sm:p-3 sm:mb-4 sm:text-sm md:mb-5"
               style={{
                 backgroundColor: colors.lightPurpleOverlay30,
                 color: colors.darkPurple,

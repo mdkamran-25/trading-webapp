@@ -26,6 +26,7 @@ export {
 // Organisms
 export {
   BottomNavigation,
+  MobileBottomNav,
   ModalDialog,
   DataTable,
   FormCard,
@@ -41,4 +42,5 @@ export {
   ReferralCard,
   PopularFeaturesSection,
   HomeContent,
+  Footer,
 } from './organisms';

@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bell, LogOut, User, ChevronDown } from "lucide-react";
+import {
+  Bell,
+  LogOut,
+  User,
+  ChevronDown,
+  Settings,
+  HelpCircle,
+  Users,
+} from "lucide-react";
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
 import pako from "pako";
@@ -86,7 +94,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-30 flex items-center justify-between h-16 px-4 transition-all duration-500 border-b sm:px-6 lg:px-8 ${
+      className={`fixed top-0 left-0 right-0 z-30 flex items-center justify-between h-14 px-3 transition-all duration-500 border-b sm:h-16 sm:px-4 md:px-6 lg:px-8 ${
         isCollapsed ? "lg:pl-24" : "lg:pl-80"
       }`}
       style={{
@@ -97,12 +105,16 @@ const Navbar = () => {
       {/* Left Side - Logo and App Name */}
       <button
         onClick={() => navigate("/")}
-        className="flex items-center gap-3 transition-all duration-300 hover:opacity-80"
+        className="flex items-center gap-2 transition-all duration-300 sm:gap-3 hover:opacity-80"
       >
-        <img src="/MainLogo.svg" alt="InvestPro" className="w-auto h-8" />
+        <img
+          src="/MainLogo.svg"
+          alt="InvestPro"
+          className="w-auto h-7 sm:h-8"
+        />
         <span
           style={{ color: colors.darkPurple }}
-          className="hidden text-lg font-bold sm:inline"
+          className="hidden text-base font-bold sm:text-lg sm:inline"
         >
           InvestPro
         </span>
@@ -111,21 +123,21 @@ const Navbar = () => {
       <div className="flex-1" />
 
       {/* Right Side - Actions & Auth Buttons */}
-      <div className="flex items-center gap-3 sm:gap-4">
+      <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
         {isAuthenticated ? (
           <>
             {/* Notifications Button */}
             <div className="relative">
               <button
                 onClick={handleNotificationClick}
-                className="p-2 transition-all duration-300 rounded-lg hover:opacity-80"
+                className="p-1.5 transition-all duration-300 rounded-lg sm:p-2 hover:opacity-80"
                 style={{
                   color: colors.darkPurple,
                   backgroundColor: colors.lightPurpleOverlay15,
                 }}
                 title="Notifications"
               >
-                <Bell size={20} />
+                <Bell size={18} className="sm:w-5 sm:h-5" />
                 {notificationBadge > 0 && (
                   <span
                     className="absolute top-0 right-0 flex items-center justify-center w-5 h-5 text-xs font-bold text-white rounded-full"
@@ -147,7 +159,7 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg transition-all duration-300 hover:opacity-80"
+                className="flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all duration-300 sm:gap-2 sm:px-2.5 sm:py-1.5 hover:opacity-80"
                 style={{
                   backgroundColor: colors.lightPurpleOverlay15,
                   border: `1px solid ${colors.lightPurpleOverlay33}`,
@@ -155,7 +167,7 @@ const Navbar = () => {
               >
                 {/* Avatar */}
                 <div
-                  className="flex items-center justify-center w-8 h-8 text-xs font-bold border-2 rounded-full"
+                  className="flex items-center justify-center w-7 h-7 text-xs font-bold border-2 rounded-full sm:w-8 sm:h-8"
                   style={{
                     backgroundColor: colors.lightPurple,
                     borderColor: colors.mediumPurple,
@@ -192,23 +204,92 @@ const Navbar = () => {
               {/* Dropdown Menu */}
               {dropdownOpen && (
                 <div
-                  className="absolute right-0 z-40 w-48 py-2 mt-2 rounded-lg shadow-lg"
+                  className="absolute right-0 z-40 w-56 py-2 mt-2 rounded-lg shadow-xl"
                   style={{
                     backgroundColor: colors.lightBg,
                     border: `1px solid ${colors.lightPurpleOverlay33}`,
                   }}
                 >
+                  {/* Profile Section */}
+                  <div
+                    className="px-4 py-3 border-b"
+                    style={{ borderColor: colors.lightPurpleOverlay33 }}
+                  >
+                    <p
+                      className="text-sm font-medium"
+                      style={{ color: colors.darkPurple }}
+                    >
+                      {userData.name}
+                    </p>
+                    <p
+                      className="text-xs"
+                      style={{ color: colors.mediumPurple }}
+                    >
+                      {userData.email}
+                    </p>
+                  </div>
+
                   {/* My Profile */}
                   <button
                     onClick={() => {
                       navigate("/account");
                       setDropdownOpen(false);
                     }}
-                    className="flex items-center w-full gap-3 px-4 py-2 text-sm transition-all duration-300 hover:opacity-70"
+                    className="flex items-center w-full gap-3 px-4 py-2.5 text-sm transition-all duration-300 hover:bg-gray-50"
                     style={{ color: colors.darkPurple }}
                   >
-                    <User size={18} />
+                    <User size={16} />
                     <span>My Profile</span>
+                  </button>
+
+                  {/* Teams - Mobile Only */}
+                  <button
+                    onClick={() => {
+                      navigate("/teams");
+                      setDropdownOpen(false);
+                    }}
+                    className="flex items-center justify-between w-full gap-3 px-4 py-2.5 text-sm transition-all duration-300 md:hidden hover:bg-gray-50"
+                    style={{ color: colors.darkPurple }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Users size={16} />
+                      <span>Team Management</span>
+                    </div>
+                    <span
+                      className="px-1.5 py-0.5 text-xs font-bold rounded-full"
+                      style={{
+                        backgroundColor: colors.lightPurpleOverlay30,
+                        color: colors.darkPurple,
+                      }}
+                    >
+                      3
+                    </span>
+                  </button>
+
+                  {/* Settings */}
+                  <button
+                    onClick={() => {
+                      navigate("/settings");
+                      setDropdownOpen(false);
+                    }}
+                    className="flex items-center w-full gap-3 px-4 py-2.5 text-sm transition-all duration-300 hover:bg-gray-50"
+                    style={{ color: colors.darkPurple }}
+                  >
+                    <Settings size={16} />
+                    <span>Settings</span>
+                  </button>
+
+                  {/* Help Center */}
+                  <button
+                    onClick={() => {
+                      navigate("/helpcenter");
+                      setDropdownOpen(false);
+                    }}
+                    className="flex items-center w-full gap-3 px-4 py-2.5 text-sm transition-all duration-300 hover:bg-gray-50"
+                    style={{ color: colors.darkPurple }}
+                  >
+                    <HelpCircle size={16} />
+                    <span>Help Center</span>
                   </button>
 
                   {/* Divider */}
@@ -220,10 +301,10 @@ const Navbar = () => {
                   {/* Logout */}
                   <button
                     onClick={handleLogout}
-                    className="flex items-center w-full gap-3 px-4 py-2 text-sm transition-all duration-300 hover:opacity-70"
+                    className="flex items-center w-full gap-3 px-4 py-2.5 text-sm transition-all duration-300 hover:bg-red-50"
                     style={{ color: "#ef4444" }}
                   >
-                    <LogOut size={18} />
+                    <LogOut size={16} />
                     <span>Logout</span>
                   </button>
                 </div>
@@ -235,7 +316,7 @@ const Navbar = () => {
             {/* Login Button */}
             <button
               onClick={() => navigate("/login")}
-              className="px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:opacity-80"
+              className="px-3 py-1.5 text-xs font-medium transition-all duration-300 rounded-lg sm:px-4 sm:py-2 sm:text-sm hover:opacity-80 active:scale-95"
               style={{
                 color: colors.darkPurple,
                 backgroundColor: colors.lightPurpleOverlay15,
@@ -248,7 +329,7 @@ const Navbar = () => {
             {/* Signup Button */}
             <button
               onClick={() => navigate("/register")}
-              className="px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:opacity-80"
+              className="px-3 py-1.5 text-xs font-medium transition-all duration-300 rounded-lg sm:px-4 sm:py-2 sm:text-sm hover:opacity-80 active:scale-95"
               style={{
                 color: "white",
                 backgroundColor: colors.darkPurple,

@@ -1,4 +1,5 @@
 export { default as BottomNavigation } from './BottomNavigation';
+export { default as MobileBottomNav } from './MobileBottomNav';
 export { default as ModalDialog } from './ModalDialog';
 export { default as DataTable } from './DataTable';
 export { default as FormCard } from './FormCard';
@@ -15,3 +16,4 @@ export { default as ReferralCard } from './ReferralCard';
 export { default as PopularFeaturesSection } from './PopularFeaturesSection';
 export { default as HomeContent } from './HomeContent';
 export { default as FeaturedPropertiesSection } from './FeaturedPropertiesSection';
+export { default as Footer } from './Footer';

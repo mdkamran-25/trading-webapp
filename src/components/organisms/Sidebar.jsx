@@ -97,12 +97,15 @@ const Sidebar = () => {
       {/* Mobile Hamburger Menu Button */}
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="fixed z-50 p-2 transition-colors rounded-lg top-4 left-4 lg:hidden hover:bg-gray-700"
+        className="fixed z-50 p-2.5 transition-all rounded-lg top-3 left-3 sm:top-4 sm:left-4 lg:hidden hover:opacity-80 active:scale-95"
+        style={{
+          backgroundColor: colors.darkPurple,
+        }}
       >
         {isMobileOpen ? (
-          <X size={24} style={{ color: "white" }} />
+          <X size={20} className="text-white sm:w-6 sm:h-6" />
         ) : (
-          <Menu size={24} style={{ color: "white" }} />
+          <Menu size={20} className="text-white sm:w-6 sm:h-6" />
         )}
       </button>
 
@@ -117,7 +120,7 @@ const Sidebar = () => {
       {/* Sidebar - ChatGPT Style */}
       <div
         className={`fixed left-0 top-0 h-screen transition-all duration-500 z-40 flex flex-col ${
-          isCollapsed ? "w-0 lg:w-20" : "w-64"
+          isCollapsed ? "w-0 lg:w-20" : "w-72 sm:w-64"
         } ${
           isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}

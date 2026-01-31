@@ -24,12 +24,12 @@ const Input = ({
   ...props
 }) => {
   const baseInputClasses =
-    "w-full px-4 border-2 border-gray-300 rounded-2xl focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed";
+    "w-full px-3 sm:px-4 border-2 border-gray-300 rounded-2xl focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm sm:text-base";
 
   const sizes = {
-    sm: "py-2 text-sm",
-    md: "py-3 text-base",
-    lg: "py-4 text-lg",
+    sm: "py-2 min-h-[36px]",
+    md: "py-2.5 sm:py-3 min-h-[40px]",
+    lg: "py-3 sm:py-4 min-h-[44px]",
   };
 
   const borderColor = error

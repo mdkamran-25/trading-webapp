@@ -28,16 +28,16 @@ const QuickActionCard = ({
   return (
     <div
       onClick={handleClick}
-      className="p-6 transition-all rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg"
+      className="p-4 transition-all rounded-lg cursor-pointer sm:p-5 md:p-6 hover:scale-105 hover:shadow-lg active:scale-95"
       style={{
         backgroundColor: colors.lightBgCard,
         border: `1px solid ${colors.lightPurpleOverlay50}`,
         boxShadow: `0 2px 8px ${colors.lightPurpleOverlay15}`,
       }}
     >
-      <div className="flex items-start gap-4">
+      <div className="flex items-start gap-3 sm:gap-4">
         <div
-          className="flex items-center justify-center p-3 text-2xl rounded-lg"
+          className="flex items-center justify-center flex-shrink-0 p-2.5 text-xl rounded-lg sm:p-3 sm:text-2xl"
           style={{
             backgroundColor: "#FFFFFF",
             border: "1px solid #E5E7EB",
@@ -46,25 +46,32 @@ const QuickActionCard = ({
           {isEmoji ? (
             <span>{icon}</span>
           ) : isSVG ? (
-            <img src={icon} alt={title} className="w-6 h-6" />
+            <img src={icon} alt={title} className="w-5 h-5 sm:w-6 sm:h-6" />
           ) : (
-            <Icon size={24} style={{ color: colors.darkPurple }} />
+            <Icon
+              size={20}
+              className="sm:w-6 sm:h-6"
+              style={{ color: colors.darkPurple }}
+            />
           )}
         </div>
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <h3
             style={{ color: colors.darkPurple }}
-            className="mb-1 font-semibold"
+            className="mb-1 text-sm font-semibold truncate sm:text-base"
           >
             {title}
           </h3>
-          <p style={{ color: colors.mediumPurple }} className="mb-2 text-sm">
+          <p
+            style={{ color: colors.mediumPurple }}
+            className="mb-2 text-xs leading-relaxed sm:text-sm"
+          >
             {description}
           </p>
           {details && (
             <p
               style={{ color: colors.mediumPurple }}
-              className="text-xs leading-relaxed opacity-75"
+              className="text-xs leading-relaxed opacity-75 line-clamp-2"
             >
               {details}
             </p>
