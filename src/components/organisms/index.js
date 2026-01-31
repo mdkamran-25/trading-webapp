@@ -14,3 +14,4 @@ export { default as QuickActionsGrid } from './QuickActionsGrid';
 export { default as ReferralCard } from './ReferralCard';
 export { default as PopularFeaturesSection } from './PopularFeaturesSection';
 export { default as HomeContent } from './HomeContent';
+export { default as FeaturedPropertiesSection } from './FeaturedPropertiesSection';

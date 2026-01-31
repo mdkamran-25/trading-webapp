@@ -4,6 +4,7 @@ import QuickActionsGrid from "./QuickActionsGrid";
 import PortfolioCard from "./PortfolioCard";
 import ReferralCard from "./ReferralCard";
 import PopularFeaturesSection from "./PopularFeaturesSection";
+import FeaturedPropertiesSection from "./FeaturedPropertiesSection";
 
 const HomeContent = ({ balance, TeamSize, withdraw, UserData, navigate }) => {
   return (
@@ -26,6 +27,9 @@ const HomeContent = ({ balance, TeamSize, withdraw, UserData, navigate }) => {
           </div>
         </div>
       </div>
+
+      {/* Featured Properties Section */}
+      <FeaturedPropertiesSection />
 
       {/* Second Row: Quick Actions Grid */}
       <QuickActionsGrid />
