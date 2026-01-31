@@ -76,23 +76,12 @@ const MobileBottomNav = () => {
                     : "transparent",
                 }}
               >
-                <div className="relative">
-                  <Icon
-                    size={22}
-                    style={{
-                      color: active ? colors.darkPurple : colors.mediumPurple,
-                    }}
-                  />
-                  {active && (
-                    <div
-                      className="absolute -inset-2 border-2 rounded-full animate-pulse"
-                      style={{
-                        borderColor: colors.lightPurpleOverlay50,
-                        animationDuration: "2s",
-                      }}
-                    />
-                  )}
-                </div>
+                <Icon
+                  size={22}
+                  style={{
+                    color: active ? colors.darkPurple : colors.mediumPurple,
+                  }}
+                />
                 <span
                   className="mt-1 text-xs font-medium"
                   style={{

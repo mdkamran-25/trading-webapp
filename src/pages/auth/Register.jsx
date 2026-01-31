@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 import { registerUser, SECRET_KEY, sendOtpNoCheck } from "../../api";
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
@@ -20,6 +21,8 @@ const Register = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showTradePassword, setShowTradePassword] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -230,15 +233,29 @@ const Register = () => {
             >
               Password
             </label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={!otpVerified}
-              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base transition border-2 outline-none rounded-xl disabled:bg-gray-100 disabled:cursor-not-allowed"
-              style={{ borderColor: colors.lightPurple }}
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={!otpVerified}
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-10 sm:pr-12 text-sm sm:text-base transition border-2 outline-none rounded-xl disabled:bg-gray-100 disabled:cursor-not-allowed"
+                style={{ borderColor: colors.lightPurple }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                disabled={!otpVerified}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 transition-opacity hover:opacity-70 disabled:opacity-40"
+              >
+                {showPassword ? (
+                  <EyeOff size={18} style={{ color: colors.mediumPurple }} />
+                ) : (
+                  <Eye size={18} style={{ color: colors.mediumPurple }} />
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Trade Password Field */}
@@ -249,15 +266,29 @@ const Register = () => {
             >
               Trade Password
             </label>
-            <input
-              type="password"
-              placeholder="Enter your trade password"
-              value={tradePassword}
-              onChange={(e) => setTradePassword(e.target.value)}
-              disabled={!otpVerified}
-              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base transition border-2 outline-none rounded-xl disabled:bg-gray-100 disabled:cursor-not-allowed"
-              style={{ borderColor: colors.lightPurple }}
-            />
+            <div className="relative">
+              <input
+                type={showTradePassword ? "text" : "password"}
+                placeholder="Enter your trade password"
+                value={tradePassword}
+                onChange={(e) => setTradePassword(e.target.value)}
+                disabled={!otpVerified}
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-10 sm:pr-12 text-sm sm:text-base transition border-2 outline-none rounded-xl disabled:bg-gray-100 disabled:cursor-not-allowed"
+                style={{ borderColor: colors.lightPurple }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowTradePassword(!showTradePassword)}
+                disabled={!otpVerified}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 transition-opacity hover:opacity-70 disabled:opacity-40"
+              >
+                {showTradePassword ? (
+                  <EyeOff size={18} style={{ color: colors.mediumPurple }} />
+                ) : (
+                  <Eye size={18} style={{ color: colors.mediumPurple }} />
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Invitation Code Field */}
