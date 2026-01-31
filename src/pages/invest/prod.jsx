@@ -1,6 +1,7 @@
 import React from "react";
 import { API_BASE_URL2 } from "../../api";
 import { Card, Text } from "../../components";
+import { colors } from "../../utils/colors";
 
 const MetricItem = ({
   label,
@@ -14,19 +15,20 @@ const MetricItem = ({
     justifyContent: "space-between",
     alignItems: "center",
     padding: "0.6rem 0.2rem 0 0.2rem",
-    borderBottom: !isPrimary ? "1px solid #f3f4f6" : "none",
+    borderBottom: !isPrimary ? `1px solid ${colors.borderLight}` : "none",
   };
 
   const labelStyle = {
-    color: "#374151",
+    color: colors.textLight,
     fontWeight: "500",
     fontSize: isLarge ? "1.125rem" : "1rem",
   };
 
-  let finalValueColor = "#1f2937";
-  if (valueColor === "text-green-800") finalValueColor = "#000000ff";
-  else if (valueColor === "text-green-600") finalValueColor = "#000000ff";
-  else if (valueColor === "text-red-600") finalValueColor = "#000000ff";
+  let finalValueColor = colors.darkPurple;
+  if (valueColor === "text-green-800") finalValueColor = colors.darkPurple;
+  else if (valueColor === "text-green-600")
+    finalValueColor = colors.mediumPurple;
+  else if (valueColor === "text-red-600") finalValueColor = colors.success;
 
   return (
     <div style={containerStyle}>
@@ -76,19 +78,33 @@ const ProductCard = ({ productData, onBuy }) => {
   } = productData;
 
   return (
-    <Card className="relative w-full min-h-[33vh] bg-yellow-50 overflow-hidden border border-gray-700">
-      {/* Orange badge */}
-      <div className="absolute top-0 left-0 bg-orange-500 text-white text-xs font-semibold px-4 py-1 rounded-br-4xl shadow-md">
+    <Card
+      className="relative w-full min-h-[33vh] overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300"
+      style={{
+        backgroundColor: colors.background,
+        border: `1px solid ${colors.lightPurpleOverlay20}`,
+      }}
+    >
+      {/* Duration badge */}
+      <div
+        className="absolute top-0 left-0 px-4 py-1 text-xs font-semibold text-white shadow-md rounded-br-2xl"
+        style={{
+          background: `linear-gradient(135deg, ${colors.darkPurple} 0%, ${colors.mediumPurple} 100%)`,
+        }}
+      >
         {durationDays} {cycleType === "hour" ? "Hours" : "Days"}
       </div>
 
       <div className="pt-2">
         {/* Product image */}
-        <div className="w-full h-[18vh] bg-red-200 rounded-lg flex items-center justify-center overflow-hidden">
+        <div
+          className="w-full h-[18vh] rounded-lg flex items-center justify-center overflow-hidden"
+          style={{ backgroundColor: colors.backgroundLight }}
+        >
           <img
             src={`${API_BASE_URL2}${img}`}
             alt="Product"
-            className="w-full h-full object-cover"
+            className="object-cover w-full h-full"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src =
@@ -122,8 +138,14 @@ const ProductCard = ({ productData, onBuy }) => {
         </div>
       </div>
 
-      <div className="py-2 px-0 bg-yellow-50 flex justify-center">
-        <button className="buy-button" onClick={onBuy}>
+      <div className="flex justify-center px-0 py-3">
+        <button
+          className="w-full py-3 mx-4 text-sm font-semibold text-white transition-all duration-300 shadow-md rounded-xl sm:text-base hover:opacity-90 hover:scale-105 active:scale-95"
+          style={{
+            background: `linear-gradient(135deg, ${colors.darkPurple} 0%, ${colors.mediumPurple} 100%)`,
+          }}
+          onClick={onBuy}
+        >
           BUY NOW
         </button>
       </div>

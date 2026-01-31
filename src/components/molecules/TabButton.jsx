@@ -1,4 +1,5 @@
 import React from "react";
+import { colors } from "../../utils/colors";
 
 /**
  * TabButton Molecule Component
@@ -19,17 +20,31 @@ const TabButton = ({
   ...props
 }) => {
   const baseClasses =
-    "px-4 py-2.5 font-semibold text-sm rounded-2xl transition duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed";
+    "px-4 py-2.5 font-semibold text-sm rounded-2xl transition-all duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed";
 
-  const activeClass = isActive
-    ? "bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 shadow-md"
-    : "bg-white text-gray-600 border-2 border-gray-200 hover:border-orange-300";
+  const activeStyle = isActive
+    ? {
+        background: `linear-gradient(135deg, ${colors.darkPurple} 0%, ${colors.mediumPurple} 100%)`,
+        color: "white",
+        boxShadow:
+          "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+      }
+    : {
+        backgroundColor: "white",
+        color: colors.textLight,
+        border: `2px solid ${colors.borderLight}`,
+      };
+
+  const hoverClass = !isActive
+    ? "hover:border-purple-300 hover:text-purple-600"
+    : "";
 
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`${baseClasses} ${activeClass} ${className}`}
+      className={`${baseClasses} ${hoverClass} ${className}`}
+      style={activeStyle}
       {...props}
     >
       {Icon && <Icon size={18} />}

@@ -7,6 +7,7 @@ import { getTeamOverview, SECRET_KEY } from "../../api";
 import pako from "pako";
 import LoadingScreen from "../../components/atoms/LoadingScreen";
 import { Card, Text, MainLayout } from "../../components";
+import { colors } from "../../utils/colors";
 
 const Teams = () => {
   const navigate = useNavigate();
@@ -82,20 +83,23 @@ const Teams = () => {
   return (
     <MainLayout>
       {isLoading && <LoadingScreen />}
-      <div className="w-full max-w-md mx-auto min-h-screen bg-gray-100 overflow-y-auto pb-24 font-sans">
+      <div
+        className="w-full max-w-md min-h-screen pb-24 mx-auto overflow-y-auto font-sans"
+        style={{ backgroundColor: colors.lightBgContent }}
+      >
         {/* Header */}
-        <div className="w-full bg-gradient-to-b from-yellow-400 to-orange-400 pt-5 pb-8 rounded-b-3xl shadow-md">
-          <div className="mx-auto px-5 flex justify-between items-center">
-            <img
-              src="/logo.jpg"
-              alt="logo"
-              className="w-12 h-12 bg-white rounded-full p-1 shadow-md cursor-pointer"
-            />
-            <div className="text-center flex-1">
-              <Text variant="h3" className="text-xl font-bold text-gray-800">
+        <div
+          className="w-full pt-5 pb-8 shadow-md rounded-b-3xl"
+          style={{
+            background: `linear-gradient(135deg, ${colors.darkPurple} 0%, ${colors.mediumPurple} 100%)`,
+          }}
+        >
+          <div className="flex items-center justify-between px-5 mx-auto">
+            <div className="flex-1 text-center">
+              <Text variant="h3" className="text-xl font-bold text-white">
                 Team
               </Text>
-              <Text variant="sm" className="text-sm text-gray-700">
+              <Text variant="sm" className="text-sm text-white opacity-90">
                 Total Team Member: {totalTeams}
               </Text>
             </div>
@@ -109,7 +113,11 @@ const Teams = () => {
               key={index}
               variant="default"
               padding="lg"
-              className="bg-gradient-to-b from-white to-yellow-50 cursor-pointer hover:shadow-xl transition-shadow"
+              className="transition-all duration-300 cursor-pointer hover:shadow-xl"
+              style={{
+                backgroundColor: colors.background,
+                border: `1px solid ${colors.lightPurpleOverlay20}`,
+              }}
               onClick={() =>
                 navigate(team.path, {
                   state: { userid: team.userid, level: team.level },
@@ -118,7 +126,8 @@ const Teams = () => {
             >
               <Text
                 variant="h3"
-                className="text-lg font-bold text-gray-800 mb-4"
+                className="mb-4 text-lg font-bold"
+                style={{ color: colors.darkPurple }}
               >
                 Level {team.level} Teams
               </Text>
@@ -126,20 +135,25 @@ const Teams = () => {
                 {/* Gold Image */}
                 <div className="flex flex-col items-center">
                   <div
-                    className="w-20 h-20 rounded-full shadow-md bg-cover bg-center"
+                    className="w-20 h-20 bg-center bg-cover rounded-full shadow-md"
                     style={{
                       backgroundImage:
                         "url('https://img.freepik.com/free-vector/gradient-gold-coin_78370-4508.jpg?semt=ais_incoming&w=740&q=80')",
                     }}
                   ></div>
-                  <div className="text-center mt-2">
+                  <div className="mt-2 text-center">
                     <Text
                       variant="h2"
-                      className="text-2xl font-bold text-yellow-500"
+                      className="text-2xl font-bold"
+                      style={{ color: colors.mediumPurple }}
                     >
                       {team.level === 1 ? "25" : team.level === 2 ? "8" : "2"}
                     </Text>
-                    <Text variant="sm" className="text-xs text-gray-600">
+                    <Text
+                      variant="sm"
+                      className="text-xs"
+                      style={{ color: colors.textLight }}
+                    >
                       Commission Rate
                     </Text>
                   </div>
@@ -147,21 +161,38 @@ const Teams = () => {
 
                 {/* Team Info */}
                 <div className="flex-1 space-y-6">
-                  <div className="flex gap-5 text-sm text-gray-700">
+                  <div
+                    className="flex gap-5 text-sm"
+                    style={{ color: colors.textLight }}
+                  >
                     <span>Total Recharge:</span>
-                    <Text variant="sm" className="font-bold text-yellow-500">
+                    <Text
+                      variant="sm"
+                      className="font-bold"
+                      style={{ color: colors.darkPurple }}
+                    >
                       ₹ {team.totalRecharge}
                     </Text>
                   </div>
-                  <div className="flex gap-5 text-sm text-gray-700">
+                  <div
+                    className="flex gap-5 text-sm"
+                    style={{ color: colors.textLight }}
+                  >
                     <span>My Commission:</span>
-                    <Text variant="sm" className="font-bold text-yellow-500">
+                    <Text
+                      variant="sm"
+                      className="font-bold"
+                      style={{ color: colors.success }}
+                    >
                       ₹ {team.myCommission}
                     </Text>
                   </div>
                 </div>
 
-                <ChevronRight className="text-gray-400 cursor-pointer" />
+                <ChevronRight
+                  style={{ color: colors.mediumPurple }}
+                  className="cursor-pointer"
+                />
               </div>
             </Card>
           ))}

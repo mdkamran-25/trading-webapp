@@ -30,7 +30,7 @@ const MobileBottomNav = () => {
       id: "wallet",
       icon: Wallet,
       label: "Wallet",
-      path: "/orders",
+      path: "/wallet",
     },
     {
       id: "account",

@@ -33,6 +33,7 @@ import HelpCenter from "./pages/support/HelpCenter";
 import HomePage from "./pages/system/Home";
 import Recharge from "./pages/system/Recharge";
 import Withdraw from "./pages/system/Withdraw";
+import Wallet from "./pages/system/Wallet";
 import Teams from "./pages/system/Teams";
 import Teamtwolevel from "./pages/system/Teamtwolevel";
 import Bill from "./pages/system/Bill";
@@ -71,6 +72,7 @@ function App() {
         <Route path="/RechargeHistory" element={<RechargeHistory />} />
         <Route path="/WithdrawHistory" element={<WithdrawalHistory />} />
         <Route path="/withdraw" element={<Withdraw />} />
+        <Route path="/wallet" element={<Wallet />} />
         <Route path="/teams" element={<Teams />} />
         <Route path="/teamonelevel" element={<Teamtwolevel />} />
         <Route path="/teamtwolevel" element={<Teamtwolevel />} />
