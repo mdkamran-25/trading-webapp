@@ -6,10 +6,10 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full px-4 py-8 mb-8 text-center sm:px-6 sm:py-10 sm:mb-10 md:py-12 md:mb-12 lg:mb-16">
+    <div className="w-full px-4 pt-20 pb-8 mb-8 text-center sm:px-6 sm:py-10 sm:mb-10 md:py-12 md:mb-12 lg:mb-16">
       <h1
         style={{ color: colors.darkPurple }}
-        className="mb-4 text-2xl font-bold leading-tight sm:mb-5 sm:text-3xl md:text-4xl md:mb-6 lg:text-5xl xl:text-6xl"
+        className="mb-4 text-4xl font-bold leading-tight sm:mb-5 sm:text-3xl md:text-4xl md:mb-6 lg:text-5xl xl:text-6xl"
       >
         Invest in Real Estate and
         <br className="hidden sm:block" />

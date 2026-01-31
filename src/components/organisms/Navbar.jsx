@@ -94,7 +94,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-30 flex items-center justify-between h-14 px-3 transition-all duration-500 border-b sm:h-16 sm:px-4 md:px-6 lg:px-8 ${
+      className={`fixed top-0 left-0 right-0 z-30 flex items-center justify-between h-16 px-6 transition-all duration-500 border-b sm:h-16 sm:px-4 md:px-6 lg:px-8 ${
         isCollapsed ? "lg:pl-24" : "lg:pl-80"
       }`}
       style={{
@@ -114,7 +114,7 @@ const Navbar = () => {
         />
         <span
           style={{ color: colors.darkPurple }}
-          className="hidden text-base font-bold sm:text-lg sm:inline"
+          className="text-sm font-bold sm:text-base md:text-lg"
         >
           InvestPro
         </span>
@@ -167,7 +167,7 @@ const Navbar = () => {
               >
                 {/* Avatar */}
                 <div
-                  className="flex items-center justify-center w-7 h-7 text-xs font-bold border-2 rounded-full sm:w-8 sm:h-8"
+                  className="flex items-center justify-center text-xs font-bold border-2 rounded-full w-7 h-7 sm:w-8 sm:h-8"
                   style={{
                     backgroundColor: colors.lightPurple,
                     borderColor: colors.mediumPurple,
@@ -355,7 +355,7 @@ const Navbar = () => {
             </div>
             <h2
               style={{ color: colors.darkPurple }}
-              className="text-2xl font-bold mb-2"
+              className="mb-2 text-2xl font-bold"
             >
               Logging Out
             </h2>

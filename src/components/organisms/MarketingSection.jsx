@@ -5,7 +5,7 @@ const MarketingSection = () => {
   return (
     <>
       {/* Platform Statistics Section */}
-      <div className="w-full px-4 mx-auto mb-8 sm:px-6 sm:mb-10 md:px-8 md:mb-12 lg:mb-16 max-w-6xl">
+      <div className="w-full max-w-6xl px-4 mx-auto mb-8 sm:px-6 sm:mb-10 md:px-8 md:mb-12 lg:mb-16">
         <h2
           style={{ color: colors.darkPurple }}
           className="mb-4 text-xl font-bold text-center sm:mb-6 sm:text-2xl md:text-3xl md:mb-8"
@@ -100,7 +100,7 @@ const MarketingSection = () => {
       </div>
 
       {/* Features Section */}
-      <div className="w-full px-4 mx-auto mb-8 sm:px-6 sm:mb-10 md:px-8 md:mb-12 lg:mb-16 max-w-6xl">
+      <div className="w-full max-w-6xl px-4 mx-auto mb-8 sm:px-6 sm:mb-10 md:px-8 md:mb-12 lg:mb-16">
         <h2
           style={{ color: colors.darkPurple }}
           className="mb-4 text-xl font-bold text-center sm:mb-6 sm:text-2xl md:text-3xl md:mb-8"
@@ -117,10 +117,14 @@ const MarketingSection = () => {
             }}
           >
             <div
-              className="flex items-center justify-center w-10 h-10 mb-3 text-xl rounded-lg sm:w-12 sm:h-12 sm:mb-4 sm:text-2xl"
-              style={{ backgroundColor: colors.lightPurple }}
+              className="flex items-center justify-center w-10 h-10 mb-3 text-xl border rounded-lg sm:w-12 sm:h-12 sm:mb-4 sm:text-2xl "
+              // style={{ backgroundColor: colors.lightPurple }}
             >
-              <span style={{ color: colors.darkPurple }}>🔒</span>
+              <img
+                src="/Secure lock.svg"
+                alt="Secure"
+                className="w-5 h-5 sm:w-6 sm:h-6"
+              />
             </div>
             <h3
               style={{ color: colors.darkPurple }}
@@ -145,11 +149,12 @@ const MarketingSection = () => {
               border: `1px solid ${colors.lightPurpleOverlay50}`,
             }}
           >
-            <div
-              className="flex items-center justify-center w-10 h-10 mb-3 text-xl rounded-lg sm:w-12 sm:h-12 sm:mb-4 sm:text-2xl"
-              style={{ backgroundColor: colors.lightPurple }}
-            >
-              <span style={{ color: colors.darkPurple }}>⚡</span>
+            <div className="flex items-center justify-center w-10 h-10 mb-3 text-xl border rounded-lg sm:w-12 sm:h-12 sm:mb-4 sm:text-2xl">
+              <img
+                src="/Cashback Reward-Rupee.svg"
+                alt="Easy to Use"
+                className="w-5 h-5 sm:w-6 sm:h-6"
+              />
             </div>
             <h3
               style={{ color: colors.darkPurple }}
@@ -175,10 +180,13 @@ const MarketingSection = () => {
             }}
           >
             <div
-              className="flex items-center justify-center w-10 h-10 mb-3 text-xl rounded-lg sm:w-12 sm:h-12 sm:mb-4 sm:text-2xl"
-              style={{ backgroundColor: colors.lightPurple }}
+              className="flex items-center justify-center w-10 h-10 mb-3 text-xl border rounded-lg sm:w-12 sm:h-12 sm:mb-4 sm:text-2xl"
             >
-              <span style={{ color: colors.darkPurple }}>👥</span>
+              <img
+                src="/Stock chart- Rupee.svg"
+                alt="Expert Support"
+                className="w-5 h-5 sm:w-6 sm:h-6"
+              />
             </div>
             <h3
               style={{ color: colors.darkPurple }}
@@ -204,10 +212,13 @@ const MarketingSection = () => {
             }}
           >
             <div
-              className="flex items-center justify-center w-10 h-10 mb-3 text-xl rounded-lg sm:w-12 sm:h-12 sm:mb-4 sm:text-2xl"
-              style={{ backgroundColor: colors.lightPurple }}
+              className="flex items-center justify-center w-10 h-10 mb-3 text-xl border rounded-lg sm:w-12 sm:h-12 sm:mb-4 sm:text-2xl"
             >
-              <span style={{ color: colors.darkPurple }}>📈</span>
+              <img
+                src="/UPI-Rupee.svg"
+                alt="Track Progress"
+                className="w-5 h-5 sm:w-6 sm:h-6"
+              />
             </div>
             <h3
               style={{ color: colors.darkPurple }}
@@ -226,7 +237,7 @@ const MarketingSection = () => {
       </div>
 
       {/* Testimonials Section */}
-      <div className="w-full px-4 mx-auto mb-8 sm:px-6 sm:mb-10 md:px-8 md:mb-12 lg:mb-16 max-w-6xl">
+      <div className="w-full max-w-6xl px-4 mx-auto mb-8 sm:px-6 sm:mb-10 md:px-8 md:mb-12 lg:mb-16">
         <h2
           style={{ color: colors.darkPurple }}
           className="mb-4 text-xl font-bold text-center sm:mb-6 sm:text-2xl md:text-3xl md:mb-8"
@@ -244,10 +255,14 @@ const MarketingSection = () => {
           >
             <div className="flex items-center mb-3 sm:mb-4">
               <div
-                className="flex items-center justify-center flex-shrink-0 w-10 h-10 text-sm font-bold text-white rounded-full sm:w-12 sm:h-12"
-                style={{ backgroundColor: colors.lightPurple }}
+                className="flex items-center justify-center flex-shrink-0 w-10 h-10 overflow-hidden border-2 rounded-full sm:w-12 sm:h-12"
+                style={{ borderColor: colors.lightPurple }}
               >
-                RK
+                <img
+                  src="/images/image.png"
+                  alt="Rajesh Kumar"
+                  className="object-cover w-full h-full"
+                />
               </div>
               <div className="ml-2 sm:ml-3">
                 <p
@@ -279,23 +294,27 @@ const MarketingSection = () => {
 
           {/* Testimonial 2 */}
           <div
-            className="p-6 rounded-lg"
+            className="p-4 transition-all rounded-lg sm:p-5 md:p-6 hover:scale-105 hover:shadow-lg"
             style={{
               backgroundColor: colors.lightBgCard,
               border: `1px solid ${colors.lightPurpleOverlay50}`,
             }}
           >
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-3 sm:mb-4">
               <div
-                className="flex items-center justify-center w-12 h-12 font-bold text-white rounded-full"
-                style={{ backgroundColor: colors.lightPurple }}
+                className="flex items-center justify-center flex-shrink-0 w-10 h-10 overflow-hidden border-2 rounded-full sm:w-12 sm:h-12"
+                style={{ borderColor: colors.lightPurple }}
               >
-                PS
+                <img
+                  src="/images/girlimage.png"
+                  alt="Priya Sharma"
+                  className="object-cover w-full h-full"
+                />
               </div>
-              <div className="ml-3">
+              <div className="ml-2 sm:ml-3">
                 <p
                   style={{ color: colors.darkPurple }}
-                  className="text-sm font-bold"
+                  className="text-xs font-bold sm:text-sm"
                 >
                   Priya Sharma
                 </p>
@@ -304,36 +323,45 @@ const MarketingSection = () => {
                 </p>
               </div>
             </div>
-            <p style={{ color: colors.mediumPurple }} className="mb-3 text-sm">
+            <p
+              style={{ color: colors.mediumPurple }}
+              className="mb-3 text-xs leading-relaxed sm:text-sm"
+            >
               "Transparent and secure. I love how I can track my investments in
               real-time. Best decision ever!"
             </p>
             <div className="flex gap-1">
               {[...Array(5)].map((_, i) => (
-                <span key={i}>⭐</span>
+                <span key={i} className="text-sm">
+                  ⭐
+                </span>
               ))}
             </div>
           </div>
 
           {/* Testimonial 3 */}
           <div
-            className="p-6 rounded-lg"
+            className="p-4 transition-all rounded-lg sm:p-5 md:p-6 hover:scale-105 hover:shadow-lg"
             style={{
               backgroundColor: colors.lightBgCard,
               border: `1px solid ${colors.lightPurpleOverlay50}`,
             }}
           >
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-3 sm:mb-4">
               <div
-                className="flex items-center justify-center w-12 h-12 font-bold text-white rounded-full"
-                style={{ backgroundColor: colors.lightPurple }}
+                className="flex items-center justify-center flex-shrink-0 w-10 h-10 overflow-hidden border-2 rounded-full sm:w-12 sm:h-12"
+                style={{ borderColor: colors.lightPurple }}
               >
-                AV
+                <img
+                  src="/images/image2.png"
+                  alt="Amit Verma"
+                  className="object-cover w-full h-full"
+                />
               </div>
-              <div className="ml-3">
+              <div className="ml-2 sm:ml-3">
                 <p
                   style={{ color: colors.darkPurple }}
-                  className="text-sm font-bold"
+                  className="text-xs font-bold sm:text-sm"
                 >
                   Amit Verma
                 </p>
@@ -342,13 +370,18 @@ const MarketingSection = () => {
                 </p>
               </div>
             </div>
-            <p style={{ color: colors.mediumPurple }} className="mb-3 text-sm">
+            <p
+              style={{ color: colors.mediumPurple }}
+              className="mb-3 text-xs leading-relaxed sm:text-sm"
+            >
               "The platform is user-friendly and the returns have been
               consistent. Highly recommended!"
             </p>
             <div className="flex gap-1">
               {[...Array(5)].map((_, i) => (
-                <span key={i}>⭐</span>
+                <span key={i} className="text-sm">
+                  ⭐
+                </span>
               ))}
             </div>
           </div>
@@ -356,7 +389,7 @@ const MarketingSection = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="w-full px-4 mx-auto mb-8 sm:px-6 sm:mb-10 md:px-8 md:mb-12 lg:mb-16 max-w-4xl">
+      <div className="w-full max-w-4xl px-4 mx-auto mb-8 sm:px-6 sm:mb-10 md:px-8 md:mb-12 lg:mb-16">
         <div
           className="p-6 text-center rounded-lg sm:p-8 md:p-10 lg:p-12"
           style={{

@@ -14,8 +14,8 @@ const HomePromotionalCard = () => {
         }}
       >
         {/* Left Content */}
-        <div className="z-10 flex-1 w-full mb-4 sm:mb-0 sm:w-auto sm:max-w-[50%] md:max-w-[55%]">
-          <h2 className="mb-2 text-lg font-bold leading-tight text-white sm:mb-3 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+        <div className="z-10 flex-1 w-full mb-4 text-center sm:mb-0 sm:text-left sm:w-auto sm:max-w-[50%] md:max-w-[55%]">
+          <h2 className="mb-3 text-2xl font-bold leading-snug text-white sm:mb-3 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl sm:leading-tight">
             Enjoy your
             <br />
             first home
@@ -24,7 +24,7 @@ const HomePromotionalCard = () => {
           </h2>
           <button
             onClick={() => navigate("/invest")}
-            className="px-4 py-1.5 text-xs font-semibold transition-all duration-300 rounded-full sm:px-5 sm:py-2 sm:text-sm md:px-6 md:py-2.5 md:text-base lg:px-8 lg:py-3 lg:text-lg hover:opacity-90 hover:shadow-xl active:scale-95"
+            className="w-full px-5 py-2 text-sm font-semibold transition-all duration-300 rounded-full sm:w-auto sm:px-5 sm:py-2 sm:text-sm md:px-6 md:py-2.5 md:text-base lg:px-8 lg:py-3 lg:text-lg hover:opacity-90 hover:shadow-xl active:scale-95"
             style={{
               backgroundColor: "white",
               color: colors.darkPurple,
