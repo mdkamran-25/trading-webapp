@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Card, Text } from "../atoms";
 import { TabButton } from "../molecules";
 
 /**

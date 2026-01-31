@@ -23,7 +23,7 @@ const HomePromotionalCard = () => {
           {/* Desktop Button - Hidden on mobile */}
           <button
             onClick={() => navigate("/invest")}
-            className="hidden w-full px-5 py-2 text-sm font-semibold transition-all duration-300 rounded-full sm:block sm:w-auto sm:px-5 sm:py-2 sm:text-sm md:px-6 md:py-2.5 md:text-base lg:px-8 lg:py-3 lg:text-lg hover:opacity-90 hover:shadow-xl active:scale-95"
+            className="hidden w-full px-5 py-2 text-sm font-semibold transition-all duration-300 rounded-lg sm:block sm:w-auto sm:px-5 sm:py-2 sm:text-sm md:px-6 md:py-2.5 md:text-base lg:px-8 lg:py-3 lg:text-lg hover:opacity-90 hover:shadow-xl active:scale-95"
             style={{
               backgroundColor: "white",
               color: colors.darkPurple,
@@ -45,7 +45,7 @@ const HomePromotionalCard = () => {
         {/* Mobile Button - Below image, hidden on desktop */}
         <button
           onClick={() => navigate("/invest")}
-          className="z-10 w-full px-5 py-2 mt-4 text-sm font-semibold transition-all duration-300 rounded-full sm:hidden hover:opacity-90 hover:shadow-xl active:scale-95"
+          className="z-10 w-full px-5 py-2 mt-4 text-sm font-semibold transition-all duration-300 rounded-lg sm:hidden hover:opacity-90 hover:shadow-xl active:scale-95"
           style={{
             backgroundColor: "white",
             color: colors.darkPurple,

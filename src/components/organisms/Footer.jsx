@@ -59,28 +59,36 @@ const Footer = () => {
               {/* Social Media */}
               <div className="flex gap-3 sm:gap-4">
                 <a
-                  href="#"
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 transition-all rounded-lg hover:scale-110 hover:shadow-lg"
                   style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
                 >
                   <Facebook size={18} className="text-white sm:w-5 sm:h-5" />
                 </a>
                 <a
-                  href="#"
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 transition-all rounded-lg hover:scale-110 hover:shadow-lg"
                   style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
                 >
                   <Twitter size={18} className="text-white sm:w-5 sm:h-5" />
                 </a>
                 <a
-                  href="#"
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 transition-all rounded-lg hover:scale-110 hover:shadow-lg"
                   style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
                 >
                   <Instagram size={18} className="text-white sm:w-5 sm:h-5" />
                 </a>
                 <a
-                  href="#"
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 transition-all rounded-lg hover:scale-110 hover:shadow-lg"
                   style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
                 >
@@ -192,24 +200,15 @@ const Footer = () => {
               </div>
 
               <div className="flex items-center gap-4 sm:gap-6">
-                <a
-                  href="#"
-                  className="text-xs transition-colors sm:text-sm text-white/60 hover:text-white"
-                >
+                <button className="text-xs transition-colors sm:text-sm text-white/60 hover:text-white">
                   Privacy Policy
-                </a>
-                <a
-                  href="#"
-                  className="text-xs transition-colors sm:text-sm text-white/60 hover:text-white"
-                >
+                </button>
+                <button className="text-xs transition-colors sm:text-sm text-white/60 hover:text-white">
                   Terms of Service
-                </a>
-                <a
-                  href="#"
-                  className="text-xs transition-colors sm:text-sm text-white/60 hover:text-white"
-                >
+                </button>
+                <button className="text-xs transition-colors sm:text-sm text-white/60 hover:text-white">
                   Cookie Policy
-                </a>
+                </button>
               </div>
             </div>
           </div>

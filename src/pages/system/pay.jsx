@@ -11,7 +11,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import pako from "pako";
-import { PageHeader, Card, Text, Button, Input, Badge } from "../../components";
+import { PageHeader, Card, Text, Button, Input } from "../../components";
 
 const QRCode = async () => {
   const res = await QRrandom();
@@ -32,7 +32,7 @@ const Pay = () => {
   const [payeeName, setPayeeName] = useState("Guest Name");
   const [utr, setUtr] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [price, setprice] = useState(location.state ?? 0);
+  const [price] = useState(location.state ?? 0);
   const [message, setMessage] = useState({ text: "", type: "" });
   const [timer, setTimer] = useState(300); // countdown (in seconds)
   const [user, setuser] = useState(null);
@@ -240,26 +240,6 @@ const Pay = () => {
   }, [timer]);
   const minutes = Math.floor(timer / 60);
   const seconds = timer % 60;
-  // Inline styles
-  const containerStyle = {
-    marginTop: "10px",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "10px",
-  };
-
-  const itemStyle = {
-    backgroundColor: "#F4F4F5",
-    padding: "10px 12px",
-    borderRadius: "8px",
-    border: "1px solid #D1D1D6",
-    width: "48%",
-    cursor: "pointer",
-  };
-
-  const innerFlex = { display: "flex", alignItems: "center", gap: "10px" };
-  const textStyle = { color: "#0F0F0F", fontSize: "12px", fontWeight: 500 };
-  const imageStyle = { width: "24px", height: "auto" };
 
   // 🧾 Submit UTR
   const handleSubmit = async (e) => {

@@ -1,5 +1,4 @@
 import React from "react";
-import { Card, Text } from "../atoms";
 import { BottomNavItem } from "../molecules";
 
 /**

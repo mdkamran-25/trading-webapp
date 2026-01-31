@@ -4,7 +4,6 @@ import { API_BASE_URL, SECRET_KEY, sendOtp } from "../../api";
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
 import pako from "pako";
-import { Card, Input, Button, Text, Label } from "../../components";
 import { colors } from "../../utils/colors";
 function ForgotPassword() {
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ function ForgotPassword() {
   const handleVerifyOtp = () => {
     if (!otp) return alert("Enter OTP");
     console.log(generatedOtp);
-    if (otp == generatedOtp) {
+    if (otp === generatedOtp) {
       setOtpVerified(true);
       alert("OTP verified! You can now set new password.");
     } else {

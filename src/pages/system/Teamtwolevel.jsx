@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getTeamLevel } from "../../api";
-import { Card, Text, Button, Badge, PageHeader } from "../../components";
+import { Card, Text, Badge, PageHeader } from "../../components";
 
 const TeamTwoLevel = () => {
   const navigate = useNavigate();

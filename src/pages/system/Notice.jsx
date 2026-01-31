@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { PageHeader, Card, Text } from "../../components";
+import { PageHeader, Text } from "../../components";
 
 export default function Notice() {
   const navigate = useNavigate();

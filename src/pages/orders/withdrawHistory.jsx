@@ -1,5 +1,5 @@
 import React from "react";
-import { Clock, CheckCircle, XCircle, Copy } from "lucide-react";
+import { Copy } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PageHeader, Card, Text, Badge } from "../../components";
 
@@ -41,32 +41,6 @@ const WithdrawalItem = ({ record }) => {
       });
     } catch (e) {
       return "Invalid Date";
-    }
-  };
-
-  // Determine which icon to show based on the status (now using lowercase record.status)
-  const getStatusIcon = (status) => {
-    console.log(record);
-    switch (status) {
-      case "approved":
-        return <CheckCircle className="w-4 h-4" />;
-      case "rejected":
-        return <XCircle className="w-4 h-4" />;
-      case "pending":
-      default:
-        return <Clock className="w-4 h-4" />;
-    }
-  };
-
-  const getStatusColors = (status) => {
-    switch (status) {
-      case "approved":
-        return "bg-emerald-400 text-white";
-      case "rejected":
-        return "bg-red-400 text-white";
-      case "pending":
-      default:
-        return "bg-amber-400 text-white";
     }
   };
 

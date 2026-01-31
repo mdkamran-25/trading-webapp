@@ -7,12 +7,10 @@ import LoadingScreen from "../../components/atoms/LoadingScreen";
 import { API_BASE_URL, SECRET_KEY } from "../../api";
 import Profile from "./Profile";
 import pako from "pako";
-import { Card } from "../../components";
 
 export default function AccountPage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("Profile");
 
   const [accountData, setAccountData] = useState({
     totalBuy: 0,

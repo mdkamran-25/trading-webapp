@@ -6,7 +6,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { loginUser, SECRET_KEY } from "../../api";
 import ForgotPassword from "./ForgotPassword";
 import pako from "pako";
-import { Card, Text, Button } from "../../components";
 import { colors } from "../../utils/colors";
 
 const Login = () => {

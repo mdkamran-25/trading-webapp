@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import LoadingScreen from "../../components/atoms/LoadingScreen";
 import ProductCard from "./prod";
-import { TabButton, BottomNavigation, Card, Text } from "../../components";
+import { TabButton, BottomNavigation, Card } from "../../components";
 
 const Invest = ({ products }) => {
   const navigate = useNavigate();
@@ -33,15 +33,6 @@ const Invest = ({ products }) => {
     { name: "Profile", path: "/account" },
   ];
   const [activeTab1, setActiveTab1] = useState("invest");
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
-  };
 
   const getProducts = () => {
     switch (activeTab) {

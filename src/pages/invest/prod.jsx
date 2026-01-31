@@ -73,7 +73,6 @@ const ProductCard = ({ productData, onBuy }) => {
     durationDays,
     cycleType,
     img,
-    isdailyClaim,
   } = productData;
 
   return (

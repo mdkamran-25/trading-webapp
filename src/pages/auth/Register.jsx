@@ -5,7 +5,6 @@ import { registerUser, SECRET_KEY, sendOtpNoCheck } from "../../api";
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import pako from "pako";
-import { Card, Button, Text } from "../../components";
 import { colors } from "../../utils/colors";
 
 const Register = () => {

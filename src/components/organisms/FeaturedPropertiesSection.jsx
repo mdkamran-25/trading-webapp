@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Heart,
-  Bed,
-  Bath,
-  Square,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
 import { colors } from "../../utils/colors";
 
 const FeaturedPropertiesSection = () => {

@@ -22,7 +22,6 @@ export default function Orders() {
   const [modalOrder, setModalOrder] = useState(null);
   const [UserData, setUserData] = useState(null);
   const [claimStatus, setClaimStatus] = useState(null);
-  const [timer, setTimer] = useState(0); // For countdown updates
   const navigate = useNavigate();
 
   const fetchUser = async () => {
@@ -64,12 +63,7 @@ export default function Orders() {
 
   useEffect(() => {
     fetchUser();
-  }, []);
-
-  // Refresh every second for countdown
-  useEffect(() => {
-    const interval = setInterval(() => setTimer((prev) => prev + 1), 1000);
-    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filteredOrders =

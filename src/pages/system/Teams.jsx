@@ -6,13 +6,7 @@ import CryptoJS from "crypto-js";
 import { getTeamOverview, SECRET_KEY } from "../../api";
 import pako from "pako";
 import LoadingScreen from "../../components/atoms/LoadingScreen";
-import {
-  PageHeader,
-  Card,
-  Text,
-  Button,
-  BottomNavigation,
-} from "../../components";
+import { Card, Text, Button } from "../../components";
 
 const Teams = () => {
   const navigate = useNavigate();

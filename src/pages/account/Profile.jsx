@@ -3,7 +3,6 @@ import {
   ChevronRight,
   User,
   Copy,
-  ArrowLeft,
   AtSign,
   Phone,
   LogOut,
@@ -15,16 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { VIPBadge } from "../invest/VIP";
-import {
-  Card,
-  Text,
-  PageHeader,
-  StatCard,
-  Button,
-  InfoRow,
-} from "../../components";
-// --- Color and Style Constants ---
-const BRIGHT_ORANGE = "#ff9900";
+import { Card, Text, PageHeader, StatCard, Button } from "../../components";
 
 // Utility function for copying text using document.execCommand
 const copyToClipboard = (text) => {
@@ -429,29 +419,6 @@ const ProfileHeader = ({ userId, userInfo }) => {
           <VIPBadge levelData={current} size="badge-small" isCurrent={true} />
         </div>
       </div>
-    </div>
-  );
-};
-
-// Component for the balance and income metrics
-const BalanceSummary = ({ accountData }) => {
-  const data = accountData;
-  return (
-    <div className="grid grid-cols-4 gap-2">
-      {data.map((item, index) => (
-        <div key={index} className="text-center">
-          <Text variant="h4" className="font-bold text-gray-900">
-            {item.value >= 1000000
-              ? (item.value / 1000000).toFixed(1) + "M"
-              : item.value >= 1000
-                ? (item.value / 1000).toFixed(1) + "K"
-                : item.value}
-          </Text>
-          <Text variant="sm" className="text-gray-600">
-            {item.label}
-          </Text>
-        </div>
-      ))}
     </div>
   );
 };

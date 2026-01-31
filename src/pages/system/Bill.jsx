@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PageHeader, Card, Text, Button, TabButton } from "../../components";
+import { PageHeader, Card, Text, TabButton } from "../../components";
 const transactions = [
   {
     type: "task rewards",

@@ -5,7 +5,7 @@ import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import pako from "pako";
 import { API_BASE_URL2, BuyProduct, getUserInfo, SECRET_KEY } from "../../api";
-import { PageHeader, Card, Text, Button, Badge, Input } from "../../components";
+import { PageHeader, Card, Text, Button, Badge } from "../../components";
 
 const encryptedUser = Cookies.get("tredingWebUser");
 

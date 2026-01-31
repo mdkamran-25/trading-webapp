@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Text } from "../atoms";
+import { Text } from "../atoms";
 
 /**
  * MetricRow Molecule Component

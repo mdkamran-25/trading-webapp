@@ -25,14 +25,7 @@ const Sidebar = () => {
   const location = useLocation();
   const { isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOpen } =
     useContext(SidebarContext);
-  const [userData, setUserData] = useState({
-    name: "User",
-    phone: "",
-    email: "",
-    title: "Investor",
-    profileImage: "/default-profile.png",
-    vipLevel: "V₀",
-  });
+  const [userData, setUserData] = useState(null);
 
   // Fetch user data from cookies
   useEffect(() => {

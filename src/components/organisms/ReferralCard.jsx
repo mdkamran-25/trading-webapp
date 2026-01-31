@@ -7,12 +7,10 @@ import {
   Copy,
   Check,
   Download,
-  QrCode,
 } from "lucide-react";
 
 const ReferralCard = ({ UserData = {} }) => {
   const [copied, setCopied] = useState(false);
-  const [showQr, setShowQr] = useState(false);
   const referralCode = UserData?.referralCode || "";
 
   const referralLink = `http://realstateinvest.in/register?invitation_code=${referralCode}`;
@@ -165,13 +163,13 @@ const ReferralCard = ({ UserData = {} }) => {
           {/* Right side - Large Visible QR Code */}
           <div className="flex flex-col items-center gap-3 lg:min-w-[220px]">
             <div
-              className="p-4 bg-white rounded-xl shadow-lg border-2"
+              className="p-4 bg-white border-2 shadow-lg rounded-xl"
               style={{ borderColor: colors.lightPurpleOverlay50 }}
             >
               <img
                 src={`https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=${encodeURIComponent(referralLink)}`}
                 alt="QR Code for Referral Link"
-                className="w-52 h-52 rounded-lg"
+                className="rounded-lg w-52 h-52"
               />
             </div>
             <button
