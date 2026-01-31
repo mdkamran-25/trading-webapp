@@ -106,6 +106,7 @@ const Withdraw = () => {
   useEffect(() => {
     getUserId();
     fetchBankDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleAddBank = async () => {

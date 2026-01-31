@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Phone, Clipboard, CalendarDays, Copy } from "lucide-react";
 import { Card, Text, PageHeader } from "../../components";
@@ -50,7 +50,7 @@ function Info() {
   });
 
   const location = useLocation();
-  const userData = location.state || {};
+  const userData = useMemo(() => location.state || {}, [location.state]);
 
   useEffect(() => {
     if (userData) {
@@ -65,6 +65,7 @@ function Info() {
         registrationDate: userData?.UserData?.registrationDate || new Date(),
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   const handleCopy = async (text, key) => {

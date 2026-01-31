@@ -261,6 +261,7 @@ export default function ProductInfo() {
     () =>
       PRODUCT_MOCK_DATA.dailyIncomePerShare *
       PRODUCT_MOCK_DATA.revenueDurationDays,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
@@ -301,6 +302,7 @@ export default function ProductInfo() {
   useEffect(() => {
     getUserData();
     fetchExplanations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

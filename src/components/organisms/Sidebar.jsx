@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Home,
@@ -25,7 +25,6 @@ const Sidebar = () => {
   const location = useLocation();
   const { isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOpen } =
     useContext(SidebarContext);
-  const [userData, setUserData] = useState(null);
 
   // Fetch user data from cookies
   useEffect(() => {
@@ -45,16 +44,8 @@ const Sidebar = () => {
             bytes[i] = binaryString.charCodeAt(i);
           }
 
-          const decompressed = pako.inflate(bytes, { to: "string" });
-          const userObj = JSON.parse(decompressed);
-          setUserData({
-            name: userObj.name || "User",
-            phone: userObj.phone || "",
-            email: userObj.email || "",
-            title: userObj.title || "Investor",
-            profileImage: userObj.profileImage || "/default-profile.png",
-            vipLevel: userObj.vipLevel || "V₀",
-          });
+          pako.inflate(bytes, { to: "string" });
+          // User data decoded successfully
         }
       } catch (err) {
         console.error("Failed to decode user data:", err);

@@ -133,6 +133,7 @@ export default function AccountPage() {
   };
   useEffect(() => {
     fetchAccountData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

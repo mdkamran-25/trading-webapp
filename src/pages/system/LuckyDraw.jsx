@@ -211,6 +211,7 @@ const LuckyDraw = () => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const checkSpinLimit = async () => {
     const data2 = await checkLuckySpinValidation(userId);
