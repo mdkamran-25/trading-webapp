@@ -2,7 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { colors } from "../../utils/colors";
 
-const QuickActionCard = ({ icon, title, description, onClick, path }) => {
+const QuickActionCard = ({
+  icon,
+  title,
+  description,
+  details,
+  onClick,
+  path,
+}) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -13,9 +20,10 @@ const QuickActionCard = ({ icon, title, description, onClick, path }) => {
     }
   };
 
-  // Check if icon is a string (emoji) or a React component (Lucide icon)
-  const isEmoji = typeof icon === "string";
-  const Icon = !isEmoji ? icon : null;
+  // Check if icon is a string (emoji or SVG path), a React component (Lucide icon), or SVG file
+  const isEmoji = typeof icon === "string" && !icon.includes(".svg");
+  const isSVG = typeof icon === "string" && icon.includes(".svg");
+  const Icon = !isEmoji && !isSVG ? icon : null;
 
   return (
     <div
@@ -29,11 +37,16 @@ const QuickActionCard = ({ icon, title, description, onClick, path }) => {
     >
       <div className="flex items-start gap-4">
         <div
-          className="p-3 rounded-lg text-2xl flex items-center justify-center"
-          style={{ backgroundColor: colors.lightPurple }}
+          className="flex items-center justify-center p-3 text-2xl rounded-lg"
+          style={{
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #E5E7EB",
+          }}
         >
           {isEmoji ? (
             <span>{icon}</span>
+          ) : isSVG ? (
+            <img src={icon} alt={title} className="w-6 h-6" />
           ) : (
             <Icon size={24} style={{ color: colors.darkPurple }} />
           )}
@@ -45,9 +58,17 @@ const QuickActionCard = ({ icon, title, description, onClick, path }) => {
           >
             {title}
           </h3>
-          <p style={{ color: colors.mediumPurple }} className="text-sm">
+          <p style={{ color: colors.mediumPurple }} className="mb-2 text-sm">
             {description}
           </p>
+          {details && (
+            <p
+              style={{ color: colors.mediumPurple }}
+              className="text-xs leading-relaxed opacity-75"
+            >
+              {details}
+            </p>
+          )}
         </div>
       </div>
     </div>

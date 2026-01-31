@@ -8,38 +8,47 @@ const QuickActionsGrid = () => {
   const quickActions = [
     {
       title: "Invest",
-      description: "Start your investment",
-      icon: "💰",
+      description: "Grow your money with property investments",
+      details:
+        "Browse curated properties, analyze returns, and invest securely with flexible minimum amounts.",
+      icon: "/Stock chart- Rupee.svg",
       onClick: () => navigate("/invest"),
     },
     {
       title: "Teams",
-      description: "View your team",
-      icon: "👥",
+      description: "Manage teams and track performance",
+      details:
+        "Track team members, manage collaborations, and monitor shared investment performance in one place.",
+      icon: "/Cashback Reward-Rupee.svg",
       onClick: () => navigate("/teams"),
     },
     {
       title: "Wallet",
-      description: "Manage funds",
-      icon: "💳",
+      description: "Add funds and monitor returns",
+      details:
+        "View balances, add or withdraw funds, track transactions, and monitor returns across all investments.",
+      icon: "/Wallet.svg",
       onClick: () => navigate("/orders"),
     },
     {
       title: "Account",
-      description: "View profile",
-      icon: "👤",
+      description: "Manage profile and security",
+      details:
+        "Update personal information, complete verification, and manage security and account preferences.",
+      icon: "/Face id_1.svg",
       onClick: () => navigate("/account"),
     },
   ];
 
   return (
-    <div className="max-w-6xl mx-auto mb-12">
+    <div className="w-full pl-32 pr-8 mx-auto mb-12">
       <div className="grid grid-cols-2 gap-4">
         {quickActions.map((action, index) => (
           <QuickActionCard
             key={index}
             title={action.title}
             description={action.description}
+            details={action.details}
             icon={action.icon}
             onClick={action.onClick}
           />
