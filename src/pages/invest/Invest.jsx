@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import LoadingScreen from "../../components/atoms/LoadingScreen";
 import ProductCard from "./prod";
-import { TabButton, MainLayout, Card } from "../../components";
+import { TabButton, MainLayout } from "../../components";
 import { colors } from "../../utils/colors";
 
 const Invest = ({ products }) => {
