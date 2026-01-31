@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import LoadingScreen from "../../components/atoms/LoadingScreen";
 import ProductCard from "./prod";
-import { TabButton, BottomNavigation, Card } from "../../components";
+import { TabButton, MainLayout, Card } from "../../components";
 
 const Invest = ({ products }) => {
   const navigate = useNavigate();
@@ -25,14 +25,6 @@ const Invest = ({ products }) => {
     }
     setIsLoading(false);
   }, [navigate]);
-
-  const tabs = [
-    { name: "Home", path: "/" },
-    { name: "invest", path: "/invest" },
-    { name: "Teams", path: "/teams" },
-    { name: "Profile", path: "/account" },
-  ];
-  const [activeTab1, setActiveTab1] = useState("invest");
 
   const getProducts = () => {
     switch (activeTab) {
@@ -59,7 +51,7 @@ const Invest = ({ products }) => {
   };
   console.log(products);
   return (
-    <>
+    <MainLayout>
       {isLoading && <LoadingScreen />}
       <div className="relative flex flex-col w-full max-h-screen min-h-screen mx-auto mb-56 bg-gradient-to-br from-orange-300 via-yellow-100 to-yellow-200 animate-bgFlow">
         {/* Header */}
@@ -124,18 +116,7 @@ const Invest = ({ products }) => {
           ))}
         </Card>
       </div>
-
-      {/* Bottom Navigation */}
-      <BottomNavigation
-        tabs={tabs.map((tab) => ({ label: tab.name, value: tab.name }))}
-        activeTab={activeTab1}
-        onTabChange={(value) => {
-          setActiveTab1(value);
-          const tab = tabs.find((t) => t.name === value);
-          if (tab) navigate(tab.path);
-        }}
-      />
-    </>
+    </MainLayout>
   );
 };
 

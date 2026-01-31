@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../api";
 import Cookies from "js-cookie";
-import { Card, Button, Text, PageHeader } from "../../components";
+import { Card, Button, Text, PageHeader, MainLayout } from "../../components";
 
 function ChangePassword() {
   const navigate = useNavigate();
@@ -54,87 +54,89 @@ function ChangePassword() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gray-100">
-      <PageHeader
-        title="Change Password"
-        onBack={() => navigate(-1)}
-        showBackButton={true}
-      />
+    <MainLayout>
+      <div className="w-full min-h-screen bg-gray-100">
+        <PageHeader
+          title="Change Password"
+          onBack={() => navigate(-1)}
+          showBackButton={true}
+        />
 
-      <Card variant="default" padding="lg" className="w-11/12 mx-auto mt-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Text variant="label" weight="semibold" className="mb-2">
-              Phone Number
-            </Text>
-            <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="Enter phone number"
-              className="w-full px-4 py-3 transition border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none"
-              required
-            />
-          </div>
-
-          <div>
-            <Text variant="label" weight="semibold" className="mb-2">
-              Current Password
-            </Text>
-            <div className="relative">
+        <Card variant="default" padding="lg" className="w-11/12 mx-auto mt-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <Text variant="label" weight="semibold" className="mb-2">
+                Phone Number
+              </Text>
               <input
-                type={showCurrent ? "text" : "password"}
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                placeholder="Enter current password"
+                type="text"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Enter phone number"
                 className="w-full px-4 py-3 transition border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none"
                 required
               />
-              <button
-                type="button"
-                className="absolute text-gray-500 transition -translate-y-1/2 right-3 top-1/2 hover:text-gray-700"
-                onClick={() => setShowCurrent(!showCurrent)}
-              >
-                {showCurrent ? "👁️" : "👁️‍🗨️"}
-              </button>
             </div>
-          </div>
 
-          <div>
-            <Text variant="label" weight="semibold" className="mb-2">
-              New Password
-            </Text>
-            <div className="relative">
-              <input
-                type={showNew ? "text" : "password"}
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="Enter new password"
-                className="w-full px-4 py-3 transition border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none"
-                required
-              />
-              <button
-                type="button"
-                className="absolute text-gray-500 transition -translate-y-1/2 right-3 top-1/2 hover:text-gray-700"
-                onClick={() => setShowNew(!showNew)}
-              >
-                {showNew ? "👁️" : "👁️‍🗨️"}
-              </button>
+            <div>
+              <Text variant="label" weight="semibold" className="mb-2">
+                Current Password
+              </Text>
+              <div className="relative">
+                <input
+                  type={showCurrent ? "text" : "password"}
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  placeholder="Enter current password"
+                  className="w-full px-4 py-3 transition border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none"
+                  required
+                />
+                <button
+                  type="button"
+                  className="absolute text-gray-500 transition -translate-y-1/2 right-3 top-1/2 hover:text-gray-700"
+                  onClick={() => setShowCurrent(!showCurrent)}
+                >
+                  {showCurrent ? "👁️" : "👁️‍🗨️"}
+                </button>
+              </div>
             </div>
-          </div>
 
-          <Button
-            type="submit"
-            variant="gradient"
-            fullWidth
-            disabled={loading}
-            className="mt-6"
-          >
-            {loading ? "Updating..." : "Update Password"}
-          </Button>
-        </form>
-      </Card>
-    </div>
+            <div>
+              <Text variant="label" weight="semibold" className="mb-2">
+                New Password
+              </Text>
+              <div className="relative">
+                <input
+                  type={showNew ? "text" : "password"}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Enter new password"
+                  className="w-full px-4 py-3 transition border-2 border-gray-300 rounded-2xl focus:border-yellow-400 focus:outline-none"
+                  required
+                />
+                <button
+                  type="button"
+                  className="absolute text-gray-500 transition -translate-y-1/2 right-3 top-1/2 hover:text-gray-700"
+                  onClick={() => setShowNew(!showNew)}
+                >
+                  {showNew ? "👁️" : "👁️‍🗨️"}
+                </button>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              variant="gradient"
+              fullWidth
+              disabled={loading}
+              className="mt-6"
+            >
+              {loading ? "Updating..." : "Update Password"}
+            </Button>
+          </form>
+        </Card>
+      </div>
+    </MainLayout>
   );
 }
 

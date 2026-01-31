@@ -44,3 +44,6 @@ export {
   HomeContent,
   Footer,
 } from './organisms';
+
+// Layouts
+export { MainLayout, AuthLayout } from './layouts';

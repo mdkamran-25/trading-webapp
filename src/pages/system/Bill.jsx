@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PageHeader, Card, Text, TabButton } from "../../components";
+import {
+  PageHeader,
+  Card,
+  Text,
+  TabButton,
+  MainLayout,
+} from "../../components";
 const transactions = [
   {
     type: "task rewards",
@@ -62,61 +68,63 @@ function Bill() {
       : transactions.filter((t) => t.category === activeTab);
 
   return (
-    <div className="flex flex-col max-w-lg min-h-screen mx-auto font-sans bg-gradient-to-br from-white via-yellow-50 to-yellow-100">
-      {/* Header */}
-      <PageHeader title="Balance Details" onBack={() => navigate(-1)} />
+    <MainLayout>
+      <div className="flex flex-col max-w-lg min-h-screen mx-auto font-sans bg-gradient-to-br from-white via-yellow-50 to-yellow-100">
+        {/* Header */}
+        <PageHeader title="Balance Details" onBack={() => navigate(-1)} />
 
-      {/* Tabs */}
-      <div className="flex justify-around gap-2.5 mx-2.5 my-5">
-        <TabButton
-          label="All"
-          isActive={activeTab === "all"}
-          onClick={() => setActiveTab("all")}
-        />
-        <TabButton
-          label="Recharge"
-          isActive={activeTab === "recharge"}
-          onClick={() => setActiveTab("recharge")}
-        />
-        <TabButton
-          label="Withdrawal"
-          isActive={activeTab === "withdrawal"}
-          onClick={() => setActiveTab("withdrawal")}
-        />
-      </div>
+        {/* Tabs */}
+        <div className="flex justify-around gap-2.5 mx-2.5 my-5">
+          <TabButton
+            label="All"
+            isActive={activeTab === "all"}
+            onClick={() => setActiveTab("all")}
+          />
+          <TabButton
+            label="Recharge"
+            isActive={activeTab === "recharge"}
+            onClick={() => setActiveTab("recharge")}
+          />
+          <TabButton
+            label="Withdrawal"
+            isActive={activeTab === "withdrawal"}
+            onClick={() => setActiveTab("withdrawal")}
+          />
+        </div>
 
-      {/* Transactions */}
-      <div className="flex flex-col flex-1 gap-4 p-4 pb-5">
-        {filteredTransactions.map((tx, index) => (
-          <Card
-            key={index}
-            variant="flat"
-            padding="md"
-            className="flex justify-between items-center"
-          >
-            <div className="flex-1">
-              <Text variant="body" className="font-semibold text-gray-800">
-                {tx.type}
-              </Text>
-              <Text variant="sm" className="mt-1 text-gray-500">
-                {tx.date}
-              </Text>
-            </div>
-            <Text
-              variant="body"
-              className={`font-bold ${
-                tx.amount.includes("+") ? "text-green-500" : "text-orange-600"
-              }`}
+        {/* Transactions */}
+        <div className="flex flex-col flex-1 gap-4 p-4 pb-5">
+          {filteredTransactions.map((tx, index) => (
+            <Card
+              key={index}
+              variant="flat"
+              padding="md"
+              className="flex justify-between items-center"
             >
-              {tx.amount}
-            </Text>
-          </Card>
-        ))}
-        <Text variant="sm" className="my-5 text-center text-gray-500">
-          No more
-        </Text>
+              <div className="flex-1">
+                <Text variant="body" className="font-semibold text-gray-800">
+                  {tx.type}
+                </Text>
+                <Text variant="sm" className="mt-1 text-gray-500">
+                  {tx.date}
+                </Text>
+              </div>
+              <Text
+                variant="body"
+                className={`font-bold ${
+                  tx.amount.includes("+") ? "text-green-500" : "text-orange-600"
+                }`}
+              >
+                {tx.amount}
+              </Text>
+            </Card>
+          ))}
+          <Text variant="sm" className="my-5 text-center text-gray-500">
+            No more
+          </Text>
+        </div>
       </div>
-    </div>
+    </MainLayout>
   );
 }
 

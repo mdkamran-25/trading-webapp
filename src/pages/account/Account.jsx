@@ -7,6 +7,7 @@ import LoadingScreen from "../../components/atoms/LoadingScreen";
 import { API_BASE_URL, SECRET_KEY } from "../../api";
 import Profile from "./Profile";
 import pako from "pako";
+import { MainLayout } from "../../components";
 
 export default function AccountPage() {
   const navigate = useNavigate();
@@ -137,11 +138,11 @@ export default function AccountPage() {
   }, []);
 
   return (
-    <>
+    <MainLayout>
       {isLoading && <LoadingScreen />}
       <div className="min-h-screen pb-8 font-sans bg-gradient-to-r from-amber-100 to-yellow-300">
         <Profile userInfo={userInfo} accountData={accountData} />
       </div>
-    </>
+    </MainLayout>
   );
 }

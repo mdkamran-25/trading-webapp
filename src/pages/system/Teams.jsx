@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Home, Users, User, DollarSign, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
 import { getTeamOverview, SECRET_KEY } from "../../api";
 import pako from "pako";
 import LoadingScreen from "../../components/atoms/LoadingScreen";
-import { Card, Text, Button } from "../../components";
+import { Card, Text, MainLayout } from "../../components";
 
 const Teams = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("Teams");
   const [teamData, setTeamData] = useState([]);
   const [totalTeams, settotalTeams] = useState(0);
 
@@ -81,7 +80,7 @@ const Teams = () => {
   }, [navigate]);
 
   return (
-    <>
+    <MainLayout>
       {isLoading && <LoadingScreen />}
       <div className="w-full max-w-md mx-auto min-h-screen bg-gray-100 overflow-y-auto pb-24 font-sans">
         {/* Header */}
@@ -167,33 +166,8 @@ const Teams = () => {
             </Card>
           ))}
         </div>
-
-        {/* Bottom Navigation */}
-        <div className="fixed bottom-0 left-0 right-0 bg-white p-2 flex justify-around items-center border-t border-gray-200 z-50">
-          {[
-            { name: "Home", icon: <Home size={22} />, path: "/" },
-            { name: "Invest", icon: <DollarSign size={22} />, path: "/invest" },
-            { name: "Teams", icon: <Users size={22} />, path: "/teams" },
-            { name: "Profile", icon: <User size={22} />, path: "/account" },
-          ].map((tab) => (
-            <Button
-              key={tab.name}
-              variant={activeTab === tab.name ? "primary" : "secondary"}
-              onClick={() => {
-                setActiveTab(tab.name);
-                navigate(tab.path);
-              }}
-              className="flex flex-col items-center gap-1 px-3 py-2"
-            >
-              {tab.icon}
-              <Text variant="xs" className="text-xs">
-                {tab.name}
-              </Text>
-            </Button>
-          ))}
-        </div>
       </div>
-    </>
+    </MainLayout>
   );
 };
 

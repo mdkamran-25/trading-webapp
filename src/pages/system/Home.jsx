@@ -4,17 +4,11 @@ import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import pako from "pako";
 import { getUserInfo, SECRET_KEY, tokenVerify } from "../../api";
-import { colors } from "../../utils/colors";
-import { SidebarProvider } from "../../context/SidebarContext";
 import {
-  BottomNavigation,
-  MobileBottomNav,
-  Sidebar,
-  Navbar,
+  MainLayout,
   HeroSection,
   MarketingSection,
   HomeContent,
-  Footer,
 } from "../../components";
 
 const HomePage = () => {
@@ -107,55 +101,26 @@ const HomePage = () => {
   }, []);
 
   return (
-    <SidebarProvider>
-      <div className="flex h-screen overflow-hidden">
-        {/* Sidebar - Hidden on mobile devices */}
-        <div className="hidden md:block">
-          <Sidebar />
-        </div>
-        <div className="flex flex-col flex-1">
-          <Navbar />
-          <div
-            className="flex-1 overflow-y-auto"
-            style={{ backgroundColor: colors.lightBgContent }}
-          >
-            <div className="flex-1 pt-14 pb-20 sm:pt-16 sm:pb-24 md:pt-20 md:pb-12 lg:pl-4 lg:pr-8 lg:pt-20 lg:pb-8">
-              {/* Show Marketing Section for Unauthenticated Users */}
-              {!isAuthenticated && (
-                <>
-                  <HeroSection />
-                  <MarketingSection />
-                </>
-              )}
+    <MainLayout>
+      {/* Show Marketing Section for Unauthenticated Users */}
+      {!isAuthenticated && (
+        <>
+          <HeroSection />
+          <MarketingSection />
+        </>
+      )}
 
-              {/* Show Authenticated Content for Logged-In Users */}
-              {isAuthenticated && (
-                <HomeContent
-                  balance={balance}
-                  TeamSize={TeamSize}
-                  withdraw={withdraw}
-                  UserData={UserData}
-                  navigate={navigate}
-                />
-              )}
-            </div>
-
-            {/* Footer */}
-            <Footer />
-
-            {/* Mobile Bottom Navigation - Always visible on mobile */}
-            <MobileBottomNav />
-
-            {/* Bottom Navigation - Mobile Only - Only for authenticated users */}
-            {isAuthenticated && (
-              <div className="hidden lg:hidden">
-                <BottomNavigation activeId="home" />
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </SidebarProvider>
+      {/* Show Authenticated Content for Logged-In Users */}
+      {isAuthenticated && (
+        <HomeContent
+          balance={balance}
+          TeamSize={TeamSize}
+          withdraw={withdraw}
+          UserData={UserData}
+          navigate={navigate}
+        />
+      )}
+    </MainLayout>
   );
 };
 

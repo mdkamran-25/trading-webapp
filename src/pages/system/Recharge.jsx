@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { Card, Button, Text, PageHeader } from "../../components";
+import { Card, Button, Text, PageHeader, MainLayout } from "../../components";
 
 const Recharge = () => {
   const navigate = useNavigate();
@@ -41,80 +41,82 @@ const Recharge = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto min-h-screen bg-white overflow-y-auto flex flex-col items-center">
-      {/* Header */}
-      <PageHeader
-        title="Recharge"
-        onBack={() => navigate(-1)}
-        showBackButton={true}
-        className="w-full mb-6"
-      />
+    <MainLayout>
+      <div className="w-full max-w-md mx-auto min-h-screen bg-white overflow-y-auto flex flex-col items-center">
+        {/* Header */}
+        <PageHeader
+          title="Recharge"
+          onBack={() => navigate(-1)}
+          showBackButton={true}
+          className="w-full mb-6"
+        />
 
-      {/* Recharge Card */}
-      <Card variant="default" padding="lg" className="w-11/12 mx-auto">
-        <div>
-          <Text variant="label" weight="semibold" className="mb-3">
-            Recharge Amount
-          </Text>
-          <input
-            type="number"
-            placeholder="Recharge Amount"
-            className="w-full px-4 py-4 border border-gray-300 rounded-2xl text-base mb-6 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-          />
-
-          {/* Quick Amounts */}
-          <div className="grid grid-cols-3 gap-3 mb-8 bg-gray-100 p-5 rounded-2xl">
-            {quickAmounts.map((amt) => (
-              <button
-                key={amt}
-                className={`px-2 py-3 rounded-lg font-medium text-sm transition-all ${
-                  amount === amt
-                    ? "bg-orange-400 text-white shadow-md"
-                    : "bg-white border border-gray-200 text-gray-800 hover:bg-gray-50"
-                }`}
-                onClick={() => handleQuickAmount(amt)}
-              >
-                ₹{amt}
-              </button>
-            ))}
-          </div>
-
-          {/* Recharge Button */}
-          <Button
-            variant="gradient"
-            fullWidth
-            onClick={handleRecharge}
-            className="mb-6"
-          >
-            Recharge Now
-          </Button>
-
-          {/* Explanations */}
-          <Card variant="flat" padding="md" className="bg-gray-50">
+        {/* Recharge Card */}
+        <Card variant="default" padding="lg" className="w-11/12 mx-auto">
+          <div>
             <Text variant="label" weight="semibold" className="mb-3">
-              Explain
+              Recharge Amount
             </Text>
-            <ol className="space-y-3 text-sm text-gray-700">
-              {explanations.map((text, i) => (
-                <li key={i} className="flex gap-2">
-                  <Text
-                    variant="small"
-                    weight="semibold"
-                    color="primary"
-                    className="flex-shrink-0 text-orange-500"
-                  >
-                    {i + 1}.
-                  </Text>
-                  <Text variant="small">{text}</Text>
-                </li>
+            <input
+              type="number"
+              placeholder="Recharge Amount"
+              className="w-full px-4 py-4 border border-gray-300 rounded-2xl text-base mb-6 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+
+            {/* Quick Amounts */}
+            <div className="grid grid-cols-3 gap-3 mb-8 bg-gray-100 p-5 rounded-2xl">
+              {quickAmounts.map((amt) => (
+                <button
+                  key={amt}
+                  className={`px-2 py-3 rounded-lg font-medium text-sm transition-all ${
+                    amount === amt
+                      ? "bg-orange-400 text-white shadow-md"
+                      : "bg-white border border-gray-200 text-gray-800 hover:bg-gray-50"
+                  }`}
+                  onClick={() => handleQuickAmount(amt)}
+                >
+                  ₹{amt}
+                </button>
               ))}
-            </ol>
-          </Card>
-        </div>
-      </Card>
-    </div>
+            </div>
+
+            {/* Recharge Button */}
+            <Button
+              variant="gradient"
+              fullWidth
+              onClick={handleRecharge}
+              className="mb-6"
+            >
+              Recharge Now
+            </Button>
+
+            {/* Explanations */}
+            <Card variant="flat" padding="md" className="bg-gray-50">
+              <Text variant="label" weight="semibold" className="mb-3">
+                Explain
+              </Text>
+              <ol className="space-y-3 text-sm text-gray-700">
+                {explanations.map((text, i) => (
+                  <li key={i} className="flex gap-2">
+                    <Text
+                      variant="small"
+                      weight="semibold"
+                      color="primary"
+                      className="flex-shrink-0 text-orange-500"
+                    >
+                      {i + 1}.
+                    </Text>
+                    <Text variant="small">{text}</Text>
+                  </li>
+                ))}
+              </ol>
+            </Card>
+          </div>
+        </Card>
+      </div>
+    </MainLayout>
   );
 };
 
